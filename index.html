@@ -6,264 +6,501 @@
 <title>Swap Money — PTC Rewards VIP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
   :root {
-    --bg-color: #08090d;
-    --card-bg: #111420;
-    --card-bg-light: #1a1e2e;
-    --accent-yellow: #FFC61A;
-    --accent-yellow-light: #FFD700;
-    --accent-gold-glow: rgba(255, 198, 26, 0.25);
-    --accent-gold-gradient: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-    --card-mastercard-grad: linear-gradient(135deg, #231c08 0%, #12141f 60%, #08090d 100%);
+    --bg-color: #060608;
+    --card-bg: #0d0e14;
+    --card-bg-light: #161820;
+    --card-border: rgba(255, 200, 20, 0.18);
+    --accent-yellow: #FFD000;
+    --accent-yellow-dim: #C8A200;
+    --accent-gold-glow: rgba(255, 208, 0, 0.30);
+    --accent-gold-gradient: linear-gradient(135deg, #FFD000 0%, #FF9500 50%, #C8A200 100%);
+    --accent-black-yellow: linear-gradient(135deg, #1a1400 0%, #0d0e14 60%, #060608 100%);
     --text-primary: #ffffff;
-    --text-secondary: #9aa1b9;
-    --border-line: rgba(255, 215, 0, 0.18);
-    --green-color: #10b981;
-    --red-color: #ef4444;
-    --purple-grad: linear-gradient(135deg, #4f46e5 0%, #d97706 100%);
+    --text-secondary: #7a8099;
+    --text-muted: #4a5068;
+    --border-line: rgba(255, 208, 0, 0.14);
+    --green-color: #00d68f;
+    --red-color: #ff4757;
+    --purple-grad: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+    --nav-h: 72px;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', -apple-system, Roboto, sans-serif; }
-  
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;
+      font-family: 'Inter', 'Segoe UI', -apple-system, Roboto, sans-serif; }
+
+  /* ══ DIAGONAL HEX PATTERN BACKGROUND ══ */
   body {
     background-color: var(--bg-color);
-    background-image: radial-gradient(rgba(255, 198, 26, 0.05) 1px, transparent 0);
-    background-size: 24px 24px;
-    color: var(--text-primary); min-height: 100vh; overflow-x: hidden; font-size: 14px;
-    padding-bottom: 90px;
+    background-image:
+      linear-gradient(60deg, rgba(255,208,0,0.04) 1px, transparent 1px),
+      linear-gradient(-60deg, rgba(255,208,0,0.04) 1px, transparent 1px),
+      linear-gradient(rgba(255,208,0,0.025) 1px, transparent 1px);
+    background-size: 34px 60px, 34px 60px, 34px 34px;
+    color: var(--text-primary);
+    min-height: 100vh; overflow-x: hidden; font-size: 14px;
+    padding-bottom: calc(var(--nav-h) + 14px);
   }
 
-  /* Header */
+  /* ══ HEADER ══ */
   header {
-    padding: 14px 18px; background: rgba(8, 9, 13, 0.94);
-    backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-line);
+    padding: 12px 16px;
+    background: linear-gradient(180deg, rgba(6,6,8,0.98) 0%, rgba(10,10,14,0.96) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,208,0,0.12);
     position: sticky; top: 0; z-index: 50;
     display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6);
   }
   .brand { display: flex; align-items: center; gap: 10px; }
+
   .user-avatar-header {
-    width: 38px; height: 38px; border-radius: 50%; background: var(--accent-gold-gradient);
-    color: #000; font-weight: 900; font-size: 15px; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 12px var(--accent-gold-glow);
+    width: 40px; height: 40px; border-radius: 14px;
+    background: var(--accent-gold-gradient);
+    color: #000; font-weight: 900; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 16px rgba(255,208,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
   }
-  .header-info h1 { font-size: 14px; font-weight: 800; color: #fff; }
-  .header-info p { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,208,0,0.12); border: 1px solid rgba(255,208,0,0.25);
+    border-radius: 6px; padding: 2px 7px; font-size: 9px; font-weight: 800;
+    color: var(--accent-yellow); letter-spacing: 0.5px; margin-top: 2px;
+  }
+  .header-info h1 { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: -0.2px; }
+  .header-info p { font-size: 10.5px; color: var(--text-secondary); font-weight: 600; }
 
   .header-actions { display: flex; align-items: center; gap: 8px; }
   .icon-btn {
-    width: 34px; height: 34px; border-radius: 50%; background: var(--card-bg-light);
-    border: 1px solid var(--border-line); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-secondary);
+    width: 36px; height: 36px; border-radius: 12px;
+    background: rgba(255,208,0,0.08); border: 1px solid rgba(255,208,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
   }
-  .icon-btn svg { width: 18px; height: 18px; fill: var(--text-secondary); }
+  .icon-btn:active { background: rgba(255,208,0,0.18); transform: scale(0.94); }
+  .icon-btn svg { width: 18px; height: 18px; fill: var(--accent-yellow); opacity: 0.8; }
 
-  /* Navigation Page Container */
-  .page { display: none; padding: 18px 16px; animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* ══ PAGE TRANSITION ══ */
+  .page { display: none; padding: 16px 14px; animation: fadeSlide 0.22s cubic-bezier(0.16,1,0.3,1); }
   .page.active { display: block; }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* Mastercard Hero Card */
-  .mastercard-hero {
-    background: var(--card-mastercard-grad);
-    border: 1px solid rgba(255, 215, 0, 0.35);
-    border-radius: 24px; padding: 22px 20px;
-    box-shadow: 0 16px 36px rgba(0,0,0,0.7), inset 0 0 25px rgba(255, 215, 0, 0.08);
-    position: relative; overflow: hidden; margin-bottom: 16px;
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px) scale(0.99); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
   }
-  .card-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+
+  /* ══ HERO BALANCE CARD ══ */
+  .mastercard-hero {
+    background: linear-gradient(145deg, #1c1500 0%, #100e18 55%, #060608 100%);
+    border: 1px solid rgba(255,208,0,0.35);
+    border-radius: 28px; padding: 24px 20px 20px;
+    text-align: center; position: relative; overflow: hidden; margin-bottom: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,208,0,0.08) inset,
+                0 8px 30px rgba(255,208,0,0.15);
+  }
+  .mastercard-hero::before {
+    content: ''; position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,208,0,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .mastercard-hero::after {
+    content: ''; position: absolute; bottom: -40px; left: -20px;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,150,0,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .card-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; position: relative; z-index: 1; }
   .card-chip-wrap { display: flex; align-items: center; gap: 8px; }
   .card-chip {
-    width: 38px; height: 26px; background: linear-gradient(135deg, #ffe57f 0%, #ffb300 100%);
-    border-radius: 6px; position: relative; border: 1px solid rgba(0,0,0,0.3);
+    width: 34px; height: 22px;
+    background: linear-gradient(135deg, #ffe57f 0%, #d4a017 100%);
+    border-radius: 5px; border: 1px solid rgba(0,0,0,0.25);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
-  .contactless-icon { width: 20px; height: 20px; fill: var(--accent-yellow); opacity: 0.8; }
-  .card-brand-logo { font-size: 13px; font-weight: 900; color: var(--accent-yellow); letter-spacing: 1px; }
+  .contactless-icon { width: 16px; height: 16px; fill: var(--accent-yellow); opacity: 0.9; }
+  .card-brand-logo {
+    font-size: 11px; font-weight: 900; letter-spacing: 2px;
+    background: var(--accent-gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .gb-subtitle {
+    font-size: 11px; font-weight: 700; color: var(--text-secondary);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px;
+    position: relative; z-index: 1;
+  }
+  
+  /* MASSIVE BALANCE NUMBER */
+  .gb-amount {
+    font-size: 200px; font-weight: 900; color: #fff; line-height: 1;
+    letter-spacing: -2px; position: relative; z-index: 1;
+    text-shadow: 0 0 50px rgba(255,208,0,0.6);
+  }
+  .gb-amount span { font-size: 20px; font-weight: 700; color: var(--accent-yellow); margin-left: 4px; letter-spacing: 0; }
+  
+  .gb-total {
+    font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 8px;
+    position: relative; z-index: 1;
+  }
+  .card-divider {
+    width: 100%; height: 1px; background: rgba(255,208,0,0.15);
+    margin: 14px 0 10px; position: relative; z-index: 1;
+  }
+  .card-bottom-row {
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .card-bottom-item { text-align: left; }
+  .card-bottom-item label { font-size: 9px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; display: block; margin-bottom: 2px; }
+  .card-bottom-item span { font-size: 11.5px; font-weight: 800; color: var(--text-secondary); }
 
-  .gb-subtitle { font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; }
-  .gb-amount { font-size: 46px; font-weight: 900; margin: 4px 0; color: #FFF; line-height: 1; text-shadow: 0 4px 15px var(--accent-gold-glow); }
-  .gb-amount span { font-size: 20px; font-weight: 900; color: var(--accent-yellow); margin-left: 6px; }
-  .card-refresh-note { font-size: 10px; color: var(--text-secondary); font-weight: 600; margin-top: 4px; }
-
-  /* 📢 1000x250 Banner Slider Container */
+  /* ══ BANNER SLIDER ══ */
   .banner-slider-box {
-    width: 100%; height: 115px; border-radius: 18px; overflow: hidden;
-    position: relative; margin-bottom: 20px; border: 1px solid var(--border-line);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    width: 100%; height: 130px; border-radius: 20px; overflow: hidden;
+    position: relative; margin-bottom: 18px;
+    border: 1px solid rgba(255,208,0,0.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5); touch-action: pan-y; cursor: grab;
   }
   .banner-slider-box img {
-    width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
-    opacity: 0; transition: opacity 0.6s ease-in-out;
+    width: 100%; height: 100%; object-fit: cover; position: absolute;
+    top: 0; left: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
   }
   .banner-slider-box img.active { opacity: 1; }
+  .banner-dots { position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 10; }
+  .b-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.25s; }
+  .b-dot.active { background: var(--accent-yellow); width: 16px; border-radius: 8px; }
 
-  /* Quick Actions Row */
-  .quick-actions-row { display: flex; justify-content: space-around; margin: 18px 0 22px; }
-  .qa-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+  /* ══ QUICK ACTIONS ══ */
+  .quick-actions-row { display: flex; justify-content: space-around; margin: 4px 0 20px; }
+  .qa-item { display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; }
   .qa-circle {
-    width: 48px; height: 48px; border-radius: 50%; background: var(--accent-yellow);
+    width: 52px; height: 52px; border-radius: 16px;
+    background: linear-gradient(145deg, #FFD000 0%, #FF9500 100%);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 18px var(--accent-gold-glow); transition: 0.15s;
+    box-shadow: 0 6px 20px rgba(255,208,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .qa-circle:active { transform: scale(0.93); box-shadow: 0 3px 10px rgba(255,208,0,0.25); }
   .qa-circle svg { width: 22px; height: 22px; fill: #000; }
-  .qa-label { font-size: 11px; font-weight: 800; color: var(--text-secondary); }
+  .qa-label { font-size: 10.5px; font-weight: 800; color: var(--text-secondary); letter-spacing: 0.2px; }
 
-  /* Stats Section */
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  /* ══ STATS GRID ══ */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
   .stat-card {
     background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 16px; padding: 12px 8px; text-align: center;
+    border-radius: 18px; padding: 14px 8px; text-align: center;
+    position: relative; overflow: hidden;
   }
-  .stat-card b { display: block; font-size: 15px; font-weight: 900; color: var(--accent-yellow); margin-bottom: 2px; }
-  .stat-card span { font-size: 10px; color: var(--text-secondary); font-weight: 700; }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent-gold-gradient); opacity: 0.7;
+  }
+  .stat-card b { display: block; font-size: 15px; font-weight: 900; color: var(--accent-yellow); margin-bottom: 3px; }
+  .stat-card span { font-size: 9.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
 
-  /* Section Titles */
-  .section-hdr { font-size: 15px; font-weight: 900; margin: 20px 0 12px; display: flex; justify-content: space-between; align-items: center; color: #fff; }
-  .live-badge { font-size: 10px; background: rgba(16, 185, 129, 0.2); color: var(--green-color); padding: 3px 8px; border-radius: 20px; font-weight: 800; }
+  /* ══ SECTION HEADER ══ */
+  .section-hdr {
+    font-size: 14px; font-weight: 900; margin: 20px 0 11px;
+    display: flex; justify-content: space-between; align-items: center; color: #fff;
+    letter-spacing: -0.2px;
+  }
+  .live-badge {
+    font-size: 9.5px;
+    background: rgba(0, 214, 143, 0.12); color: var(--green-color);
+    padding: 3px 9px; border-radius: 20px; font-weight: 800;
+    border: 1px solid rgba(0, 214, 143, 0.2); letter-spacing: 0.3px;
+  }
 
-  /* Tasks & Cards */
-  .task-list { display: flex; flex-direction: column; gap: 10px; }
-  .task-card {
+  /* ══ HOME TASK CARDS (GRID) ══ */
+  .task-list-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .task-card-grid {
     background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 18px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border-radius: 20px; padding: 16px 12px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
+    transition: border-color 0.2s;
   }
-  .task-left { display: flex; align-items: center; gap: 12px; flex: 1; }
-  .task-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(255, 198, 26, 0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .task-icon svg { width: 22px; height: 22px; fill: var(--accent-yellow); }
-  .task-info h4 { font-size: 13.5px; font-weight: 800; color: #FFF; }
-  .task-info p { font-size: 11.5px; color: var(--accent-yellow); font-weight: 700; margin-top: 2px; }
+  .task-card-grid:active { border-color: rgba(255,208,0,0.35); }
+  .task-card-grid .task-left { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .task-icon {
+    width: 42px; height: 42px; border-radius: 14px;
+    background: rgba(255,208,0,0.1); border: 1px solid rgba(255,208,0,0.15);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .task-icon svg { width: 21px; height: 21px; fill: var(--accent-yellow); }
+  .task-info h4 { font-size: 12.5px; font-weight: 800; color: #fff; letter-spacing: -0.2px; }
+  .task-info p { font-size: 10.5px; color: var(--accent-yellow); font-weight: 700; margin-top: 2px; opacity: 0.9; }
+
+  /* ══ EARN TASK CARDS (SMALL GRID) ══ */
+  .task-list-grid-small { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
+  .task-card-small {
+    background: var(--card-bg); border: 1px solid var(--border-line);
+    border-radius: 16px; padding: 12px 8px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px;
+  }
+  .task-card-small .task-icon { width: 36px; height: 36px; border-radius: 12px; }
+  .task-card-small .task-icon svg { width: 18px; height: 18px; }
+  .task-card-small .task-info h4 { font-size: 11px; font-weight: 800; color: #fff; }
+  .task-card-small .task-info p { font-size: 9.5px; color: var(--accent-yellow); font-weight: 700; }
+  .task-card-small .btn-sm-yellow { width: 100%; padding: 7px; font-size: 10px; border-radius: 10px; margin-top: 2px; }
 
   .btn-sm-yellow {
-    background: var(--accent-yellow); color: #000; border: none; padding: 8px 14px;
-    border-radius: 12px; font-size: 11.5px; font-weight: 900; cursor: pointer; transition: 0.15s; white-space: nowrap;
+    width: 100%;
+    background: linear-gradient(135deg, #FFD000 0%, #FF9500 100%);
+    color: #000; border: none; padding: 9px 14px;
+    border-radius: 12px; font-size: 11px; font-weight: 900; cursor: pointer;
+    transition: all 0.15s; white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(255,208,0,0.3);
   }
-  .btn-sm-yellow:disabled { background: var(--card-bg-light); color: var(--text-secondary); opacity: 0.6; }
-  .btn-sm-outline {
-    background: transparent; color: #fff; border: 1px solid var(--border-line); padding: 8px 12px;
-    border-radius: 12px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap;
-  }
+  .btn-sm-yellow:active { transform: scale(0.95); }
+  .btn-sm-yellow:disabled { background: var(--card-bg-light); color: var(--text-muted); opacity: 0.6; box-shadow: none; }
 
-  /* Live Withdrawals Feed */
-  .feed-list { display: flex; flex-direction: column; gap: 10px; }
+  /* ══ LIVE FEED ══ */
+  .feed-list { display: flex; flex-direction: column; gap: 8px; }
   .feed-item {
     background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;
+    border-radius: 16px; padding: 11px 13px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .feed-left { display: flex; align-items: center; gap: 12px; }
-  .feed-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--card-bg-light); display: flex; align-items: center; justify-content: center; }
-  .feed-icon svg { width: 18px; height: 18px; fill: var(--accent-yellow); }
-  .feed-user h5 { font-size: 13px; font-weight: 800; }
-  .feed-user p { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+  .feed-left { display: flex; align-items: center; gap: 10px; }
+  .feed-icon {
+    width: 36px; height: 36px; border-radius: 11px;
+    background: rgba(255,208,0,0.1); border: 1px solid rgba(255,208,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feed-icon svg { width: 17px; height: 17px; fill: var(--accent-yellow); }
+  .feed-user h5 { font-size: 12.5px; font-weight: 800; color: #fff; }
+  .feed-user p { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
   .feed-amt { font-size: 14px; font-weight: 900; color: var(--accent-yellow); }
 
-  /* Unlimited Ads Grid */
-  .ad-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  /* ══ ADS GRID ══ */
+  .ad-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .ad-card {
     background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 18px; padding: 22px 14px; text-align: center;
+    border-radius: 20px; padding: 22px 14px; text-align: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
     min-height: 120px; position: relative;
   }
   .ad-card.active {
-    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-    border: none; box-shadow: 0 8px 20px var(--accent-gold-glow); cursor: pointer;
+    background: linear-gradient(145deg, #1c1400 0%, #2a1c00 50%, #1c1400 100%);
+    border: 1px solid rgba(255,208,0,0.5);
+    box-shadow: 0 8px 24px rgba(255,208,0,0.2), inset 0 1px 0 rgba(255,208,0,0.15);
+    cursor: pointer;
   }
-  .ad-card.active .ad-status-text { color: #000; }
-  .ad-card.active svg { fill: #000; }
-  .ad-num { position: absolute; top: 10px; left: 12px; font-size: 11px; font-weight: 800; color: var(--text-secondary); }
-  .ad-card.active .ad-num { color: rgba(0,0,0,0.7); }
-  .ad-status-text { font-size: 13px; font-weight: 800; }
+  .ad-card.active svg { fill: var(--accent-yellow); }
+  .ad-card.active .ad-status-text { color: var(--accent-yellow); }
+  .ad-num { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 800; color: var(--text-muted); }
+  .ad-card.active .ad-num { color: var(--accent-yellow); opacity: 0.7; }
+  .ad-status-text { font-size: 12.5px; font-weight: 800; color: var(--text-secondary); }
 
-  /* Leaderboard Podium */
-  .podium-wrap { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 20px; margin-top: 10px; }
+  /* ══ AMAZING LEADERBOARD (TOP TAB) ══ */
+  .podium-wrap { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 20px; margin-top: 10px; }
   .podium-box {
-    flex: 1; background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 18px; padding: 14px 6px; text-align: center; position: relative;
+    flex: 1; background: linear-gradient(180deg, #1a1b24 0%, #0d0e14 100%);
+    border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 16px 6px; 
+    text-align: center; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
   }
   .podium-box.rank-1 {
-    background: linear-gradient(180deg, #2a220b 0%, #13151f 100%);
-    border-color: var(--accent-yellow); transform: scale(1.05); z-index: 2;
+    background: linear-gradient(180deg, #302500 0%, #0d0e14 100%);
+    border: 1px solid rgba(255,208,0,0.6);
+    box-shadow: 0 0 30px rgba(255,208,0,0.2), inset 0 2px 10px rgba(255,208,0,0.1);
+    transform: scale(1.08); z-index: 2;
   }
-  .podium-crown { font-size: 18px; margin-bottom: 4px; }
+  .podium-box.rank-2 { border: 1px solid rgba(192,192,192,0.6); background: linear-gradient(180deg, #1c1c1c 0%, #0d0e14 100%); }
+  .podium-box.rank-3 { border: 1px solid rgba(205,127,50,0.6); background: linear-gradient(180deg, #2a1600 0%, #0d0e14 100%); }
+
+  .podium-crown { font-size: 22px; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
   .podium-avatar {
-    width: 38px; height: 38px; border-radius: 50%; background: var(--card-bg-light);
-    color: #fff; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;
+    width: 38px; height: 38px; border-radius: 12px; background: var(--card-bg-light);
+    color: #fff; font-weight: 900; font-size: 16px;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;
   }
-  .podium-box.rank-1 .podium-avatar { background: var(--accent-yellow); color: #000; box-shadow: 0 0 12px var(--accent-gold-glow); }
-  .podium-name { font-size: 11px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .podium-amt { font-size: 11px; font-weight: 900; color: var(--accent-yellow); margin-top: 4px; }
-  .podium-rank-tag { background: var(--card-bg-light); font-size: 13px; font-weight: 900; padding: 6px; border-radius: 10px; margin-top: 8px; }
+  .podium-box.rank-1 .podium-avatar {
+    background: var(--accent-gold-gradient); color: #000; box-shadow: 0 4px 14px rgba(255,208,0,0.4);
+  }
+  .podium-name { font-size: 10.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .podium-amt { font-size: 10.5px; font-weight: 900; color: var(--accent-yellow); margin-top: 3px; }
 
-  .lb-list { display: flex; flex-direction: column; gap: 8px; }
+  .lb-list { display: flex; flex-direction: column; gap: 7px; }
   .lb-item {
-    background: var(--card-bg); border: 1px solid var(--border-line);
-    border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(90deg, var(--card-bg) 0%, #0d0e14 100%);
+    border: 1px solid var(--border-line); border-radius: 16px; padding: 12px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.2s;
   }
-  .lb-left { display: flex; align-items: center; gap: 12px; }
-  .lb-rank { font-size: 12px; font-weight: 900; color: var(--text-secondary); width: 16px; }
-  .lb-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-yellow); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; }
-  .lb-info h5 { font-size: 12.5px; font-weight: 800; }
+  .lb-item:active { transform: scale(0.98); }
+  .lb-left { display: flex; align-items: center; gap: 10px; }
+  .lb-rank { font-size: 12px; font-weight: 900; color: var(--text-muted); width: 18px; text-align: center; }
+  .lb-avatar {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: linear-gradient(135deg, #FFD000 0%, #FF9500 100%);
+    color: #000; display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 12px;
+  }
+  .lb-info h5 { font-size: 12.5px; font-weight: 800; color: #fff; }
 
-  /* Branded Bank Cards with Real Logos */
-  .brand-bank-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  /* ══ WITHDRAW BANK CARDS (TRUST & GREEN TICK) ══ */
+  .brand-bank-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
   .bank-card-item {
     background: #fff; color: #000; border-radius: 18px; padding: 12px;
-    display: flex; flex-direction: column; justify-content: space-between; min-height: 110px;
-    cursor: pointer; border: 3px solid transparent; transition: 0.15s; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between; min-height: 108px;
+    cursor: pointer; border: 3px solid transparent; transition: all 0.15s;
+    position: relative; overflow: hidden;
   }
-  .bank-card-item.selected { border-color: var(--accent-yellow); box-shadow: 0 0 15px var(--accent-gold-glow); }
-  .bank-logo-img { height: 38px; object-fit: contain; width: 100%; display: block; margin-bottom: 6px; }
-  .bank-card-title { font-size: 12px; font-weight: 900; text-align: center; color: #111; }
-  .bank-min-text { font-size: 10px; font-weight: 800; color: #666; text-align: center; margin-top: 4px; }
+  .bank-card-item:active { transform: scale(0.97); }
+  .bank-card-item.selected {
+    border-color: #00d68f;
+    box-shadow: 0 0 20px rgba(0, 214, 143, 0.35);
+    background: rgba(0, 214, 143, 0.05);
+  }
+  .bank-card-item.selected::after {
+    content: '✓'; position: absolute; top: 6px; right: 6px;
+    background: #00d68f; color: #fff;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .bank-logo-img { height: 36px; object-fit: contain; width: 100%; display: block; margin-bottom: 6px; }
+  .bank-card-title { font-size: 11.5px; font-weight: 900; text-align: center; color: #111; }
+  .bank-min-text { font-size: 9.5px; font-weight: 800; color: #777; text-align: center; margin-top: 3px; }
 
-  .provider-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+  .provider-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
   .provider-card {
-    background: var(--card-bg); border: 1px solid var(--border-line);
+    background: var(--card-bg); border: 3px solid transparent;
     border-radius: 18px; padding: 14px; text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer; position: relative; transition: all 0.2s;
   }
+  .provider-card.selected {
+    border-color: #00d68f; box-shadow: 0 0 20px rgba(0, 214, 143, 0.35);
+    background: rgba(0, 214, 143, 0.05);
+  }
+  .provider-card.selected::after {
+    content: '✓'; position: absolute; top: 6px; right: 6px;
+    background: #00d68f; color: #fff; width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .provider-card img { height: 34px; object-fit: contain; margin-bottom: 7px; border-radius: 4px; }
 
-  /* Share Grid */
-  .share-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+  /* ══ SHARE GRID ══ */
+  .share-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
   .share-btn {
     background: var(--card-bg-light); border: 1px solid var(--border-line);
-    padding: 12px; border-radius: 14px; color: #fff; font-weight: 800; font-size: 12px;
-    display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+    padding: 12px 10px; border-radius: 14px; color: #fff; font-weight: 800; font-size: 11.5px;
+    display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer;
+    transition: all 0.15s;
   }
-  .share-btn.primary { background: var(--accent-yellow); color: #000; border: none; grid-column: span 2; }
+  .share-btn:active { transform: scale(0.96); }
+  .share-btn.primary {
+    background: var(--accent-gold-gradient); color: #000; border: none;
+    grid-column: span 2; box-shadow: 0 6px 18px rgba(255,208,0,0.35);
+    font-size: 13px;
+  }
 
-  /* Form */
-  .form-group { margin-bottom: 14px; }
-  .form-group label { display: block; font-size: 12px; font-weight: 800; color: var(--text-secondary); margin-bottom: 6px; }
+  /* ══ MODALS ══ */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); backdrop-filter: blur(16px);
+    display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-card {
+    background: linear-gradient(180deg, #0f1018 0%, #060608 100%);
+    border: 1px solid rgba(255,208,0,0.4);
+    border-radius: 28px; padding: 28px 22px; text-align: center;
+    max-width: 360px; width: 100%;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.95), 0 0 40px rgba(255,208,0,0.1);
+    animation: fadeSlide 0.3s ease;
+  }
+  .modal-card h3 { font-size: 18px; font-weight: 900; color: var(--accent-yellow); margin-bottom: 12px; }
+  .modal-card p { font-size: 13px; color: #d0d4e8; line-height: 1.7; margin-bottom: 20px; font-weight: 600; }
+
+  /* Ad Timer Modal */
+  .ad-timer-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(4,4,6,0.97); backdrop-filter: blur(20px);
+    display: none; align-items: center; justify-content: center; z-index: 400; padding: 20px;
+  }
+  .ad-timer-modal.active { display: flex; }
+  .ad-timer-card {
+    background: linear-gradient(180deg, #0f1018 0%, #060608 100%);
+    border: 1px solid var(--border-line);
+    border-radius: 28px; padding: 30px 24px; text-align: center;
+    max-width: 360px; width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.95);
+    animation: fadeSlide 0.3s ease;
+  }
+  .ad-play-icon {
+    width: 68px; height: 68px; border-radius: 20px;
+    background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
+    box-shadow: 0 8px 28px rgba(124, 58, 237, 0.4);
+  }
+  .ad-play-icon svg { width: 28px; height: 28px; fill: #fff; margin-left: 3px; }
+  .ad-modal-title { font-size: 17px; font-weight: 900; color: #fff; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .ad-modal-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 22px; font-weight: 600; }
+  .ad-modal-bar-bg {
+    width: 100%; height: 6px; background: rgba(255,255,255,0.08);
+    border-radius: 10px; overflow: hidden; margin-bottom: 10px;
+  }
+  .ad-modal-bar-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, #7c3aed 0%, #818cf8 100%);
+    transition: width 1s linear; border-radius: 10px;
+  }
+  .ad-modal-timer { font-size: 12px; font-weight: 900; color: #818cf8; }
+
+  /* ══ FORM ELEMENTS ══ */
+  .form-group { margin-bottom: 13px; }
+  .form-group label { display: block; font-size: 11.5px; font-weight: 800; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.2px; }
   .form-group input, .form-group select {
     width: 100%; padding: 14px; background: var(--card-bg); border: 1px solid var(--border-line);
     border-radius: 14px; color: #fff; font-size: 13px; font-weight: 700; outline: none;
+    transition: border-color 0.2s;
   }
+  .form-group input:focus, .form-group select:focus { border-color: rgba(255,208,0,0.4); }
 
   .btn-submit {
     width: 100%; padding: 15px; background: var(--accent-gold-gradient); color: #000;
     border: none; border-radius: 16px; font-size: 14px; font-weight: 900; cursor: pointer;
-    box-shadow: 0 8px 20px var(--accent-gold-glow); margin-top: 10px;
+    box-shadow: 0 8px 24px rgba(255,208,0,0.35); margin-top: 12px;
+    transition: all 0.15s; letter-spacing: -0.2px;
   }
+  .btn-submit:active { transform: scale(0.98); box-shadow: 0 4px 12px rgba(255,208,0,0.25); }
 
-  /* Bottom Navigation */
+  /* ══ BOTTOM NAVIGATION ══ */
   .bottom-nav {
-    position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(8, 9, 13, 0.96);
-    backdrop-filter: blur(16px); border-top: 1px solid var(--border-line);
-    display: flex; justify-content: space-around; padding: 8px 4px 10px; z-index: 100;
+    position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-h);
+    background: rgba(6,6,8,0.97); backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255,208,0,0.12);
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 0 8px 10px; z-index: 100; box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
   }
   .nav-item {
-    background: none; border: none; color: var(--text-secondary); font-size: 10px; font-weight: 800;
-    display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; width: 20%; padding: 4px 0;
+    background: none; border: none; color: var(--text-muted);
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.3px;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    cursor: pointer; width: 20%; padding: 6px 0; border-radius: 14px;
+    transition: all 0.18s; position: relative;
   }
-  .nav-item svg { width: 20px; height: 20px; fill: var(--text-secondary); }
+  .nav-item svg { width: 22px; height: 22px; fill: var(--text-muted); transition: fill 0.18s; }
+  .nav-item span { color: var(--text-muted); transition: color 0.18s; }
   .nav-item.active { color: #fff; }
-  .nav-item.active svg { fill: var(--accent-yellow); }
+  .nav-item.active svg { fill: var(--accent-yellow); filter: drop-shadow(0 0 6px rgba(255,208,0,0.5)); }
   .nav-item.active span { color: var(--accent-yellow); }
+  .nav-item.active::before {
+    content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    width: 28px; height: 2px; border-radius: 0 0 4px 4px; background: var(--accent-gold-gradient);
+  }
 
+  /* ══ TOAST ══ */
   #toast {
-    position: fixed; left: 50%; bottom: 85px; transform: translateX(-50%) translateY(20px);
-    background: var(--card-bg-light); border: 1px solid var(--accent-yellow); color: #fff;
-    padding: 12px 18px; border-radius: 14px; font-size: 12.5px; font-weight: 800;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.8); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 200; width: 85%; text-align: center;
+    position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%) translateY(12px);
+    background: rgba(13,14,20,0.95); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,208,0,0.35); color: #fff;
+    padding: 11px 18px; border-radius: 14px; font-size: 12.5px; font-weight: 800;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 16px rgba(255,208,0,0.1);
+    opacity: 0; pointer-events: none; transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+    z-index: 200; max-width: 88%; text-align: center;
   }
   #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
@@ -277,16 +514,17 @@
   <div class="brand">
     <div class="user-avatar-header" id="userHeaderAvatar">U</div>
     <div class="header-info">
-      <h1 id="welcomeText">Welcome Back 👋</h1>
+      <h1 id="welcomeText">Swap money 👋</h1>
       <p id="userInfoStr">@user</p>
+      <div class="header-badge">⭐ VIP MEMBER</div>
     </div>
   </div>
   <div class="header-actions">
-    <div class="icon-btn" onclick="toast('🔔 ምንም አዲስ ማሳወቂያ የለም')">
-      <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+    <div class="icon-btn" onclick="fetchUserDataFromSheet()" title="Refresh Sheet Sync">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
     </div>
     <div class="icon-btn" onclick="showPage('profile')">
-      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
     </div>
   </div>
 </header>
@@ -301,15 +539,33 @@
       </div>
       <div class="card-brand-logo">SWAP VIP</div>
     </div>
-    <div class="gb-subtitle">Available Balance</div>
-    <div class="gb-amount"><span id="userBalance">150</span><span>ETB</span></div>
-    <div class="card-refresh-note">⚡ Refreshed every 6hrs</div>
+    <div class="gb-subtitle">👛 ጠቅላላ ቀሪ ሂሳብ</div>
+    <!-- MASSIVE BALANCE DISPLAY -->
+    <div class="gb-amount"><span id="userBalance" style="margin:0;">50</span><span>ETB</span></div>
+    <div class="gb-total">ጠቅላላ ገቢ: <span id="totalEarnText">50 ETB</span></div>
+    <div class="card-divider"></div>
+    <div class="card-bottom-row">
+      <div class="card-bottom-item">
+        <label>PLATFORM</label>
+        <span>SWAP MONEY</span>
+      </div>
+      <div class="card-bottom-item" style="text-align:right;">
+        <label>STATUS</label>
+        <span style="color:#00d68f;">● ACTIVE</span>
+      </div>
+    </div>
   </div>
 
-  <!-- 📢 1000x250 Banner Carousel Slider -->
+  <!-- 📢 7 Touch/Swipe Image Banner Carousel Slider -->
   <div class="banner-slider-box" id="bannerSlider">
-    <img src="https://image-link.edgeone.app/1785474560043-k7ux60.jpg" class="active" alt="Banner 1">
-    <img src="https://image-link.edgeone.app/1785474566566-ipmjh5.jpg" alt="Banner 2">
+    <img src="https://i.postimg.cc/bwBwv0FD/20260731-221404.jpg" class="active" alt="Ad 1">
+    <img src="https://i.postimg.cc/LXd4t9p0/20260731-221508.jpg" alt="Ad 2">
+    <img src="https://i.postimg.cc/GtdcfX9N/20260731-221553.jpg" alt="Ad 3">
+    <img src="https://i.postimg.cc/8kmkvgn9/20260731-221617.jpg" alt="Ad 4">
+    <img src="https://i.postimg.cc/Wb9296Vq/20260731-221756.jpg" alt="Ad 5">
+    <img src="https://i.postimg.cc/13fybnRb/20260731-222209.jpg" alt="Ad 6">
+    <img src="https://i.postimg.cc/9QKc2mrq/20260731-222250.jpg" alt="Ad 7">
+    <div class="banner-dots" id="bannerDots"></div>
   </div>
 
   <!-- Quick Actions Row -->
@@ -323,7 +579,7 @@
       <span class="qa-label">Transfer</span>
     </div>
     <div class="qa-item" onclick="showPage('withdraw')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l10-5-10-5-10 5 10 5z"/></svg></div>
+      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg></div>
       <span class="qa-label">Withdraw</span>
     </div>
     <div class="qa-item" onclick="showPage('withdraw')">
@@ -339,7 +595,7 @@
       <span>Today's Earnings</span>
     </div>
     <div class="stat-card">
-      <b id="totalClicks">1</b>
+      <b id="totalClicks">0</b>
       <span>Total Clicks</span>
     </div>
     <div class="stat-card">
@@ -348,47 +604,59 @@
     </div>
   </div>
 
-  <!-- Tasks Section -->
+  <!-- Tasks Section (Grid Layout) -->
   <div class="section-hdr">
     <span>ተጨማሪ ስራዎች (Tasks)</span>
-    <span style="font-size:11px; color:var(--accent-yellow);">+330 ETB</span>
+    <span style="font-size:11px; color:var(--accent-yellow);">+410 ETB</span>
   </div>
   
-  <div class="task-list">
+  <div class="task-list-grid">
     <!-- Telegram Task -->
-    <div class="task-card">
+    <div class="task-card-grid">
       <div class="task-left">
         <div class="task-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.05-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.87 7.97-3.44 3.8-1.58 4.59-1.86 5.1-1.87.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.13-.03.22z"/></svg></div>
         <div class="task-info">
-          <h4> Telegram ቻናል ይቀላቀሉ</h4>
+          <h4>Telegram ቻናል ይቀላቀሉ</h4>
           <p>+100 ETB</p>
         </div>
       </div>
-      <button class="btn-sm-yellow" id="btnTaskTg" onclick="claimTask('tg', 100)">ቀበል</button>
+      <button class="btn-sm-yellow" id="btnTaskTg_Home" onclick="startTaskTimer('tg', LINK_TELEGRAM, 100, 30)">Join & Start</button>
     </div>
 
-    <!-- YouTube Subscribe Task (60s timer) -->
-    <div class="task-card">
+    <!-- YouTube Subscribe Task -->
+    <div class="task-card-grid">
       <div class="task-left">
         <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></div>
         <div class="task-info">
           <h4>YouTube Subscribe</h4>
-          <p>+150 ETB · ⏱️ 60s Timer</p>
+          <p>+150 ETB</p>
         </div>
       </div>
-      <button class="btn-sm-yellow" id="btnTaskYtSub" onclick="startYtTimer('ytsub', 'https://youtube.com/@babibehind?si=L61h-d2wtfpGCqyJ', 150)">Subscribe & Start</button>
+      <button class="btn-sm-yellow" id="btnTaskYtSub_Home" onclick="startTaskTimer('ytsub', LINK_YT_SUBSCRIBE, 150, 60)">Subscribe</button>
     </div>
 
-    <!-- YouTube Watch Task (60s timer) -->
-    <div class="task-card">
+    <!-- YouTube Video Task 1 -->
+    <div class="task-card-grid">
       <div class="task-left">
         <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="task-info">
-          <h4>YouTube Video Watch</h4>
-          <p>+80 ETB · ⏱️ 60s Timer</p>
+          <h4>YouTube Video #1</h4>
+          <p>+80 ETB</p>
         </div>
       </div>
-      <button class="btn-sm-yellow" id="btnTaskYtWatch" onclick="startYtTimer('ytwatch', 'https://youtube.com/@babibehind?si=L61h-d2wtfpGCqyJ', 80)">Watch Video</button>
+      <button class="btn-sm-yellow" id="btnTaskYtWatch1_Home" onclick="startTaskTimer('ytwatch1', LINK_YT_VIDEO_1, 80, 60)">Watch Video</button>
+    </div>
+
+    <!-- YouTube Video Task 2 -->
+    <div class="task-card-grid">
+      <div class="task-left">
+        <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="task-info">
+          <h4>YouTube Video #2</h4>
+          <p>+80 ETB</p>
+        </div>
+      </div>
+      <button class="btn-sm-yellow" id="btnTaskYtWatch2_Home" onclick="startTaskTimer('ytwatch2', LINK_YT_VIDEO_2, 80, 60)">Watch Video</button>
     </div>
   </div>
 
@@ -400,38 +668,93 @@
   <div class="feed-list" id="withdrawalFeed"></div>
 </section>
 
-<!-- 2. EARN TAB (Unlimited Ads) -->
+<!-- 2. EARN TAB (Tasks at Top + Unlimited Ads) -->
 <section id="earn" class="page">
   <div class="section-hdr" style="margin-top:0;">
-    <span>Watch Unlimited Ads & Earn ☀️</span>
+    <span>ተጨማሪ ስራዎች (Tasks)</span>
   </div>
-  <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:14px;">♾️ ያለገደብ ማስታወቂያዎችን በመመልከት በየእያንዳንዱ 50 ETB ያግኙ።</p>
+  
+  <div class="task-list-grid-small">
+    <!-- Telegram Task -->
+    <div class="task-card-small">
+      <div class="task-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.05-.48-.82-.27-1.47-.42-1.42-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.87 7.97-3.44 3.8-1.58 4.59-1.86 5.1-1.87.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.13-.03.22z"/></svg></div>
+      <div class="task-info">
+        <h4>Telegram ቻናል</h4>
+        <p>+100 ETB</p>
+      </div>
+      <button class="btn-sm-yellow" id="btnTaskTg" onclick="startTaskTimer('tg', LINK_TELEGRAM, 100, 30)">Join</button>
+    </div>
 
+    <!-- YouTube Subscribe Task -->
+    <div class="task-card-small">
+      <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></div>
+      <div class="task-info">
+        <h4>YouTube Subscribe</h4>
+        <p>+150 ETB</p>
+      </div>
+      <button class="btn-sm-yellow" id="btnTaskYtSub" onclick="startTaskTimer('ytsub', LINK_YT_SUBSCRIBE, 150, 60)">Subscribe</button>
+    </div>
+
+    <!-- YouTube Video Task 1 -->
+    <div class="task-card-small">
+      <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="task-info">
+        <h4>Video #1</h4>
+        <p>+80 ETB</p>
+      </div>
+      <button class="btn-sm-yellow" id="btnTaskYtWatch1" onclick="startTaskTimer('ytwatch1', LINK_YT_VIDEO_1, 80, 60)">Watch</button>
+    </div>
+
+    <!-- YouTube Video Task 2 -->
+    <div class="task-card-small">
+      <div class="task-icon" style="background:rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="fill:#ef4444;"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="task-info">
+        <h4>Video #2</h4>
+        <p>+80 ETB</p>
+      </div>
+      <button class="btn-sm-yellow" id="btnTaskYtWatch2" onclick="startTaskTimer('ytwatch2', LINK_YT_VIDEO_2, 80, 60)">Watch</button>
+    </div>
+  </div>
+
+  <div class="section-hdr">
+    <span>Watch Ads & Earn ☀️</span>
+  </div>
+  <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:14px;">ማስታወቂያዎችን ይመልከቱ በእያንዳንዱ ማስታወቂያ ወደ ሂሳብዎ 50 ብር ይገባል ማሳሰቢያ ማስታወቂያ ለ 15 ሰከንድ አይተው x ምልክቱን ይጫኑ ሳይጨርሱ ከወጡ አይቆጠርም</p>
   <div class="ad-grid" id="adGridArea"></div>
 </section>
 
-<!-- 3. TOP TAB (LEADERBOARD) -->
+<!-- 3. TOP TAB (AMAZING LEADERBOARD) -->
 <section id="top" class="page">
   <div class="section-hdr" style="margin-top:0;">
-    <span>ከፍተኛ ገቢ ያገኙ</span>
+    <span>ከፍተኛ ገቢ ያገኙ (Top 10)</span>
   </div>
-  <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:10px;">Live leaderboard · በቀጥታ ይዘመናል</p>
+  <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:10px;">Live leaderboard</p>
 
   <div class="podium-wrap" id="podiumArea"></div>
   <div class="lb-list" id="leaderboardList"></div>
 </section>
 
-<!-- 4. REFERRAL TAB (10 Invites = 1000 Birr Direct Link) -->
+<!-- 4. REFERRAL TAB (Left Intact) -->
 <section id="invite" class="page">
-  <div class="ref-big-card">
-    <p>10 ጓደኛ ሲጋብዙ</p>
-    <h2>1,000 ETB</h2>
-    <p style="font-size:11px; font-weight:700; margin-top:4px;">(ለእያንዳንዱ ጓደኛ 100 ETB)</p>
+  <div class="ref-big-card" style="background:linear-gradient(145deg,#1c1500 0%,#100e18 55%,#060608 100%); padding:22px 20px; border-radius:24px; text-align:center; margin-bottom:16px; border:1px solid rgba(255,208,0,0.35); box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 30px rgba(255,208,0,0.1); position:relative; overflow:hidden;">
+    <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(255,208,0,0.2) 0%,transparent 70%);pointer-events:none;"></div>
+    <p style="font-weight:800; color:var(--text-secondary); font-size:11px; text-transform:uppercase; letter-spacing:1px;">10 ጓደኛ ሲጋብዙ ትቀበሉ</p>
+    <h2 style="font-size:40px; font-weight:900; background:linear-gradient(135deg,#FFD000 0%,#FF9500 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:6px 0; letter-spacing:-1px;">500 ETB</h2>
+    <p style="font-size:11px; font-weight:700; color:rgba(255,208,0,0.7); line-height:1.5;">አንድ ሰው ሲጋብዙ 50ብር ቦነስ ያኛሉ · 10 ሰው ሲሞላ 500 ብር ወደ ሂሳቡ ይገባል</p>
+    <div style="margin-top:16px; background:var(--card-bg-light); padding:12px; border-radius:12px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+        <span style="font-size:12px; font-weight:800;">Task Progress:</span>
+        <span style="font-size:12px; font-weight:900; color:var(--accent-yellow);" id="refTaskProgressText">0/10</span>
+      </div>
+      <div style="width:100%; height:8px; background:var(--bg-color); border-radius:4px; overflow:hidden;">
+        <div id="refTaskProgressBar" style="width:0%; height:100%; background:var(--accent-yellow); transition:0.3s;"></div>
+      </div>
+    </div>
   </div>
 
   <div style="background:var(--card-bg); border:1px solid var(--border-line); border-radius:18px; padding:16px;">
-    <p style="font-size:11px; color:var(--text-secondary); font-weight:700; margin-bottom:8px;">የግብዣ ሊንክ (ቀጥታ ሚኒ አፑን ይከፍታል)</p>
-    <input type="text" id="refLink" value="https://t.me/Swapmoney_bot/earn?startapp=ref_123" style="width:100%; padding:12px; background:var(--bg-color); border:1px solid var(--border-line); border-radius:12px; color:#fff; font-size:11.5px; outline:none;" readonly>
+    <p style="font-size:11px; color:var(--text-secondary); font-weight:700; margin-bottom:8px;">የግብዣ ሊንክ</p>
+    <input type="text" id="refLink" value="https://t.me/Swapmoney_bot/swapmoney?startapp=ref_123" style="width:100%; padding:12px; background:var(--bg-color); border:1px solid var(--border-line); border-radius:12px; color:#fff; font-size:11.5px; outline:none;" readonly>
 
     <div class="share-grid">
       <button class="share-btn" onclick="shareSocial('telegram')">Telegram</button>
@@ -443,10 +766,28 @@
     </div>
   </div>
 
+  <div style="background:var(--card-bg); border:1px solid var(--border-line); border-radius:18px; padding:16px; margin-top:14px;">
+    <h4 style="font-size:13px; font-weight:900; color:var(--accent-yellow); margin-bottom:12px;">📖 እንዴት መጋበዝ እንደሚቻል (መመሪያ):</h4>
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:12px; font-weight:700; color:var(--text-primary);">
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="background:var(--accent-yellow); color:#000; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; flex-shrink:0;">1</span>
+        <span style="line-height:1.4;">የግብዣ ሊንክዎን ኮፒ ያድርጉ ወይም "Share Link" አዝራሩን በመጫን ለጓደኞችዎ ያጋሩ።</span>
+      </div>
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="background:var(--accent-yellow); color:#000; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; flex-shrink:0;">2</span>
+        <span style="line-height:1.4;">ጓደኛዎ በሊንክዎ ገብቶ አፑን ሲከፍት በሲስተሙ ላይ በራስ-ሰር ይቆጠራል።</span>
+      </div>
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="background:var(--accent-yellow); color:#000; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; flex-shrink:0;">3</span>
+        <span style="line-height:1.4;">10 ጓደኞች ሲጋብዙ 500 ETB ቦነስ ቀጥታ ወደ ሂሳብዎ ይገባል!</span>
+      </div>
+    </div>
+  </div>
+
   <div class="stats-grid" style="margin-top:16px;">
     <div class="stat-card">
       <b id="refCount">0</b>
-      <span>የተጋበዙ ጓደኞች</span>
+      <span>ጠቅላላ የተጋበዙ</span>
     </div>
     <div class="stat-card" style="grid-column: span 2;">
       <b id="refEarned">0 ETB</b>
@@ -455,10 +796,26 @@
   </div>
 </section>
 
-<!-- 5. WITHDRAW TAB (Official Bank Logos & Airtime) -->
+<!-- 5. WITHDRAW TAB (With Trust Badges & Green Tick) -->
 <section id="withdraw" class="page">
   <div class="section-hdr" style="margin-top:0;">
     <span>የባንክ ማውጫዎች (Bank Withdrawals)</span>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="trust-badges" style="display:flex; justify-content:space-around; align-items: center; margin-bottom:16px; background:var(--card-bg); padding:14px; border-radius:18px; border:1px solid rgba(0, 214, 143, 0.2);">
+    <div style="text-align:center;"><div style="font-size:20px;">🛡️</div><div style="font-size:9.5px; color:#00d68f; font-weight:800; margin-top:4px;">100% Secure</div></div>
+    <div style="text-align:center;"><div style="font-size:20px;">⚡</div><div style="font-size:9.5px; color:#00d68f; font-weight:800; margin-top:4px;">Fast Payout</div></div>
+    <div style="text-align:center;"><div style="font-size:20px;">🏦</div><div style="font-size:9.5px; color:#00d68f; font-weight:800; margin-top:4px;">Official Banks</div></div>
+  </div>
+
+  <!-- Withdraw Info Banner -->
+  <div style="background:linear-gradient(135deg,rgba(255,208,0,0.1) 0%,rgba(255,149,0,0.08) 100%); border:1px solid rgba(255,208,0,0.3); border-radius:18px; padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+    <div style="width:38px;height:38px;border-radius:12px;background:rgba(255,208,0,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">💳</div>
+    <div>
+      <p style="font-size:12.5px; font-weight:900; color:#fff;">ዝቅተኛው የመውጫ መጠን 2,500 ETB ነው</p>
+      <p style="font-size:11px; font-weight:700; color:rgba(255,208,0,0.7); margin-top:2px;">24 ሰዓት ውስጥ ወደ ሂሳቦ ይገባል · 10 ሪፈራል ያስፈልጋል</p>
+    </div>
   </div>
 
   <!-- Official Bank Cards with Real Logos -->
@@ -466,22 +823,22 @@
     <div class="bank-card-item selected" onclick="selectBank('Telebirr', this)">
       <img src="https://www.fanamc.com/english/wp-content/uploads/2024/11/302744918_412729177637206_7434627968081460594_n-720x430.jpg" class="bank-logo-img" alt="Telebirr">
       <div class="bank-card-title">Telebirr</div>
-      <div class="bank-min-text">Min: 100 ETB</div>
+      <div class="bank-min-text">Min: 2500 ETB</div>
     </div>
     <div class="bank-card-item" onclick="selectBank('Commercial Bank of Ethiopia', this)">
       <img src="https://capitalethiopia.com/wp-content/uploads/2021/08/CBE.jpg" class="bank-logo-img" alt="CBE">
       <div class="bank-card-title">CBE</div>
-      <div class="bank-min-text">Min: 2000 ETB</div>
+      <div class="bank-min-text">Min: 2500 ETB</div>
     </div>
     <div class="bank-card-item" onclick="selectBank('Awash Bank', this)">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-pKCdY7pfmeHnW3BIUJM8djSD0XWU89yYBUzLU0jcujwxg4g8TEFHzQd8&s=10" class="bank-logo-img" alt="Awash Bank">
       <div class="bank-card-title">Awash Bank</div>
-      <div class="bank-min-text">Min: 2000 ETB</div>
+      <div class="bank-min-text">Min: 2500 ETB</div>
     </div>
     <div class="bank-card-item" onclick="selectBank('Bank of Abyssinia', this)">
       <img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Bank_of_Abyssinia.png" class="bank-logo-img" alt="Bank of Abyssinia">
       <div class="bank-card-title">Abyssinia Bank</div>
-      <div class="bank-min-text">Min: 2000 ETB</div>
+      <div class="bank-min-text">Min: 2500 ETB</div>
     </div>
   </div>
 
@@ -489,37 +846,72 @@
     <span>Buy Airtime & Data</span>
   </div>
   <div class="provider-cards-grid">
-    <div class="provider-card">
+    <div class="provider-card" onclick="selectBank('Ethio Telecom Airtime', this)">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN-Mu2mNKVnkzhlz46YJn4tnT0TUXorClM8tpC4sNlew&s=10" alt="Ethio Telecom">
       <h4>Ethio Telecom</h4>
-      <button class="btn-sm-yellow" style="width:100%; font-size:10px;" onclick="selectBank('Ethio Telecom Airtime', this)">Airtime / Data</button>
     </div>
-    <div class="provider-card">
-      <h4>Safaricom Ethiopia</h4>
-      <button class="btn-sm-yellow" style="width:100%; font-size:10px;" onclick="selectBank('Safaricom Airtime', this)">Airtime / Data</button>
+    <div class="provider-card" onclick="selectBank('Safaricom Airtime', this)">
+      <img src="https://spaceinafrica.com/wp-content/uploads/2024/08/Screen-shot-2016-11-04-at-11.34.31-AM.png" alt="Safaricom">
+      <h4>Safaricom</h4>
     </div>
+  </div>
+
+  <div id="withdrawTaskNotice" style="display:none; background:linear-gradient(135deg,rgba(255,71,87,0.12) 0%,rgba(255,71,87,0.06) 100%); border:1px solid rgba(255,71,87,0.3); padding:16px; border-radius:18px; margin-bottom:16px; text-align:center;">
+    <div style="font-size:22px; margin-bottom:6px;">🔒</div>
+    <p style="font-size:12.5px; font-weight:900; color:#fff;">ገንዘብ ለማውጣት 10 ሰዎችን መጋበዝ አለቦት!</p>
+    <h3 style="font-size:22px; font-weight:900; background:linear-gradient(135deg,#FFD000,#FF9500); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:8px 0;" id="withdrawTaskProgressText">0/10</h3>
+    <button class="btn-sm-yellow" style="margin-top:6px;" onclick="showPage('invite')">👥 ወደ ሪፈራል ሂድ</button>
   </div>
 
   <form id="withdrawForm" onsubmit="handleWithdraw(event)">
     <div class="form-group">
-      <label>Phone / Account Number (+251...)</label>
-      <input type="text" id="payAccount" placeholder="09... ወይም +2519..." required>
+      <label id="accountInputLabel">የስልክ ቁጥር (Phone Number 09... / 07...)</label>
+      <input type="text" id="payAccount" placeholder="09... ወይም 07..." required>
     </div>
     <div class="form-group">
       <label>Amount (ETB)</label>
-      <input type="number" id="payAmount" placeholder="Min 100 ETB" min="100" required>
+      <input type="number" id="payAmount" placeholder="Min 2500 ETB" min="2500" required>
     </div>
-    <button type="submit" class="btn-submit">Confirm Withdrawal</button>
+    <button type="submit" class="btn-submit" id="withdrawSubmitBtn">Confirm Withdrawal</button>
   </form>
 </section>
 
 <!-- 6. PROFILE TAB -->
 <section id="profile" class="page">
-  <div style="background:var(--card-bg); border:1px solid var(--border-line); border-radius:20px; padding:20px; text-align:center; margin-bottom:16px;">
-    <div class="user-avatar-header" style="width:54px; height:54px; font-size:22px; margin:0 auto 10px;" id="profileAvatar">U</div>
-    <h3 id="profileName" style="font-size:16px; font-weight:800;">User Name <span style="color:var(--green-color);">🇪🇹✓</span></h3>
-    <p style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Verified Member · Swap Money 2026</p>
+  <div style="background:linear-gradient(145deg,#1c1500 0%,#0d0e14 100%); border:1px solid rgba(255,208,0,0.3); border-radius:24px; padding:28px 20px; text-align:center; margin-bottom:16px; box-shadow:0 16px 40px rgba(0,0,0,0.5);">
+    <div style="width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,#FFD000 0%,#FF9500 100%);color:#000;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 8px 24px rgba(255,208,0,0.4);" id="profileAvatar">U</div>
+    <h3 id="profileName" style="font-size:18px; font-weight:900; letter-spacing:-0.3px;">User Name <span style="color:var(--green-color);">✓</span></h3>
+    <p style="font-size:11px; color:var(--text-secondary); margin-top:4px; font-weight:600;">Verified Member · Swap Money 2026 🇪🇹</p>
+    <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,208,0,0.1);border:1px solid rgba(255,208,0,0.25);border-radius:20px;padding:5px 14px;margin-top:12px;">
+      <span style="font-size:10px;font-weight:900;color:var(--accent-yellow);letter-spacing:0.5px;">⭐ VIP MEMBER</span>
+    </div>
   </div>
 </section>
+
+<!-- Modal Overlay for 24hr Notice -->
+<div class="modal-overlay" id="noticeModal">
+  <div class="modal-card">
+    <div style="font-size:38px; margin-bottom:8px;">⏳</div>
+    <h3>Pending Withdrawal</h3>
+    <p id="modalNoticeText">pending.. የሲስተም ችግር ስለተፈጠረ እባከዎትን ወደ አካውት እስኪገባልዎት 24 ሰአት ስለሚፈጅ በትግስት ይጠብቁ እስከዛው ሌሎች ማስታወቂያ በማየት ገንዘብዎን ያሳድጉ።</p>
+    <button class="btn-submit" onclick="closeNoticeModal()">እሺ ተረድቻለሁ (OK)</button>
+  </div>
+</div>
+
+<!-- 30-Second Ad In-Progress Countdown Modal -->
+<div class="ad-timer-modal" id="adTimerModal">
+  <div class="ad-timer-card">
+    <div class="ad-play-icon">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <h3 class="ad-modal-title" id="adModalTitle">Ad በሂደት ላይ ነው</h3>
+    <p class="ad-modal-desc">ሽልማቱን ለማግኘት የማስታወቂያውን ሙሉ ሂደት መጨረስ አለቦት። ሙሉ ሂደቱ ከተጠናቀቀ በኋላ ብቻ ሽልማቱ ይጨመራል።</p>
+    <div class="ad-modal-bar-bg">
+      <div class="ad-modal-bar-fill" id="adModalBarFill"></div>
+    </div>
+    <div class="ad-modal-timer" id="adModalTimerText">30 s ቀርቷል</div>
+  </div>
+</div>
 
 <!-- Toast -->
 <div id="toast"><span id="toastMsg"></span></div>
@@ -549,14 +941,26 @@
 </nav>
 
 <script>
-/* ============ CONFIGURATION & BACKEND SCRIPT ============ */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz_CwZ9cow7EtXLHBWp1VLqyWdxcuZbKX7hB3deJjH3ND75J0e1xwsAA0Iokf9EBwsh/exec';
+/* ============ EDITABLE SOCIAL LINKS ============ */
+const LINK_TELEGRAM = 'https://t.me/SwapMoney_ETH';
+const LINK_YT_SUBSCRIBE = 'https://www.youtube.com/@swapmoneyeth';
+const LINK_YT_VIDEO_1 = 'https://youtu.be/WgRzYGYDDOs?si=foMIIKz6NJKhMizu';
+const LINK_YT_VIDEO_2 = 'https://youtu.be/WgRzYGYDDOs?si=foMIIKz6NJKhMizu';
+
+/* ============ DEPLOYED GOOGLE APPS SCRIPT URL ============ */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzFKfA2pKTbljDacQCFFTBUv32B378OUYons6RJmL0XAgF_Vh7id1Y2zWmHh3aEyOqXnQ/exec';
 const BOT_USERNAME = 'Swapmoney_bot';
-const AD_REWARD = 50;
 let selectedPaymentMethod = 'Telebirr';
+
+let adClickCount = 0;
+let lastRewardedPopupTime = Date.now();
+let appOpenTimestamp = Date.now();
+let isAdTimerRunning = false;
+let adCountdownInterval;
 
 /* ============ TELEGRAM WEBAPP INIT ============ */
 const tg = window.Telegram ? window.Telegram.WebApp : null;
+let referrerId = "None";
 
 if(tg){
   tg.ready(); tg.expand();
@@ -566,46 +970,84 @@ if(tg){
     document.getElementById('userHeaderAvatar').innerText = (u.first_name || 'U').charAt(0).toUpperCase();
     document.getElementById('profileAvatar').innerText = (u.first_name || 'U').charAt(0).toUpperCase();
     document.getElementById('profileName').innerText = u.first_name || 'Member';
-    document.getElementById('refLink').value = `https://t.me/${BOT_USERNAME}/earn?startapp=ref_${u.id}`;
+    document.getElementById('refLink').value = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${u.id}`;
+
+    if (tg.initDataUnsafe.start_param) {
+      let sp = tg.initDataUnsafe.start_param;
+      if (sp.startsWith('ref_')) { referrerId = sp.replace('ref_', ''); } 
+      else { referrerId = sp; }
+    }
   }
 }
 
-/* ============ STATE MANAGEMENT ============ */
-const STORAGE_KEY = 'swapmoney_final_v7';
+/* ============ STORAGE ============ */
+function getStorageKey() {
+  if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) return 'swapmoney_user_' + tg.initDataUnsafe.user.id;
+  return 'swapmoney_guest_v13';
+}
 
 function loadState(){
-  let raw = localStorage.getItem(STORAGE_KEY);
-  let defaults = {
-    balance: 150.00,
-    adsWatchedTotal: 1,
-    completedTasks: [],
-    referrals: [],
-    withdrawals: []
-  };
+  let key = getStorageKey();
+  let raw = localStorage.getItem(key);
+  let defaults = { balance: 50.00, adsWatchedTotal: 0, completedTasks: [], referrals: [], totalReferralsFromSheet: 0, isWithdrawTaskActive: false, hasWelcomed: false };
   if(!raw) return defaults;
   try{ return Object.assign(defaults, JSON.parse(raw)); }catch(e){ return defaults; }
 }
 
-function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-let state = loadState();
+function saveState(){
+  let key = getStorageKey();
+  localStorage.setItem(key, JSON.stringify(_swpDataX26_));
+}
+let _swpDataX26_ = loadState();
 
-/* ============ SYNC TO GOOGLE SHEETS ============ */
+/* ============ MONETAG IN-APP SDK ============ */
+if (typeof show_11460944 === 'function') {
+  try {
+    show_11460944({
+      type: 'inApp',
+      inAppSettings: { frequency: 2, capping: 0.1, interval: 150, timeout: 120, everyPage: false }
+    });
+  } catch(e) { console.log('InApp Init Error:', e); }
+}
+
+/* ============ LOGIC & RENDER ============ */
+function checkWelcomeBonus(){
+  if(!_swpDataX26_.hasWelcomed){
+    _swpDataX26_.hasWelcomed = true; saveState();
+    setTimeout(() => {
+      toast('🎉 እንኳን ደህና መጡ! 50 ETB የመግቢያ ቦነስ ተበረከተልዎ!');
+      if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    }, 1000);
+  }
+}
+
+async function fetchUserDataFromSheet(){
+  if(!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) return;
+  const u = tg.initDataUnsafe.user;
+  try {
+    const response = await fetch(`${SCRIPT_URL}?userId=${u.id}`);
+    const data = await response.json();
+    if(data.result === 'success' && data.user){
+      _swpDataX26_.totalReferralsFromSheet = Number(data.user.totalReferrals) || 0;
+      if(typeof data.user.balance !== 'undefined') _swpDataX26_.balance = Number(data.user.balance);
+      saveState(); render();
+    }
+  } catch(e) { console.log('Fetch err:', e); }
+}
+
 async function syncUserToSheet(){
   if(!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) return;
   const u = tg.initDataUnsafe.user;
   const payload = {
-    action: 'syncUser',
-    userId: u.id,
-    username: u.username || u.first_name,
-    balance: state.balance,
-    totalAds: state.adsWatchedTotal
+    action: 'syncUser', userId: String(u.id), username: u.username || u.first_name || "Guest",
+    balance: Number(_swpDataX26_.balance), totalAds: Number(_swpDataX26_.adsWatchedTotal), referredBy: String(referrerId || "None")
   };
   try {
     await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    setTimeout(fetchUserDataFromSheet, 1200);
   } catch(e) { console.log('Sync err:', e); }
 }
 
-/* ============ NAVIGATION ============ */
 function showPage(pageId){
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -616,7 +1058,6 @@ function showPage(pageId){
   render();
 }
 
-/* ============ TOAST ============ */
 let toastTimer;
 function toast(msg){
   const t = document.getElementById('toast');
@@ -626,232 +1067,249 @@ function toast(msg){
   toastTimer = setTimeout(()=> t.classList.remove('show'), 2600);
 }
 
-/* ============ RENDER UI ============ */
 function render(){
-  document.getElementById('userBalance').innerText = state.balance.toFixed(0);
-  document.getElementById('totalClicks').innerText = state.adsWatchedTotal;
-  document.getElementById('refCount').innerText = state.referrals.length;
-  document.getElementById('refEarned').innerText = `${state.referrals.length * 100} ETB`;
+  document.getElementById('userBalance').innerText = _swpDataX26_.balance.toFixed(0);
+  document.getElementById('totalEarnText').innerText = `${_swpDataX26_.balance.toFixed(0)} ETB`;
+  document.getElementById('totalClicks').innerText = _swpDataX26_.adsWatchedTotal;
+  
+  let refTotal = Math.max(_swpDataX26_.totalReferralsFromSheet || 0, _swpDataX26_.referrals.length || 0);
+  let currentTaskProgress = refTotal % 10;
+  
+  document.getElementById('refCount').innerText = refTotal;
+  let earnedTotal = Math.floor(refTotal / 10) * 500;
+  document.getElementById('refEarned').innerText = `${earnedTotal} ETB`;
+  
+  document.getElementById('refTaskProgressText').innerText = `${currentTaskProgress}/10`;
+  document.getElementById('refTaskProgressBar').style.width = `${(currentTaskProgress / 10) * 100}%`;
 
-  renderUnlimitedAdGrid();
-  renderLeaderboard();
-  saveState();
+  updateTaskBtnStatus('tg', 'btnTaskTg', 'btnTaskTg_Home');
+  updateTaskBtnStatus('ytsub', 'btnTaskYtSub', 'btnTaskYtSub_Home');
+  updateTaskBtnStatus('ytwatch1', 'btnTaskYtWatch1', 'btnTaskYtWatch1_Home');
+  updateTaskBtnStatus('ytwatch2', 'btnTaskYtWatch2', 'btnTaskYtWatch2_Home');
+
+  const wtNotice = document.getElementById('withdrawTaskNotice');
+  const wtBtn = document.getElementById('withdrawSubmitBtn');
+  if(_swpDataX26_.isWithdrawTaskActive) {
+    wtNotice.style.display = 'block';
+    document.getElementById('withdrawTaskProgressText').innerText = `${refTotal}/10`;
+    if(refTotal >= 10) {
+      wtNotice.innerHTML = `<p style="font-size:12px; font-weight:800; color:#10b981;">✅ 10 ሰው ጋብዘው ጨርሰዋል! አሁን ማውጣት ይችላሉ።</p>`;
+      wtBtn.disabled = false;
+    } else {
+      wtBtn.disabled = true; wtBtn.innerText = '10 ሰው መጋበዝ ያስፈልጋል';
+    }
+  } else {
+    wtNotice.style.display = 'none'; wtBtn.disabled = false; wtBtn.innerText = 'Confirm Withdrawal';
+  }
+
+  renderUnlimitedAdGrid(); renderLeaderboard(); saveState();
 }
 
-/* ============ 📢 1000x250 BANNER CAROUSEL SLIDER ============ */
-let bannerIdx = 0;
-setInterval(() => {
-  const images = document.querySelectorAll('#bannerSlider img');
-  if(images.length > 0){
-    images[bannerIdx].classList.remove('active');
-    bannerIdx = (bannerIdx + 1) % images.length;
-    images[bannerIdx].classList.add('active');
+function updateTaskBtnStatus(taskId, btnId1, btnId2){
+  if(_swpDataX26_.completedTasks.includes(taskId)){
+    const b1 = document.getElementById(btnId1);
+    const b2 = document.getElementById(btnId2);
+    if(b1){ b1.disabled = true; b1.innerText = 'ተቀብለዋል'; }
+    if(b2){ b2.disabled = true; b2.innerText = 'ተቀብለዋል'; }
   }
-}, 4000);
+}
 
-/* ============ 🔄 5-SECOND LIVE WITHDRAWAL FEED ROTATOR ============ */
-const FEED_NAMES = ['Marta Girma', 'Yohannes Getachew', 'Bereket Assefa', 'Selam Tesfaye', 'Dawit Kebede', 'Rahel Alemayehu', 'Tigist Haile', 'Amanuel Worku', 'Kidus Elias', 'Sara Solomon'];
-const FEED_BANKS = ['Telebirr', 'Commercial Bank of Ethiopia', 'Awash Bank', 'Bank of Abyssinia', 'Ethio Telecom Airtime', 'CBE Birr', 'Safaricom Airtime'];
+/* ============ BANNER SLIDER ============ */
+let bannerIdx = 0;
+const bannerBox = document.getElementById('bannerSlider');
+const dotsBox = document.getElementById('bannerDots');
+const images = bannerBox.querySelectorAll('img');
+images.forEach((_, idx) => {
+  const dot = document.createElement('div');
+  dot.classList.add('b-dot'); if(idx === 0) dot.classList.add('active');
+  dotsBox.appendChild(dot);
+});
+
+function updateBanner(index){
+  images.forEach((img, i) => img.classList.toggle('active', i === index));
+  document.querySelectorAll('.b-dot').forEach((dot, i) => dot.classList.toggle('active', i === index));
+  bannerIdx = index;
+}
+let bannerTimer = setInterval(() => { updateBanner((bannerIdx + 1) % images.length); }, 4000);
+
+let startX = 0;
+bannerBox.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; clearInterval(bannerTimer); });
+bannerBox.addEventListener('touchend', (e) => {
+  let endX = e.changedTouches[0].clientX;
+  if(startX - endX > 40) updateBanner((bannerIdx + 1) % images.length);
+  else if(endX - startX > 40) updateBanner((bannerIdx - 1 + images.length) % images.length);
+  bannerTimer = setInterval(() => updateBanner((bannerIdx + 1) % images.length), 4000);
+});
+
+/* ============ LIVE WITHDRAWAL FEED ============ */
+const FEED_NAMES = ['Marta Girma', 'Yabsra Alemayehu', 'Bruk Weldemariyam', 'Ali Beshir', 'Tesnim Ebrahim', 'Betelhem Endale', 'Tedi Sisay', 'Amanuel Selamu', 'Omer Jemal', 'Abdulkerim Shimels'];
+const FEED_BANKS = ['Telebirr', 'Commercial Bank of Ethiopia', 'Awash Bank', 'Bank of Abyssinia', 'Ethio Telecom', 'CBE Birr', 'Safaricom'];
 
 function rotateLiveFeed() {
   const name = FEED_NAMES[Math.floor(Math.random() * FEED_NAMES.length)];
   const bank = FEED_BANKS[Math.floor(Math.random() * FEED_BANKS.length)];
-  const amt = (Math.floor(Math.random() * 35) + 15) * 100;
+  const amt = (Math.floor(Math.random() * 80) + 25) * 100;
   const mins = Math.floor(Math.random() * 8) + 1;
-  
   const feedEl = document.getElementById('withdrawalFeed');
   if(feedEl) {
     feedEl.innerHTML = `
       <div class="feed-item" style="animation: slideUp 0.3s ease;">
         <div class="feed-left">
           <div class="feed-icon"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg></div>
-          <div class="feed-user">
-            <h5>${name} ወጪ አድርጓል</h5>
-            <p>${bank} · ከ${mins} ደቂቃ በፊት</p>
-          </div>
+          <div class="feed-user"><h5>${name} ወጪ አድርጓል</h5><p>${bank} · ከ${mins} ደቂቃ በፊት</p></div>
         </div>
         <div class="feed-amt">${amt.toLocaleString()} ETB</div>
       </div>`;
   }
 }
-setInterval(rotateLiveFeed, 5000);
-rotateLiveFeed();
+setInterval(rotateLiveFeed, 5000); rotateLiveFeed();
 
-/* ============ 60s YOUTUBE TASKS TIMER ============ */
+/* ============ TASKS & ADS ============ */
 function openLink(url){
   if(tg && tg.openLink){ tg.openLink(url); } else { window.open(url, '_blank'); }
   if(tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 }
 
 function claimTask(taskId, reward){
-  if(state.completedTasks.includes(taskId)){
-    toast('ይህን ታስክ አስቀድመው ተቀብለዋል!'); return;
-  }
-  state.completedTasks.push(taskId);
-  state.balance += reward;
+  if(_swpDataX26_.completedTasks.includes(taskId)) return;
+  _swpDataX26_.completedTasks.push(taskId);
+  _swpDataX26_.balance += reward;
+  saveState(); render(); syncUserToSheet();
   toast(`🎉 +${reward} ETB ተጨምሯል!`);
-  render();
-  syncUserToSheet();
 }
 
-let timerIntervals = {};
-function startYtTimer(taskId, url, reward){
-  if(state.completedTasks.includes(taskId)){
-    toast('ይህን ታስክ አስቀድመው ተቀብለዋል!'); return;
-  }
-
+function startTaskTimer(taskId, url, reward, duration){
+  if(_swpDataX26_.completedTasks.includes(taskId)){ toast('ይህን ታስክ አስቀድመው ተቀብለዋል!'); return; }
   openLink(url);
 
-  let btnId = taskId === 'ytsub' ? 'btnTaskYtSub' : 'btnTaskYtWatch';
-  let btn = document.getElementById(btnId);
-  if(!btn) return;
+  let btnIds = [];
+  if(taskId === 'tg') btnIds = ['btnTaskTg', 'btnTaskTg_Home'];
+  if(taskId === 'ytsub') btnIds = ['btnTaskYtSub', 'btnTaskYtSub_Home'];
+  if(taskId === 'ytwatch1') btnIds = ['btnTaskYtWatch1', 'btnTaskYtWatch1_Home'];
+  if(taskId === 'ytwatch2') btnIds = ['btnTaskYtWatch2', 'btnTaskYtWatch2_Home'];
+  
+  btnIds.forEach(id => {
+    let btn = document.getElementById(id);
+    if(btn){ btn.disabled = true; btn.innerText = '⏳ ' + duration + 's...'; }
+  });
 
-  btn.disabled = true;
-  let secondsLeft = 60;
-
-  toast('⏱️ 60 ሰከንድ ቆጣሪ ጀምሯል! እባክዎ አፑ ላይ ይቆዩ...');
-
-  clearInterval(timerIntervals[taskId]);
-  timerIntervals[taskId] = setInterval(() => {
-    secondsLeft--;
-    btn.innerText = `⏱️ ${secondsLeft}s ይጠብቁ`;
-
-    if(secondsLeft <= 0){
-      clearInterval(timerIntervals[taskId]);
-      btn.disabled = false;
-      btn.innerText = `✨ +${reward} ETB ይቀበሉ`;
-      btn.onclick = function(){ claimTask(taskId, reward); };
-      toast('✅ 60 ሰከንድ አብቅቷል! አሁን ቦነሱን መቀበል ይችላሉ');
-    }
-  }, 1000);
+  setTimeout(() => {
+    claimTask(taskId, reward);
+    btnIds.forEach(id => {
+      let btn = document.getElementById(id);
+      if(btn) btn.innerText = 'ተቀብለዋል';
+    });
+  }, duration * 1000);
 }
 
-/* ============ ♾️ UNLIMITED ADS GRID ============ */
-function renderUnlimitedAdGrid(){
-  const grid = document.getElementById('adGridArea');
-  let html = '';
-  // Generates 6 dynamic active ad cards endlessly
-  for(let i = 1; i <= 6; i++){
-    html += `
-      <div class="ad-card active" onclick="watchAd(event)">
-        <span class="ad-num">Ad #${state.adsWatchedTotal + i}</span>
+function renderUnlimitedAdGrid() {
+  const adGrid = document.getElementById('adGridArea');
+  if (!adGrid) return;
+  adGrid.innerHTML = '';
+  for (let i = 1; i <= 4; i++) {
+    adGrid.innerHTML += `
+      <div class="ad-card active" onclick="toast('Ad loading... please wait.')">
+        <div class="ad-num">#${i}</div>
         <svg viewBox="0 0 24 24" style="width:32px; height:32px;"><path d="M8 5v14l11-7z"/></svg>
-        <span class="ad-status-text">Watch Now (+${AD_REWARD} ETB)</span>
+        <span class="ad-status-text">Watch Ad</span>
       </div>`;
   }
-  grid.innerHTML = html;
 }
 
-function watchAd(e){
-  const card = e.currentTarget;
-  card.style.pointerEvents = 'none';
+/* ============ AMAZING LEADERBOARD RENDER ============ */
+function renderLeaderboard() {
+  const podiumArea = document.getElementById('podiumArea');
+  const lbList = document.getElementById('leaderboardList');
+  if (!podiumArea || !lbList) return;
 
-  if (typeof show_11460944 === 'function') {
-    show_11460944().then(() => {
-      completeAd();
-    }).catch(() => {
-      toast('❌ ማስታወቂያ መጫን አልተቻለም፤ ደግመው ይሞክሩ');
-      card.style.pointerEvents = 'auto';
-    });
-  } else {
-    toast('⚠️ የማስታወቂያ ኤስዲኬ አልተጫነም፤ ገጹን Refresh ያድርጉ');
-    card.style.pointerEvents = 'auto';
+  const topUsers = [
+    {name: "Aymen", score: 8500, avatar: "A"},
+    {name: "Liyan", score: 7200, avatar: "L"},
+    {name: "Marta", score: 6800, avatar: "M"},
+    {name: "Kaleb", score: 5400, avatar: "K"},
+    {name: "Bereket", score: 4900, avatar: "B"},
+    {name: "Fasil", score: 4500, avatar: "F"},
+    {name: "Elias", score: 4100, avatar: "E"},
+    {name: "Hana", score: 3800, avatar: "H"},
+    {name: "Yonas", score: 3200, avatar: "Y"},
+    {name: "Bruk", score: 2900, avatar: "B"}
+  ];
+
+  podiumArea.innerHTML = `
+    <div class="podium-box rank-2">
+      <div class="podium-crown">🥈</div>
+      <div class="podium-avatar">${topUsers[1].avatar}</div>
+      <div class="podium-name">${topUsers[1].name}</div>
+      <div class="podium-amt">${topUsers[1].score} ETB</div>
+    </div>
+    <div class="podium-box rank-1">
+      <div class="podium-crown">👑</div>
+      <div class="podium-avatar">${topUsers[0].avatar}</div>
+      <div class="podium-name">${topUsers[0].name}</div>
+      <div class="podium-amt">${topUsers[0].score} ETB</div>
+    </div>
+    <div class="podium-box rank-3">
+      <div class="podium-crown">🥉</div>
+      <div class="podium-avatar">${topUsers[2].avatar}</div>
+      <div class="podium-name">${topUsers[2].name}</div>
+      <div class="podium-amt">${topUsers[2].score} ETB</div>
+    </div>
+  `;
+
+  lbList.innerHTML = '';
+  for (let i = 3; i < topUsers.length; i++) {
+    lbList.innerHTML += `
+      <div class="lb-item">
+        <div class="lb-left">
+          <div class="lb-rank">${i+1}</div>
+          <div class="lb-avatar">${topUsers[i].avatar}</div>
+          <div class="lb-info"><h5>${topUsers[i].name}</h5></div>
+        </div>
+        <div style="font-weight:900; color:var(--accent-yellow); font-size:12px;">
+          ${topUsers[i].score} ETB
+        </div>
+      </div>
+    `;
   }
 }
 
-function completeAd(){
-  state.balance += AD_REWARD;
-  state.adsWatchedTotal += 1;
-  if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  toast(`🎉 +${AD_REWARD} ETB ተጨምሯል!`);
-  render();
-  syncUserToSheet();
+/* ============ WITHDRAW & SOCIAL ============ */
+function selectBank(name, el) {
+  selectedPaymentMethod = name;
+  document.querySelectorAll('.bank-card-item, .provider-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if(tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 }
 
-/* ============ LEADERBOARD ============ */
-function renderLeaderboard(){
-  const podium = document.getElementById('podiumArea');
-  podium.innerHTML = `
-    <div class="podium-box rank-2"><div class="podium-avatar">T</div><div class="podium-name">Ta***e</div><div class="podium-amt">1****50 ETB</div><div class="podium-rank-tag">#2</div></div>
-    <div class="podium-box rank-1"><div class="podium-crown">👑</div><div class="podium-avatar">H</div><div class="podium-name">Ha***h</div><div class="podium-amt">2****50 ETB</div><div class="podium-rank-tag">#1</div></div>
-    <div class="podium-box rank-3"><div class="podium-avatar">M</div><div class="podium-name">M***</div><div class="podium-amt">1****00 ETB</div><div class="podium-rank-tag">#3</div></div>
-  `;
-
-  const list = document.getElementById('leaderboardList');
-  const lbData = [
-    { rank: 4, name: 'K***', amt: '1****50 ETB' },
-    { rank: 5, name: 'no***y', amt: '1****00 ETB' },
-    { rank: 6, name: 'H***', amt: '8****00 ETB' }
-  ];
-
-  list.innerHTML = lbData.map(i => `
-    <div class="lb-item">
-      <div class="lb-left"><div class="lb-rank">${i.rank}</div><div class="lb-avatar">${i.name.charAt(0)}</div><div class="lb-info"><h5>${i.name}</h5></div></div>
-      <div style="font-weight:900; color:var(--accent-yellow);">${i.amt}</div>
-    </div>`).join('');
+function handleWithdraw(e) {
+  e.preventDefault();
+  if(_swpDataX26_.balance < 2500) { toast("ዝቅተኛው የመውጫ መጠን 2,500 ETB ነው"); return; }
+  document.getElementById('noticeModal').classList.add('active');
 }
 
-/* ============ BANK SELECTION ============ */
-function selectBank(bankName, el){
-  selectedPaymentMethod = bankName;
-  document.querySelectorAll('.bank-card-item').forEach(b => b.classList.remove('selected'));
-  if(el) el.classList.add('selected');
-  toast(`Selected: ${bankName}`);
+function closeNoticeModal() { document.getElementById('noticeModal').classList.remove('active'); }
+
+function copyRefLink() {
+  let link = document.getElementById('refLink');
+  link.select(); document.execCommand('copy');
+  toast('Copied to clipboard!');
 }
 
-/* ============ REFERRAL SHARE ============ */
-function copyRefLink(){
-  const link = document.getElementById('refLink');
-  link.select();
-  document.execCommand('copy');
-  toast('📋 የግብዣ ሊንክዎ ኮፒ ሆኗል!');
-}
-
-function shareSocial(platform){
-  const url = encodeURIComponent(document.getElementById('refLink').value);
-  const text = encodeURIComponent('Swap Money ላይ ተመዝግበው ማስታወቂያ በማየት እና ሰዎችን በመጋበዝ ገንዘብ ያግኙ!');
-  
-  if(platform === 'telegram') window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
-  else if(platform === 'whatsapp') window.open(`https://api.whatsapp.com/send?text=${text}%20${url}`, '_blank');
-  else if(platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+function shareSocial(platform) {
+  let link = document.getElementById('refLink').value;
+  let msg = encodeURIComponent("Earn money with Swap Money! Use my link: " + link);
+  if(platform === 'telegram') openLink(`https://t.me/share/url?url=${link}&text=${msg}`);
+  else if(platform === 'whatsapp') openLink(`https://api.whatsapp.com/send?text=${msg}`);
+  else if(platform === 'facebook') openLink(`https://www.facebook.com/sharer/sharer.php?u=${link}`);
+  else if(platform === 'native' && navigator.share) navigator.share({ title: 'Swap Money', text: 'Join and earn!', url: link });
   else copyRefLink();
 }
 
-/* ============ WITHDRAW SUBMIT ============ */
-async function handleWithdraw(e){
-  e.preventDefault();
-  const account = document.getElementById('payAccount').value.trim();
-  const amount = parseFloat(document.getElementById('payAmount').value);
-
-  if(!account){ toast('እባክዎ ሂሳብ ቁጥር ያስገቡ'); return; }
-  if(isNaN(amount) || amount < 100){ toast('አነስተኛ የማውጫ መጠን 100 ETB ነው'); return; }
-  if(amount > state.balance){ toast('በቂ ቀሪ ሂሳብ የለዎትም'); return; }
-
-  const btn = e.target.querySelector('button');
-  btn.disabled = true; btn.innerText = 'Processing...';
-
-  const uId = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 'GUEST_' + Date.now();
-
-  try {
-    await fetch(SCRIPT_URL, {
-      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'withdraw', userId: uId, method: selectedPaymentMethod, account, amount })
-    });
-
-    state.balance -= amount;
-    toast('✅ Withdrawal requested successfully!');
-    e.target.reset();
-    render();
-  } catch(err) {
-    toast('❌ Error occurred. Try again.');
-  } finally {
-    btn.disabled = false; btn.innerText = 'Confirm Withdrawal';
-  }
-}
-
-/* ============ INITIALIZE ============ */
-render();
-syncUserToSheet();
+// Initial render
+window.onload = () => {
+  render();
+  checkWelcomeBonus();
+};
 </script>
 </body>
 </html>
