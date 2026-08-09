@@ -1087,36 +1087,72 @@ const ALL_TASKS = [
 ];
 
 /* ── HOME: compact grid (2 cols) ── */
+/* Track which task IDs currently have an active countdown running,
+   so renderHomeTasks/renderEarnTasks never clobber a live countdown
+   button back to "Start" mid-timer. This was the root cause of the
+   countdown appearing to randomly reset/flicker ("on/off") — the
+   whole grid's innerHTML gets rebuilt every time render() runs
+   (e.g. every 20s auto-sync, or after any state change), which
+   wiped out the in-progress button text and re-created a fresh
+   "Start" button with no timer attached. */
+const activeTaskTimers = new Set();
+
 function renderHomeTasks(){
   const el = document.getElementById('homeTasksGrid');
   if(!el)return;
-  el.innerHTML = ALL_TASKS.map(t=>{
-    const done = S.completedTasks.includes(t.id);
-    return `<div class="task-grid-item">
-      <div class="tgi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
-      <h4>${t.label}</h4>
-      <div class="tgi-reward">+${t.reward} ETB</div>
-      <button class="tgi-btn" id="htb_${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'✅ ተቀብለዋል':'Start'}</button>
-    </div>`;
-  }).join('');
+  // If nothing is currently counting down, do a normal full rebuild.
+  if(activeTaskTimers.size === 0){
+    el.innerHTML = ALL_TASKS.map(t=>taskGridItemHTML(t,'htb_')).join('');
+    return;
+  }
+  // Otherwise, rebuild only the tasks that do NOT have a live
+  // countdown running, and leave the counting-down button's DOM
+  // node completely untouched so its live "27s / 26s / ..." text
+  // (written directly by startTask()'s own interval) is never
+  // reset back to "Start". This was the root cause of the
+  // countdown appearing to randomly flicker/reset.
+  ALL_TASKS.forEach(t=>{
+    if(activeTaskTimers.has(t.id)) return; // leave it alone
+    const wrap = document.getElementById('htb_'+t.id)?.closest('.task-grid-item');
+    if(wrap) wrap.outerHTML = taskGridItemHTML(t,'htb_');
+  });
+}
+function taskGridItemHTML(t, prefix){
+  const done = S.completedTasks.includes(t.id);
+  return `<div class="task-grid-item">
+    <div class="tgi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
+    <h4>${t.label}</h4>
+    <div class="tgi-reward">+${t.reward} ETB</div>
+    <button class="tgi-btn" id="${prefix}${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'✅ ተቀብለዋል':'Start'}</button>
+  </div>`;
 }
 
 /* ── EARN TAB: 3-column unified grid ── */
+function earnGridItemHTML(t){
+  const done = S.completedTasks.includes(t.id);
+  return `<div class="earn-grid-item ${t.type}">
+    ${done?'<div class="egi-done-badge">✅</div>':''}
+    <div class="egi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
+    <div class="egi-title">${t.label}</div>
+    <div class="egi-reward">+${t.reward} ETB</div>
+    <div class="egi-meta">⏱️ ${t.dur}s</div>
+    <button class="egi-btn" id="etb_${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'ተቀብለዋል':'Start'}</button>
+  </div>`;
+}
 function renderEarnTasks(){
-  // Tasks grid
+  // Tasks grid — same "don't clobber a live countdown" strategy as
+  // renderHomeTasks() above.
   const tEl = document.getElementById('earnTaskGrid');
   if(tEl){
-    tEl.innerHTML = ALL_TASKS.map(t=>{
-      const done = S.completedTasks.includes(t.id);
-      return `<div class="earn-grid-item ${t.type}">
-        ${done?'<div class="egi-done-badge">✅</div>':''}
-        <div class="egi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
-        <div class="egi-title">${t.label}</div>
-        <div class="egi-reward">+${t.reward} ETB</div>
-        <div class="egi-meta">⏱️ ${t.dur}s</div>
-        <button class="egi-btn" id="etb_${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'ተቀብለዋል':'Start'}</button>
-      </div>`;
-    }).join('');
+    if(activeTaskTimers.size === 0){
+      tEl.innerHTML = ALL_TASKS.map(earnGridItemHTML).join('');
+    } else {
+      ALL_TASKS.forEach(t=>{
+        if(activeTaskTimers.has(t.id)) return; // leave the live countdown button alone
+        const wrap = document.getElementById('etb_'+t.id)?.closest('.earn-grid-item');
+        if(wrap) wrap.outerHTML = earnGridItemHTML(t);
+      });
+    }
   }
 
   // Ads grid — shows the next 6 upcoming ads with their real tier reward
@@ -1163,6 +1199,13 @@ function startTask(id, url, reward, dur){
   };
   toast(`⏱️ ${dur}s ቆጣሪ ጀምሯል!`);
 
+  // Mark this task as "actively counting down" so any render() call
+  // (e.g. from the 20s auto-sync, or after claiming a different
+  // task/ad) will render its button in a disabled/counting state
+  // instead of resetting it back to a fresh "Start" — this was the
+  // exact cause of the countdown appearing to flicker on/off.
+  activeTaskTimers.add(id);
+
   // Use a wall-clock deadline (Date.now()) instead of counting
   // interval ticks. When Telegram opens an external link, the
   // WebView is often backgrounded and setInterval ticks get
@@ -1172,19 +1215,27 @@ function startTask(id, url, reward, dur){
   // returns to the app we correctly detect that dur seconds
   // (or more) have actually passed.
   const deadline = Date.now() + dur*1000;
+
+  function finishCountdown(){
+    activeTaskTimers.delete(id);
+    clearInterval(taskTimers[id]);
+    document.removeEventListener('visibilitychange', onVisible);
+    if(S.completedTasks.includes(id)) return; // already claimed via another path
+    setBtn(`+${reward} ✨`,false);
+    [`htb_${id}`,`etb_${id}`].forEach(bid=>{
+      const b=document.getElementById(bid);
+      if(b) b.onclick=()=>claimTask(id,reward);
+    });
+    toast(`✅ ጨርሰዋል! +${reward} ETB ይቀበሉ`);
+  }
+
   clearInterval(taskTimers[id]);
   taskTimers[id]=setInterval(()=>{
     const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
     if(remaining>0){
       setBtn(`⏱️${remaining}s`,true);
     } else {
-      clearInterval(taskTimers[id]);
-      setBtn(`+${reward} ✨`,false);
-      [`htb_${id}`,`etb_${id}`].forEach(bid=>{
-        const b=document.getElementById(bid);
-        if(b) b.onclick=()=>claimTask(id,reward);
-      });
-      toast(`✅ ጨርሰዋል! +${reward} ETB ይቀበሉ`);
+      finishCountdown();
     }
   },500); // check twice a second so the button catches up quickly once the tab is foregrounded again
 
@@ -1195,12 +1246,7 @@ function startTask(id, url, reward, dur){
     if(document.visibilityState==='visible'){
       const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
       if(remaining<=0 && !S.completedTasks.includes(id)){
-        clearInterval(taskTimers[id]);
-        setBtn(`+${reward} ✨`,false);
-        [`htb_${id}`,`etb_${id}`].forEach(bid=>{
-          const b=document.getElementById(bid);
-          if(b) b.onclick=()=>claimTask(id,reward);
-        });
+        finishCountdown();
       }
     }
   };
