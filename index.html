@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Swap Money V3 💰</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src='//libtl.com/sdk.js' data-zone='11460944' data-sdk='show_11460944'></script>
 <style>
 :root{
   --bg:#07080d;--surface:#0d0f1a;--card:#111520;--card2:#161d2a;
@@ -1153,7 +1154,7 @@ function startTask(id, url, reward, dur){
   if(S.completedTasks.includes(id)){toast('አስቀድሞ ተቀብለዋል!');return;}
   if(tg?.openLink) tg.openLink(url); else window.open(url,'_blank');
   if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-  let left=dur;
+
   const setBtn=(txt,dis=false)=>{
     [`htb_${id}`,`etb_${id}`].forEach(bid=>{
       const b=document.getElementById(bid);
@@ -1161,11 +1162,22 @@ function startTask(id, url, reward, dur){
     });
   };
   toast(`⏱️ ${dur}s ቆጣሪ ጀምሯል!`);
+
+  // Use a wall-clock deadline (Date.now()) instead of counting
+  // interval ticks. When Telegram opens an external link, the
+  // WebView is often backgrounded and setInterval ticks get
+  // throttled or paused by the OS/browser — a tick-counter would
+  // undercount and never reach 0. Measuring elapsed real time
+  // fixes this: even if ticks are delayed, the moment the user
+  // returns to the app we correctly detect that dur seconds
+  // (or more) have actually passed.
+  const deadline = Date.now() + dur*1000;
   clearInterval(taskTimers[id]);
   taskTimers[id]=setInterval(()=>{
-    left--;
-    setBtn(`⏱️${left}s`,true);
-    if(left<=0){
+    const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
+    if(remaining>0){
+      setBtn(`⏱️${remaining}s`,true);
+    } else {
       clearInterval(taskTimers[id]);
       setBtn(`+${reward} ✨`,false);
       [`htb_${id}`,`etb_${id}`].forEach(bid=>{
@@ -1174,7 +1186,25 @@ function startTask(id, url, reward, dur){
       });
       toast(`✅ ጨርሰዋል! +${reward} ETB ይቀበሉ`);
     }
-  },1000);
+  },500); // check twice a second so the button catches up quickly once the tab is foregrounded again
+
+  // Also catch up immediately the moment the user comes back to
+  // this tab/app (visibilitychange fires reliably even after the
+  // WebView was backgrounded, unlike setInterval).
+  const onVisible = ()=>{
+    if(document.visibilityState==='visible'){
+      const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
+      if(remaining<=0 && !S.completedTasks.includes(id)){
+        clearInterval(taskTimers[id]);
+        setBtn(`+${reward} ✨`,false);
+        [`htb_${id}`,`etb_${id}`].forEach(bid=>{
+          const b=document.getElementById(bid);
+          if(b) b.onclick=()=>claimTask(id,reward);
+        });
+      }
+    }
+  };
+  document.addEventListener('visibilitychange', onVisible);
 }
 function claimTask(id,reward){
   if(S.completedTasks.includes(id)){toast('አስቀድሞ!');return;}
@@ -1193,45 +1223,77 @@ function claimTask(id,reward){
   }
 }
 
-/* ═══════════════ AD WATCH LOGIC (grid render is inside renderEarnTasks) ═══════════════ */
+/* ═══════════════ AD WATCH LOGIC ═══════════════
+   Tries to show a REAL ad via the Monetag SDK (show_11460944,
+   loaded in <head>). If that succeeds, the reward is only given
+   after the actual ad finishes. If the SDK isn't available for
+   any reason (ad blocker, network issue, SDK failed to load),
+   we fall back to the original 30s on-screen countdown so the
+   feature still works and nobody gets stuck. */
 let adRunning=false, adTimerInterval, adClickCount=0;
 function watchAd(btn){
   if(adRunning)return;
   btn.disabled=true;
   adClickCount++;
   adRunning=true;
+
+  if(typeof show_11460944 === 'function'){
+    // ── REAL AD PATH ──
+    show_11460944().then(()=>{
+      // Ad was actually shown/completed by the SDK
+      creditAdReward();
+    }).catch((err)=>{
+      // SDK reported an error/no-fill — don't silently keep the
+      // button stuck disabled forever; fall back to the countdown
+      // so the user can still earn (or gracefully re-enable it).
+      console.warn('[Swap Money] Real ad failed/unavailable, falling back to countdown:', err);
+      runFallbackCountdown();
+    });
+  } else {
+    // SDK script never loaded (blocked, offline, etc.)
+    console.warn('[Swap Money] Ad SDK (show_11460944) not found — using fallback countdown.');
+    runFallbackCountdown();
+  }
+}
+
+function runFallbackCountdown(){
   const modal=document.getElementById('adModal');
   const fill=document.getElementById('adBarFill');
   const txt=document.getElementById('adTimerTxt');
   document.getElementById('adTitle').textContent=`Ad #${S.adsWatched+1} በሂደት ላይ`;
   modal.classList.add('active');
   fill.style.width='0%';txt.textContent='30s ቀርቷል';
-  let s=30;
+  const deadline = Date.now()+30000;
   clearInterval(adTimerInterval);
   adTimerInterval=setInterval(()=>{
-    s--;fill.style.width=`${(30-s)/30*100}%`;txt.textContent=`${s}s ቀርቷል`;
-    if(s<=0){
+    const remaining = Math.max(0, Math.ceil((deadline-Date.now())/1000));
+    fill.style.width=`${(30-remaining)/30*100}%`;
+    txt.textContent=`${remaining}s ቀርቷል`;
+    if(remaining<=0){
       clearInterval(adTimerInterval);
       modal.classList.remove('active');
-      adRunning=false;
-      // Compute the reward BEFORE incrementing adsWatched, so it
-      // matches exactly what was shown to the user on the button.
-      const earnedReward = getAdReward(S.adsWatched);
-      // User watched the full ad — ALWAYS credit them locally right away.
-      // This guarantees "watched ad but got no money" can never happen.
-      S.balance+=earnedReward; S.adsWatched++;
-      saveState();
-      toast(`🎉 +${earnedReward} ETB ተጨምሯል!`);
-      if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
-      render();
-      if(syncReady){
-        syncToSheet();
-      } else {
-        // Not synced with server yet — queue this and push as soon as ready
-        pendingSyncAfterInit = true;
-      }
+      creditAdReward();
     }
-  },1000);
+  },500);
+}
+
+function creditAdReward(){
+  adRunning=false;
+  // Compute the reward BEFORE incrementing adsWatched, so it
+  // matches exactly what was shown to the user on the button.
+  const earnedReward = getAdReward(S.adsWatched);
+  // User watched the full ad — ALWAYS credit them locally right away.
+  // This guarantees "watched ad but got no money" can never happen.
+  S.balance+=earnedReward; S.adsWatched++;
+  saveState();
+  toast(`🎉 +${earnedReward} ETB ተጨምሯል!`);
+  if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
+  render();
+  if(syncReady){
+    syncToSheet();
+  } else {
+    pendingSyncAfterInit = true;
+  }
 }
 
 /* ═══════════════ BANNER ═══════════════ */
@@ -1532,19 +1594,34 @@ async function syncFromSheet(){
       if(typeof u.swapCoins!=='undefined') S.swapCoins=Math.max(S.swapCoins, Number(u.swapCoins)||0);
       if(typeof u.totalReferrals!=='undefined') S.totalRefs=Math.max(S.totalRefs||0, Number(u.totalReferrals)||0);
       render(); toast('✅ Synced from server');
+    } else {
+      console.warn('[Swap Money] syncFromSheet got non-success result:', data);
     }
-  }catch(e){}
+  }catch(e){
+    console.error('[Swap Money] syncFromSheet failed — check SCRIPT_URL and deployment. Error:', e);
+  }
 }
 async function syncToSheet(){
   if(!tgUser)return;
   if(!syncReady){
     // Refuse to push until we've confirmed the user's real balance
     // from the sheet — prevents wiping an existing user's data.
-    console.warn('syncToSheet blocked: not ready yet, will retry after init');
+    console.warn('[Swap Money] syncToSheet blocked: not ready yet, will retry after init');
     return;
   }
   try{
-    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+    // NOTE: mode:'no-cors' means we can NEVER read the response here
+    // (browser blocks it), so we can't tell success from failure this
+    // way. That's fine for this fire-and-forget sync call — but if
+    // NOTHING is appearing in your Google Sheet at all, the most
+    // common causes are:
+    //   1) SCRIPT_URL is wrong / not the deployed Web App URL
+    //   2) The Apps Script deployment access is not set to "Anyone"
+    //   3) You edited the script after deploying but created a NEW
+    //      deployment instead of updating the existing one, so this
+    //      URL still points to old/broken code
+    //   4) The "Users" sheet tab name doesn't exactly match "Users"
+    const res = await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         action:'syncUser',
         userId:String(tgUser.id),
@@ -1554,8 +1631,11 @@ async function syncToSheet(){
         swapCoins:S.swapCoins,
         referredBy:String(referrerId||'None')
       })});
+    console.log('[Swap Money] syncToSheet request sent (no-cors — response not readable, this is normal). If your Sheet still shows nothing after this, check the SCRIPT_URL/deployment as noted above.');
     setTimeout(syncFromSheet,1500);
-  }catch(e){}
+  }catch(e){
+    console.error('[Swap Money] syncToSheet request itself failed to send (network/URL problem):', e);
+  }
 }
 
 /* ═══════════════ HELPERS ═══════════════ */
@@ -1576,7 +1656,13 @@ async function safeInit(){
   render(); // paint whatever we have locally first (no network call yet)
 
   if(!tgUser){
-    // No Telegram user context (e.g. testing outside Telegram) — nothing to sync
+    // No Telegram user context (e.g. testing outside Telegram in a
+    // plain browser / onecompiler.com preview). There is no real
+    // account to sync against, so we stay fully local. This is
+    // expected and not an error — but it DOES mean Google Sheet
+    // sync will never happen until this is opened as a real
+    // Telegram Mini App (via the bot), where tgUser is populated.
+    console.warn('[Swap Money] No Telegram user detected — running in local-only/demo mode. Google Sheet sync requires opening this inside Telegram via the bot.');
     syncReady = true;
     if(!S.hasWelcomed){
       S.hasWelcomed = true;
@@ -1592,8 +1678,6 @@ async function safeInit(){
 
     if(data.result === 'success' && data.user){
       // ── EXISTING USER ── pull their real numbers from the sheet.
-      // Always trust the sheet here since this is the very first
-      // load — local storage on this device may be empty/stale.
       const u = data.user;
       S.balance    = Math.max(S.balance,    Number(u.balance)        || 0);
       S.adsWatched = Math.max(S.adsWatched, Number(u.totalAds)       || 0);
@@ -1614,22 +1698,29 @@ async function safeInit(){
           if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
         },800);
       }
+    } else {
+      // Backend responded but with an unexpected/error result
+      // (e.g. sheet misconfigured, wrong column names, script bug).
+      // Log it clearly so it's debuggable, then retry shortly —
+      // syncReady stays false so we never risk pushing bad data.
+      console.error('[Swap Money] Unexpected server response during init:', data);
+      setTimeout(safeInit, 4000);
+      return;
     }
-    // any other result (error/network hiccup): fall through —
-    // syncReady stays false below, so we simply retry shortly
-    // and never risk writing an unverified balance to the sheet.
 
   }catch(e){
-    // Network failed — do NOT assume anything. Retry shortly.
+    // Network / fetch itself failed (bad URL, CORS, script not
+    // deployed, no internet, etc). Log the real error so it's
+    // obvious what to fix, then retry.
+    console.error('[Swap Money] Failed to reach Google Apps Script. Check that SCRIPT_URL is correct and the script is deployed with "Anyone" access. Error:', e);
     render();
-    setTimeout(safeInit, 3000);
+    setTimeout(safeInit, 4000);
     return;
   }
 
   syncReady = true;   // ✅ only now is it safe to push local changes to the sheet
   render();
   if(pendingSyncAfterInit){
-    // User earned money while we were still verifying — push it now
     pendingSyncAfterInit = false;
     syncToSheet();
   }
