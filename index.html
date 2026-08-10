@@ -318,7 +318,7 @@ header{
 /* ── AD MODAL ── */
 .ad-modal{position:fixed;inset:0;background:rgba(7,8,13,.95);backdrop-filter:blur(14px);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}
 .ad-modal.active{display:flex}
-.ad-modal-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:24px 20px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.9)}
+.ad-modal-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:24px 20px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.9)}
 .ad-play-ring{width:60px;height:60px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 0 20px var(--gold-glow)}
 .ad-play-ring svg{width:26px;height:26px;fill:#fff;margin-left:3px}
 .ad-title{font-size:16px;font-weight:900;margin-bottom:5px}
@@ -345,9 +345,10 @@ header{
 <!-- ── AD MODAL ── -->
 <div class="ad-modal" id="adModal">
   <div class="ad-modal-card">
+    <button id="adCloseBtn" onclick="closeAdAndShowAnother()" style="display:none;position:absolute;top:12px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer;font-family:var(--font)">✕</button>
     <div class="ad-play-ring"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
     <div class="ad-title" id="adTitle">ማስታወቂያ #1 በሂደት ላይ</div>
-    <div class="ad-desc">30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">50 ETB</strong> ይጨምራሉ!</div>
+    <div class="ad-desc" id="adDesc">30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">50 ETB</strong> ይጨምራሉ!</div>
     <div class="ad-bar-bg"><div class="ad-bar-fill" id="adBarFill"></div></div>
     <div class="ad-timer-txt" id="adTimerTxt">30s ቀርቷል</div>
   </div>
@@ -359,7 +360,7 @@ header{
     <span class="gm-title" id="gmTitle">🎮 Game</span>
     <div class="gm-right">
       <div class="gm-sc-pill">
-        <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
+        <img src="https://i.postimg.cc/tCTKFCSf/20260809-161513.png" alt="sc">
         <span id="gmSCDisplay">0 SC</span>
       </div>
       <div class="gm-close" onclick="closeGame()">✕</div>
@@ -368,7 +369,7 @@ header{
   <iframe class="gm-iframe" id="gmIframe" title="Game" allow="autoplay"></iframe>
   <div class="gm-footer">
     <div class="gm-session">
-      <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
+      <img src="https://i.postimg.cc/tCTKFCSf/20260809-161513.png" alt="sc">
       ይህ ጨዋታ: <span id="gmSessionCoins">0 SC</span>
     </div>
     <button class="btn btn-green" style="padding:7px 14px;font-size:11px" onclick="closeGame()">✓ ጨርስ</button>
@@ -404,8 +405,9 @@ header{
       <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
       <span id="hdrSC">0.00</span> SWAP
     </div>
-    <div class="hdr-btn" onclick="syncFromSheet()" title="Refresh">
+    <div class="hdr-btn" onclick="syncFromSheet()" title="Refresh" style="position:relative">
       <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      <span id="syncDot" style="display:none;position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 4px var(--green)"></span>
     </div>
   </div>
 </header>
@@ -419,7 +421,7 @@ header{
   <div class="hero-wallet">
     <div class="hw-top">
       <div class="hw-logo">SWAP Money 💰</div>
-      <img class="hw-wallet-img" src="https://bvconuycpdvgzbvbkijl.supabase.co/storage/v1/object/public/sizes/7d956f-wallet/dynamic/400/premium.webp" alt="wallet">
+      <img class="hw-wallet-img" src="https://i.postimg.cc/gkQTRy6n/20260809-161458.png" alt="wallet">
     </div>
     <div class="hw-label">Wallet Balance <span style="opacity:.5;cursor:pointer">👁</span></div>
     <div class="hw-amount">
@@ -493,12 +495,13 @@ header{
 
   <!-- Banner -->
   <div class="banner-wrap" id="bannerSlider">
-    <img src="https://i.postimg.cc/xT8XygW8/20260805-160830.jpg" class="active" alt="">
-    <img src="https://i.postimg.cc/3R3RyZgL/20260805-160921.jpg" alt="">
-    <img src="https://i.postimg.cc/4xtNB0P2/20260805-160950.jpg" alt="">
-    <img src="https://i.postimg.cc/xd3jSbWF/20260805-161017.jpg" alt="">
-    <img src="https://i.postimg.cc/1tzSh70y/20260805-161030.jpg" alt="">
-    <img src="https://i.postimg.cc/76hFQGD7/20260805-161118.jpg" alt="">
+    <img src="https://i.postimg.cc/VLr7YSHL/20260809-161005.jpg" class="active" alt="">
+    <img src="https://i.postimg.cc/nLZTY3VT/20260809-161044.jpg" alt="">
+    <img src="https://i.postimg.cc/rmZJTc15/20260809-161113.jpg" alt="">
+    <img src="https://i.postimg.cc/T1ycYSQp/20260809-161154.jpg" alt="">
+    <img src="https://i.postimg.cc/QtCQ0P2x/20260809-161227.jpg" alt="">
+    <img src="https://i.postimg.cc/PfLcqFCP/20260809-161327.jpg" alt="">
+    <img src="https://i.postimg.cc/9FZndRtz/20260809-161351.jpg" alt="">
     <div class="b-dots" id="bDots"></div>
   </div>
 
@@ -508,7 +511,7 @@ header{
 
   <!-- Invite Banner -->
   <div class="invite-banner">
-    <img class="invite-gift" src="https://bvconuycpdvgzbvbkijl.supabase.co/storage/v1/object/public/sizes/634add-money/dynamic/400/color.webp" alt="gift">
+    <img class="invite-gift" src="https://i.postimg.cc/cJwy699g/20260809-161701.png" alt="gift">
     <div class="invite-info">
       <h3>Invite &amp; Earn More!</h3>
       <p>ጓደኛ ሲጋብዙ <span style="color:var(--gold);font-weight:800">50 ETB</span> ቦነስ!</p>
@@ -597,7 +600,7 @@ header{
 <section class="page" id="page-earn">
 
   <div class="earn-hero">
-    <img src="https://bvconuycpdvgzbvbkijl.supabase.co/storage/v1/object/public/sizes/421bcd-dollar/dynamic/400/color.webp" alt="earn">
+    <img src="https://i.postimg.cc/cJwy699g/20260809-161701.png" alt="earn">
     <h2>Earn &amp; Get Rewards ✨</h2>
     <p>ማስታወቂያ ያዩ፣ Tasks ያጠናቅቁ — ዕለታዊ ሽልማት ያግኙ!</p>
   </div>
@@ -672,7 +675,7 @@ header{
 ════════════════════════ -->
 <section class="page" id="page-invite">
   <div class="ref-hero">
-    <img src="https://bvconuycpdvgzbvbkijl.supabase.co/storage/v1/object/public/sizes/634add-money/dynamic/400/color.webp" style="width:64px;height:64px;object-fit:contain;margin-bottom:6px" alt="gift">
+    <img src="https://i.postimg.cc/cJwy699g/20260809-161701.png" style="width:64px;height:64px;object-fit:contain;margin-bottom:6px" alt="gift">
     <p style="font-size:11px;font-weight:800;color:var(--muted)">10 ሰው ሲጋብዙ</p>
     <h2>500 ETB</h2>
     <p>አንድ ሰው ሲጋብዙ 50 ETB ቦነስ ያኛሉ</p>
@@ -1008,7 +1011,7 @@ function render(){
    Rewards in ETB (per user's spec). Day 7 grants a special
    "Level 3" boost message instead of plain ETB. */
 const STREAK_LABELS = ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'];
-const STREAK_ETB    = [5,10,20,30,40,50,0];   // Day 7 handled specially (Level 3)
+const STREAK_SC      = [10,20,40,60,80,100,0];   // Day 7 handled specially (Level 3)
 function renderStreakDays(){
   const el = document.getElementById('streakDaysEl');
   if(!el)return;
@@ -1018,7 +1021,7 @@ function renderStreakDays(){
     const dayNum = i+1;
     const passed = dayNum < streak;                 // already-lived-through day
     const isToday = dayNum === streak;               // today's slot
-    const rewardLabel = dayNum===7 ? 'Level 3' : `+${STREAK_ETB[i]}ETB`;
+    const rewardLabel = dayNum===7 ? 'Level 3' : `+${STREAK_SC[i]}SC`;
     let cls = '';
     if(passed) cls='done';
     else if(isToday) cls='today';
@@ -1039,7 +1042,7 @@ function renderStreakDays(){
     } else {
       btn.disabled = false;
       const idx = Math.min(streak,7)-1;
-      const label = (idx+1)===7 ? 'Level 3 ማዕረግ ያግኙ 🏆' : `+${STREAK_ETB[idx]} ETB ይቀበሉ`;
+      const label = (idx+1)===7 ? 'Level 3 ማዕረግ ያግኙ 🏆' : `+${STREAK_SC[idx]} SC ይቀበሉ`;
       btn.textContent = label;
     }
   }
@@ -1048,13 +1051,13 @@ function claimStreakReward(){
   if(S.streakClaimedFor === S.lastLoginDate){toast('ዛሬ አስቀድመው ተቀብለዋል!');return;}
   const day = Math.min(S.streakDays||1, 7);
   if(day === 7){
-    // Special Level-3 style bonus — grant a generous ETB reward too
-    S.balance += 100;
-    toast('🏆 7 ቀን ተከታታይ Streak! Level 3 ማዕረግ ስጦታ +100 ETB!');
+    // Special Level-3 style bonus — grant a generous SC reward too
+    S.swapCoins = (S.swapCoins||0) + 200;
+    toast('🏆 7 ቀን ተከታታይ Streak! Level 3 ማዕረግ ስጦታ +200 SC!');
   } else {
-    const reward = STREAK_ETB[day-1];
-    S.balance += reward;
-    toast(`🔥 Day ${day} ቦነስ +${reward} ETB ተጨምሯል!`);
+    const reward = STREAK_SC[day-1];
+    S.swapCoins = (S.swapCoins||0) + reward;
+    toast(`🔥 Day ${day} ቦነስ +${reward} SC ተጨምሯል!`);
   }
   S.streakClaimedFor = S.lastLoginDate;
   saveState();
@@ -1075,7 +1078,7 @@ const TG_ICON = 'https://static.vecteezy.com/system/resources/previews/023/986/5
 const YT_ICON = 'https://static.vecteezy.com/system/resources/thumbnails/018/930/572/small_2x/youtube-logo-youtube-icon-transparent-free-png.png';
 
 const YT_VID1 = 'https://youtu.be/REPLACE_VIDEO_1';   // ← ራስህ ሊንክ ቀይር
-const YT_VID2 = 'https://youtu.be/REPLACE_VIDEO_2';   // ← ራስህ ሊንክ ቀይር
+const BUNA_BOT = 'https://t.me/Bunaairdropbot/buna?startapp=1493452810';
 
 const ALL_TASKS = [
   {id:'tg1',    label:'Telegram Channel 1',     reward:100, dur:30, link:TG_CHANNEL1, icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
@@ -1083,7 +1086,7 @@ const ALL_TASKS = [
   {id:'ytsub1', label:'YouTube Channel 1 Sub',  reward:100, dur:60, link:YT_SUB,      icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
   {id:'ytsub2', label:'YouTube Channel 2 Sub',  reward:100, dur:60, link:YT_SUB2,     icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
   {id:'ytvid1', label:'YouTube Video 1 ይመልከቱ',  reward:50,  dur:60, link:YT_VID1,     icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
-  {id:'ytvid2', label:'YouTube Video 2 ይመልከቱ',  reward:50,  dur:60, link:YT_VID2,     icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
+  {id:'bunabot',label:'Buna Bot ይቀላቀሉ',        reward:50,  dur:30, link:BUNA_BOT,    icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
 ];
 
 /* ── HOME: compact grid (2 cols) ── */
@@ -1275,28 +1278,35 @@ function claimTask(id,reward){
    after the actual ad finishes. If the SDK isn't available for
    any reason (ad blocker, network issue, SDK failed to load),
    we fall back to the original 30s on-screen countdown so the
-   feature still works and nobody gets stuck. */
+   feature still works and nobody gets stuck.
+
+   After the FIRST (rewarded) ad finishes, an "✕" close button
+   appears. If the user taps it, we don't just close the modal —
+   we immediately show one more ad automatically (same 30s flow)
+   but this one pays NOTHING; it's purely an extra impression.
+   Tapping ✕ on that second ad (or any subsequent bonus ad)
+   simply closes everything with no further chaining. */
 let adRunning=false, adTimerInterval, adClickCount=0;
+let isBonusAd=false; // true while showing the no-reward follow-up ad
+
 function watchAd(btn){
   if(adRunning)return;
   btn.disabled=true;
   adClickCount++;
   adRunning=true;
+  isBonusAd=false;
+  document.getElementById('adCloseBtn').style.display='none';
+  document.getElementById('adDesc').innerHTML = `30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">${getAdReward(S.adsWatched)} ETB</strong> ይጨምራሉ!`;
 
   if(typeof show_11460944 === 'function'){
     // ── REAL AD PATH ──
     show_11460944().then(()=>{
-      // Ad was actually shown/completed by the SDK
       creditAdReward();
     }).catch((err)=>{
-      // SDK reported an error/no-fill — don't silently keep the
-      // button stuck disabled forever; fall back to the countdown
-      // so the user can still earn (or gracefully re-enable it).
       console.warn('[Swap Money] Real ad failed/unavailable, falling back to countdown:', err);
       runFallbackCountdown();
     });
   } else {
-    // SDK script never loaded (blocked, offline, etc.)
     console.warn('[Swap Money] Ad SDK (show_11460944) not found — using fallback countdown.');
     runFallbackCountdown();
   }
@@ -1306,7 +1316,9 @@ function runFallbackCountdown(){
   const modal=document.getElementById('adModal');
   const fill=document.getElementById('adBarFill');
   const txt=document.getElementById('adTimerTxt');
-  document.getElementById('adTitle').textContent=`Ad #${S.adsWatched+1} በሂደት ላይ`;
+  document.getElementById('adTitle').textContent = isBonusAd
+    ? 'ተጨማሪ ማስታወቂያ'
+    : `Ad #${S.adsWatched+1} በሂደት ላይ`;
   modal.classList.add('active');
   fill.style.width='0%';txt.textContent='30s ቀርቷል';
   const deadline = Date.now()+30000;
@@ -1317,8 +1329,11 @@ function runFallbackCountdown(){
     txt.textContent=`${remaining}s ቀርቷል`;
     if(remaining<=0){
       clearInterval(adTimerInterval);
-      modal.classList.remove('active');
-      creditAdReward();
+      if(isBonusAd){
+        finishBonusAd();
+      } else {
+        creditAdReward();
+      }
     }
   },500);
 }
@@ -1340,6 +1355,49 @@ function creditAdReward(){
   } else {
     pendingSyncAfterInit = true;
   }
+  // Reward is locked in — now offer the option to close, or the
+  // user can tap ✕ to trigger one bonus (unpaid) ad automatically.
+  document.getElementById('adDesc').innerHTML = `🎉 <strong style="color:var(--gold)">+${earnedReward} ETB</strong> ተጨምሯል! ✕ ይንኩ ለመዝጋት`;
+  document.getElementById('adCloseBtn').style.display='flex';
+  document.getElementById('adCloseBtn').style.alignItems='center';
+  document.getElementById('adCloseBtn').style.justifyContent='center';
+}
+
+function closeAdAndShowAnother(){
+  const modal=document.getElementById('adModal');
+  if(isBonusAd){
+    // This was already the no-reward bonus ad — just close for good.
+    modal.classList.remove('active');
+    document.getElementById('adCloseBtn').style.display='none';
+    adRunning=false;
+    isBonusAd=false;
+    return;
+  }
+  // First close tap after a REWARDED ad — automatically queue one
+  // more ad with no payout, exactly as requested.
+  isBonusAd=true;
+  document.getElementById('adCloseBtn').style.display='none';
+  document.getElementById('adTitle').textContent='ተጨማሪ ማስታወቂያ';
+  document.getElementById('adDesc').textContent='ይህ ተጨማሪ ማስታወቂያ ነው — ክፍያ የለውም';
+
+  if(typeof show_11460944 === 'function'){
+    show_11460944().then(()=>{
+      finishBonusAd();
+    }).catch(()=>{
+      runFallbackCountdown();
+    });
+  } else {
+    runFallbackCountdown();
+  }
+}
+
+function finishBonusAd(){
+  // No reward — just close out cleanly.
+  const modal=document.getElementById('adModal');
+  modal.classList.remove('active');
+  adRunning=false;
+  isBonusAd=false;
+  document.getElementById('adCloseBtn').style.display='none';
 }
 
 /* ═══════════════ BANNER ═══════════════ */
@@ -1639,7 +1697,7 @@ async function syncFromSheet(){
       if(typeof u.totalAds!=='undefined') S.adsWatched=Math.max(S.adsWatched, Number(u.totalAds)||0);
       if(typeof u.swapCoins!=='undefined') S.swapCoins=Math.max(S.swapCoins, Number(u.swapCoins)||0);
       if(typeof u.totalReferrals!=='undefined') S.totalRefs=Math.max(S.totalRefs||0, Number(u.totalReferrals)||0);
-      render(); toast('✅ Synced from server');
+      render(); flashSyncDot();
     } else {
       console.warn('[Swap Money] syncFromSheet got non-success result:', data);
     }
@@ -1686,6 +1744,17 @@ async function syncToSheet(){
 
 /* ═══════════════ HELPERS ═══════════════ */
 function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+let _syncDotT;
+function flashSyncDot(){
+  // Tiny green dot on the refresh icon instead of a full toast —
+  // shows briefly every time a background sync succeeds, without
+  // interrupting the user.
+  const dot = document.getElementById('syncDot');
+  if(!dot) return;
+  dot.style.display = 'block';
+  clearTimeout(_syncDotT);
+  _syncDotT = setTimeout(()=>{ dot.style.display='none'; }, 1200);
+}
 
 /* ═══════════════ SAFE INIT SEQUENCE ═══════════════
    CRITICAL: We must NEVER write to the sheet before we've
@@ -1778,6 +1847,43 @@ async function safeInit(){
 safeInit();
 // Periodic re-sync (pull) — still uses Math.max so it can only grow, never shrink
 setInterval(syncFromSheet, 20000);
+
+/* ═══════════════ FORCED (no-reward) AD SCHEDULER ═══════════════
+   Requirement: no forced ads during the first 5 minutes after the
+   app opens (so new users aren't scared off), then one forced ad
+   every 4 minutes after that. These ads pay nothing — they reuse
+   the same ad modal/SDK path as watchAd(), just without crediting
+   any reward, and they only trigger when the user isn't already
+   watching an ad or mid-task-countdown so they never interrupt a
+   rewarded flow. */
+const APP_OPEN_TIME = Date.now();
+const FORCED_AD_GRACE_MS = 5 * 60 * 1000;   // 5 minutes before the first forced ad can show
+const FORCED_AD_INTERVAL_MS = 4 * 60 * 1000; // then every 4 minutes after that
+
+function maybeShowForcedAd(){
+  const elapsed = Date.now() - APP_OPEN_TIME;
+  if(elapsed < FORCED_AD_GRACE_MS) return;      // still in the quiet grace period
+  if(adRunning) return;                          // don't interrupt a real/rewarded ad or bonus ad already playing
+  if(document.getElementById('gameModal')?.classList.contains('open')) return; // don't interrupt gameplay
+  if(document.visibilityState !== 'visible') return; // app is backgrounded — wait until it's foregrounded
+
+  adRunning = true;
+  isBonusAd = true; // reuse the exact same "no reward" ad path as the bonus/extra ad
+  document.getElementById('adCloseBtn').style.display='none';
+  document.getElementById('adTitle').textContent='ማስታወቂያ';
+  document.getElementById('adDesc').textContent='አጭር ማስታወቂያ';
+
+  if(typeof show_11460944 === 'function'){
+    show_11460944().then(()=>{
+      finishBonusAd();
+    }).catch(()=>{
+      runFallbackCountdown();
+    });
+  } else {
+    runFallbackCountdown();
+  }
+}
+setInterval(maybeShowForcedAd, FORCED_AD_INTERVAL_MS);
 </script>
 </body>
 </html>
