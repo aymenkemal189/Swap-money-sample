@@ -360,16 +360,16 @@ header{
     <span class="gm-title" id="gmTitle">🎮 Game</span>
     <div class="gm-right">
       <div class="gm-sc-pill">
-        <img src="https://i.postimg.cc/tCTKFCSf/20260809-161513.png" alt="sc">
+        <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
         <span id="gmSCDisplay">0 SC</span>
       </div>
       <div class="gm-close" onclick="closeGame()">✕</div>
     </div>
   </div>
-  <iframe class="gm-iframe" id="gmIframe" title="Game" allow="autoplay"></iframe>
+  <iframe class="gm-iframe" id="gmIframe" title="Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
   <div class="gm-footer">
     <div class="gm-session">
-      <img src="https://i.postimg.cc/tCTKFCSf/20260809-161513.png" alt="sc">
+      <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
       ይህ ጨዋታ: <span id="gmSessionCoins">0 SC</span>
     </div>
     <button class="btn btn-green" style="padding:7px 14px;font-size:11px" onclick="closeGame()">✓ ጨርስ</button>
@@ -393,7 +393,7 @@ header{
 <header>
   <div class="hdr-av" id="hdrAv">U</div>
   <div class="hdr-info">
-    <h4 id="hdrWelcome">Welcome Back </h4>
+    <h4 id="hdrWelcome">Welcome Back 👋🔥</h4>
     <p>
       <span id="hdrUser">@user</span>
       <span class="level-chip" id="levelChip">⭐ Level 1</span>
@@ -801,7 +801,7 @@ header{
 
 <script>
 /* ═══════════════ CONFIG ═══════════════ */
-
+const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxDii62Bjz7KNxIFY9deeDDxnjNx1ifHu93GRxkhmpC9srZ_ZFSAtQgttQYh8o1pXmIgQ/exec';
 const BOT_USERNAME = 'Swapmoney_bot';
 const SC_TO_ETB    = 0.5;   // 1 SC = 0.50 ETB
 const ETB_TO_SC    = 2;     // 1 ETB = 2 SC
@@ -809,30 +809,40 @@ const WELCOME_ETB  = 50;
 const REF_BONUS    = 50;
 const MIN_WD       = 2500;
 
-/* ── Ad reward tiers (total 91 ads, then repeats at the last tier) ──
+/* ── Ad reward tiers ──
    Ads 1–6   → 50 ETB each
    Ads 7–26  → 30 ETB each  (20 ads)
    Ads 27–41 → 20 ETB each  (15 ads)
    Ads 42–91 → 10 ETB each  (50 ads)
-   Ads 92+   → 10 ETB each  (stays at the final tier) */
+   Total: 91 ETB-rewarded ads.
+
+   After all 91 are used up, watching more ads no longer pays ETB.
+   Instead, each additional ad COSTS 10 Swap Coins (paid up front,
+   before the ad plays) and is otherwise unlimited — this lets
+   active users keep engaging with ads by spending SC they've
+   earned from games, without printing unlimited free ETB. */
 const AD_TIERS = [
   {upTo:6,  reward:50},
   {upTo:26, reward:30},
   {upTo:41, reward:20},
   {upTo:91, reward:10},
 ];
+const UNLIMITED_AD_SC_COST = 10;
 function getAdReward(adsWatchedSoFar){
   const adNumber = adsWatchedSoFar + 1; // the ad about to be watched
   for(const tier of AD_TIERS){
     if(adNumber <= tier.upTo) return tier.reward;
   }
-  return AD_TIERS[AD_TIERS.length-1].reward; // beyond 91 → stays at 10 ETB
+  return 0; // beyond 91 — no ETB reward; these are SC-cost "unlimited" ads instead
 }
-const TG_CHANNEL1  = 'https://t.me/SwapMoney_ETH';        // ← ራስህ ሊንክ ቀይር
-const TG_CHANNEL2  = 'https://t.me/swapmoneybirr';         // ← ራስህ ሊንክ ቀይር
-const TG_BOT       = 'https://t.me/Swapmoney_bot';         // ← ራስህ ሊንክ ቀይር
-const YT_SUB       = 'https://www.youtube.com/@swapmoneyeth'; // ← ራስህ ሊንክ ቀይር
-const YT_SUB2      = 'https://youtu.be/WgRzYGYDDOs?si=sZXc6PfXdBWTtu8U';// ← ራስህ ሊንክ ቀይር (2ኛ ቻናል)
+function isUnlimitedAdSlot(adsWatchedSoFar){
+  return (adsWatchedSoFar + 1) > 91;
+}
+const TG_CHANNEL1  = 'https://t.me/SwapMoney_ETH';
+const TG_CHANNEL2  = 'https://t.me/swapmoneybirr';
+const TG_BOT       = 'https://t.me/Swapmoney_bot';         // ← still placeholder unless you gave a different one
+const YT_SUB       = 'https://www.youtube.com/@swapmoneyeth';
+const YT_SUB2      = 'https://www.youtube.com/@ethioonlinework1';
 
 /* Game URLs (GitHub Pages) */
 const GAME_URLS = {
@@ -1077,8 +1087,8 @@ function claimStreakReward(){
 const TG_ICON = 'https://static.vecteezy.com/system/resources/previews/023/986/562/non_2x/telegram-logo-telegram-logo-transparent-telegram-icon-transparent-free-free-png.png';
 const YT_ICON = 'https://static.vecteezy.com/system/resources/thumbnails/018/930/572/small_2x/youtube-logo-youtube-icon-transparent-free-png.png';
 
-const YT_VID1 = 'https://youtu.be/REPLACE_VIDEO_1';   // ← ራስህ ሊንክ ቀይር
-const BUNA_BOT = 'https://t.me/Bunaairdropbot/buna?startapp=1493452810';
+const YT_VID1 = 'https://youtu.be/WgRzYGYDDOs?si=gg6xUP5LBMeBk4fW';
+const BUNA_BOT = 'https://t.me/Bunaairdropbot/buna';
 
 const ALL_TASKS = [
   {id:'tg1',    label:'Telegram Channel 1',     reward:100, dur:30, link:TG_CHANNEL1, icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
@@ -1171,6 +1181,7 @@ function renderEarnTasks(){
   const ADS = Array.from({length:6},(_,i)=>({
     num: S.adsWatched+i+1,
     reward: getAdReward(S.adsWatched+i),
+    unlimited: isUnlimitedAdSlot(S.adsWatched+i),
     badge: BADGES[i],
     bg: BGS[i],
   }));
@@ -1181,9 +1192,9 @@ function renderEarnTasks(){
           <svg viewBox="0 0 24 24" style="width:11px;height:11px;fill:#000;margin-left:1px"><path d="M8 5v14l11-7z"/></svg>
         </div>
       </div>
-      <div class="egi-title">Ad #${ad.num}</div>
-      <div class="egi-reward">+${ad.reward} ETB</div>
-      <div class="egi-meta">⏱️30s · <span style="color:${BADGE_COLOR[ad.badge]};font-weight:800">${ad.badge}</span></div>
+      <div class="egi-title">${ad.unlimited ? 'Bonus Ad ∞' : 'Ad #'+ad.num}</div>
+      <div class="egi-reward" style="${ad.unlimited?'color:var(--purple)':''}">${ad.unlimited ? '-'+UNLIMITED_AD_SC_COST+' SC' : '+'+ad.reward+' ETB'}</div>
+      <div class="egi-meta">⏱️30s · <span style="color:${BADGE_COLOR[ad.badge]};font-weight:800">${ad.unlimited?'∞':ad.badge}</span></div>
       <button class="egi-btn" onclick="watchAd(this)">Watch</button>
     </div>`).join('');
 }
@@ -1273,46 +1284,70 @@ function claimTask(id,reward){
 }
 
 /* ═══════════════ AD WATCH LOGIC ═══════════════
-   Tries to show a REAL ad via the Monetag SDK (show_11460944,
-   loaded in <head>). If that succeeds, the reward is only given
-   after the actual ad finishes. If the SDK isn't available for
-   any reason (ad blocker, network issue, SDK failed to load),
-   we fall back to the original 30s on-screen countdown so the
-   feature still works and nobody gets stuck.
+   IMPORTANT: the real ad SDK (show_11460944) can resolve in as
+   little as ~15 seconds depending on the ad network's own content,
+   which was letting users get rewarded faster than intended. To
+   guarantee a full, consistent 30-second watch time regardless of
+   how long the underlying ad actually plays, we ALWAYS run our own
+   visible 30s on-screen countdown as the single source of truth
+   for when the reward is granted. The real ad SDK (if available)
+   is still triggered at the same time purely so a real ad
+   impression happens, but it no longer controls the timing.
 
-   After the FIRST (rewarded) ad finishes, an "✕" close button
-   appears. If the user taps it, we don't just close the modal —
-   we immediately show one more ad automatically (same 30s flow)
-   but this one pays NOTHING; it's purely an extra impression.
-   Tapping ✕ on that second ad (or any subsequent bonus ad)
-   simply closes everything with no further chaining. */
+   After the FIRST (rewarded) ad's 30s finishes, an "✕" close
+   button appears. If the user taps it, we don't just close the
+   modal — we immediately show one more ad automatically (same 30s
+   flow) but this one pays NOTHING; it's purely an extra
+   impression. Tapping ✕ on that bonus ad simply closes everything
+   with no further chaining. */
 let adRunning=false, adTimerInterval, adClickCount=0;
 let isBonusAd=false; // true while showing the no-reward follow-up ad
 
 function watchAd(btn){
   if(adRunning)return;
+
+  const unlimited = isUnlimitedAdSlot(S.adsWatched);
+  if(unlimited){
+    if((S.swapCoins||0) < UNLIMITED_AD_SC_COST){
+      toast(`⚠️ 91 ነጻ ማስታወቂያ አልቋል — ተጨማሪ ማስታወቂያ ለማየት ${UNLIMITED_AD_SC_COST} SC ያስፈልጋል`);
+      return;
+    }
+    // Charge the SC cost UP FRONT, before the ad even starts, so
+    // there's no way to watch the ad and then back out of paying.
+    S.swapCoins -= UNLIMITED_AD_SC_COST;
+    saveState();
+    render();
+  }
+
   btn.disabled=true;
   adClickCount++;
   adRunning=true;
   isBonusAd=false;
   document.getElementById('adCloseBtn').style.display='none';
-  document.getElementById('adDesc').innerHTML = `30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">${getAdReward(S.adsWatched)} ETB</strong> ይጨምራሉ!`;
+  document.getElementById('adDesc').innerHTML = unlimited
+    ? `30 ሰከንድ ያዩ — ${UNLIMITED_AD_SC_COST} SC ተከፍሏል (ያልተገደበ ማስታወቂያ)`
+    : `30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">${getAdReward(S.adsWatched)} ETB</strong> ይጨምራሉ!`;
 
+  // Fire the real ad SDK in the background purely for a genuine ad
+  // impression/revenue — but its resolve time no longer decides
+  // when the reward is granted. If it errors out that's fine too;
+  // it doesn't affect our own countdown below.
   if(typeof show_11460944 === 'function'){
-    // ── REAL AD PATH ──
-    show_11460944().then(()=>{
-      creditAdReward();
-    }).catch((err)=>{
-      console.warn('[Swap Money] Real ad failed/unavailable, falling back to countdown:', err);
-      runFallbackCountdown();
+    show_11460944().catch((err)=>{
+      console.warn('[Swap Money] Real ad SDK reported an issue (non-fatal, our own 30s countdown still governs reward timing):', err);
     });
   } else {
-    console.warn('[Swap Money] Ad SDK (show_11460944) not found — using fallback countdown.');
-    runFallbackCountdown();
+    console.warn('[Swap Money] Ad SDK (show_11460944) not found — showing the standard 30s countdown only.');
   }
+
+  // Our own visible countdown is now ALWAYS the thing that grants
+  // the reward, guaranteeing a full 30 seconds every time.
+  runFallbackCountdown();
 }
 
-function runFallbackCountdown(){
+function runFallbackCountdown(durationMs){
+  durationMs = durationMs || 30000; // default stays 30s for normal/bonus ads
+  const durSec = Math.round(durationMs/1000);
   const modal=document.getElementById('adModal');
   const fill=document.getElementById('adBarFill');
   const txt=document.getElementById('adTimerTxt');
@@ -1320,12 +1355,12 @@ function runFallbackCountdown(){
     ? 'ተጨማሪ ማስታወቂያ'
     : `Ad #${S.adsWatched+1} በሂደት ላይ`;
   modal.classList.add('active');
-  fill.style.width='0%';txt.textContent='30s ቀርቷል';
-  const deadline = Date.now()+30000;
+  fill.style.width='0%';txt.textContent=`${durSec}s ቀርቷል`;
+  const deadline = Date.now()+durationMs;
   clearInterval(adTimerInterval);
   adTimerInterval=setInterval(()=>{
     const remaining = Math.max(0, Math.ceil((deadline-Date.now())/1000));
-    fill.style.width=`${(30-remaining)/30*100}%`;
+    fill.style.width=`${(durSec-remaining)/durSec*100}%`;
     txt.textContent=`${remaining}s ቀርቷል`;
     if(remaining<=0){
       clearInterval(adTimerInterval);
@@ -1340,24 +1375,34 @@ function runFallbackCountdown(){
 
 function creditAdReward(){
   adRunning=false;
+  const wasUnlimited = isUnlimitedAdSlot(S.adsWatched);
   // Compute the reward BEFORE incrementing adsWatched, so it
   // matches exactly what was shown to the user on the button.
   const earnedReward = getAdReward(S.adsWatched);
-  // User watched the full ad — ALWAYS credit them locally right away.
-  // This guarantees "watched ad but got no money" can never happen.
-  S.balance+=earnedReward; S.adsWatched++;
-  saveState();
-  toast(`🎉 +${earnedReward} ETB ተጨምሯል!`);
-  if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
-  render();
-  if(syncReady){
-    syncToSheet();
+  S.adsWatched++;
+
+  if(wasUnlimited){
+    // SC was already deducted up front in watchAd() — no ETB reward
+    // for these, just confirm the ad was watched.
+    saveState();
+    toast('✅ ማስታወቂያውን አጠናቀዋል');
+    render();
+    if(syncReady){ syncToSheet(); } else { pendingSyncAfterInit = true; }
+    document.getElementById('adDesc').innerHTML = `✅ ማስታወቂያ ታይቷል። ✕ ይንኩ ለመዝጋት`;
   } else {
-    pendingSyncAfterInit = true;
+    // User watched the full ad — ALWAYS credit them locally right away.
+    // This guarantees "watched ad but got no money" can never happen.
+    S.balance+=earnedReward;
+    saveState();
+    toast(`🎉 +${earnedReward} ETB ተጨምሯል!`);
+    render();
+    if(syncReady){ syncToSheet(); } else { pendingSyncAfterInit = true; }
+    // Reward is locked in — now offer the option to close, or the
+    // user can tap ✕ to trigger one bonus (unpaid) ad automatically.
+    document.getElementById('adDesc').innerHTML = `🎉 <strong style="color:var(--gold)">+${earnedReward} ETB</strong> ተጨምሯል! ✕ ይንኩ ለመዝጋት`;
   }
-  // Reward is locked in — now offer the option to close, or the
-  // user can tap ✕ to trigger one bonus (unpaid) ad automatically.
-  document.getElementById('adDesc').innerHTML = `🎉 <strong style="color:var(--gold)">+${earnedReward} ETB</strong> ተጨምሯል! ✕ ይንኩ ለመዝጋት`;
+
+  if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
   document.getElementById('adCloseBtn').style.display='flex';
   document.getElementById('adCloseBtn').style.alignItems='center';
   document.getElementById('adCloseBtn').style.justifyContent='center';
@@ -1374,21 +1419,20 @@ function closeAdAndShowAnother(){
     return;
   }
   // First close tap after a REWARDED ad — automatically queue one
-  // more ad with no payout, exactly as requested.
+  // more ad with no payout, exactly as requested. Uses the same
+  // guaranteed 30s on-screen countdown (not the SDK's own timing)
+  // for a consistent experience.
   isBonusAd=true;
   document.getElementById('adCloseBtn').style.display='none';
   document.getElementById('adTitle').textContent='ተጨማሪ ማስታወቂያ';
   document.getElementById('adDesc').textContent='ይህ ተጨማሪ ማስታወቂያ ነው — ክፍያ የለውም';
 
   if(typeof show_11460944 === 'function'){
-    show_11460944().then(()=>{
-      finishBonusAd();
-    }).catch(()=>{
-      runFallbackCountdown();
+    show_11460944().catch(()=>{
+      console.warn('[Swap Money] Bonus ad SDK issue (non-fatal)');
     });
-  } else {
-    runFallbackCountdown();
   }
+  runFallbackCountdown();
 }
 
 function finishBonusAd(){
@@ -1525,10 +1569,19 @@ async function exchangeOnServer(type, scAmount, etbAmount){
     if(data.result!=='success'){
       console.warn('Exchange sync mismatch — will reconcile on next full sync', data);
     }
-  }catch(e){}
-  // Always follow up with a regular ad/task-style sync too, so
-  // totalAds / referral counts etc. stay current.
-  syncToSheet();
+    // NOTE: we deliberately do NOT call syncToSheet() here.
+    // exchangeSC already updated balance/SC directly on the sheet
+    // (server-side, using its own stored values — not ours). If we
+    // immediately followed up with a syncUser call using our local
+    // (already-decreased) numbers, that's a redundant write that
+    // could race with the exchange write and cause the two values
+    // to briefly disagree. The next scheduled syncFromSheet (every
+    // 20s) or the next natural syncToSheet from a task/ad claim
+    // will keep totalAds/referrals current — exchanges don't touch
+    // those fields anyway.
+  }catch(e){
+    console.error('[Swap Money] Exchange failed to reach server — your LOCAL balance already changed, but the sheet may be out of sync until the next successful connection:', e);
+  }
 }
 function addExchHistory(label, type){
   if(!S.exchangeHistory) S.exchangeHistory=[];
@@ -1646,11 +1699,13 @@ function closeGame(){
   document.body.style.overflow='';
   currentGame=null; render();
 }
-// Listen for SC from game iframe.
+// Listen for messages from the game iframe.
 // IMPORTANT: we credit S.swapCoins the moment the message arrives
 // (not when the modal is closed) and save immediately, so coins
 // can never be lost even if the player abruptly switches apps or
 // closes the browser without tapping "✓ ጨርስ".
+let lastGameAdTime = 0;
+const GAME_AD_MIN_GAP_MS = 20000; // don't allow a game to spam-trigger ads faster than this
 window.addEventListener('message',e=>{
   if(!e.data)return;
   if(e.data.type==='sc_earned'&&typeof e.data.amount==='number'){
@@ -1665,6 +1720,41 @@ window.addEventListener('message',e=>{
     document.getElementById('gmIframe')?.contentWindow?.postMessage(
       {type:'sc_balance',amount:S.swapCoins||0},'*'
     );
+  }
+  if(e.data.type==='trigger_game_ad'){
+    // A mini-game (Spin Wheel / Scratch Card / Coin Flip / Number
+    // Guess) is asking the MAIN app to show an ad on its behalf,
+    // since the game itself runs inside a sandboxed iframe and
+    // can't reliably trigger ad SDK popups on its own — Telegram's
+    // WebView often blocks ad calls made from inside an iframe.
+    // Only honor this while the game modal is actually open (never
+    // trust postMessage blindly — some other origin/script could
+    // otherwise spam ad triggers), and rate-limit so a buggy or
+    // malicious game page can't spam ad after ad.
+    const gameModalOpen = document.getElementById('gameModal')?.classList.contains('open');
+    if(!gameModalOpen) return;
+    if(adRunning) return; // already showing an ad — ignore duplicate triggers
+    const now = Date.now();
+    if(now - lastGameAdTime < GAME_AD_MIN_GAP_MS) return;
+    lastGameAdTime = now;
+
+    adRunning = true;
+    isBonusAd = true; // no ETB/SC reward for game-triggered ads — same "bonus" no-payout path
+    document.getElementById('adCloseBtn').style.display='none';
+    document.getElementById('adTitle').textContent='ማስታወቂያ';
+    document.getElementById('adDesc').textContent='አጭር ማስታወቂያ';
+
+    if(typeof show_11460944 === 'function'){
+      show_11460944('pop').catch(()=>{
+        return show_11460944().catch(()=>{});
+      }).finally(()=>{
+        finishBonusAd();
+      });
+    } else {
+      // No SDK available — still show a short on-screen countdown
+      // so the flow completes gracefully instead of doing nothing.
+      runFallbackCountdown(15000);
+    }
   }
 });
 
@@ -1809,81 +1899,4 @@ async function safeInit(){
         if(S.balance === 0) S.balance = WELCOME_ETB;
         saveState();
         setTimeout(()=>{
-          toast(`🎉 እንኳን ደህና መጡ! ${WELCOME_ETB} ETB የመግቢያ ቦነስ!`);
-          if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-        },800);
-      }
-    } else {
-      // Backend responded but with an unexpected/error result
-      // (e.g. sheet misconfigured, wrong column names, script bug).
-      // Log it clearly so it's debuggable, then retry shortly —
-      // syncReady stays false so we never risk pushing bad data.
-      console.error('[Swap Money] Unexpected server response during init:', data);
-      setTimeout(safeInit, 4000);
-      return;
-    }
-
-  }catch(e){
-    // Network / fetch itself failed (bad URL, CORS, script not
-    // deployed, no internet, etc). Log the real error so it's
-    // obvious what to fix, then retry.
-    console.error('[Swap Money] Failed to reach Google Apps Script. Check that SCRIPT_URL is correct and the script is deployed with "Anyone" access. Error:', e);
-    render();
-    setTimeout(safeInit, 4000);
-    return;
-  }
-
-  syncReady = true;   // ✅ only now is it safe to push local changes to the sheet
-  render();
-  if(pendingSyncAfterInit){
-    pendingSyncAfterInit = false;
-    syncToSheet();
-  }
-}
-
-/* syncToSheet is guarded — it will refuse to run until safeInit()
-   has confirmed real data, so a fresh device can never overwrite
-   an existing user's balance with 0. */
-safeInit();
-// Periodic re-sync (pull) — still uses Math.max so it can only grow, never shrink
-setInterval(syncFromSheet, 20000);
-
-/* ═══════════════ FORCED (no-reward) AD SCHEDULER ═══════════════
-   Requirement: no forced ads during the first 5 minutes after the
-   app opens (so new users aren't scared off), then one forced ad
-   every 4 minutes after that. These ads pay nothing — they reuse
-   the same ad modal/SDK path as watchAd(), just without crediting
-   any reward, and they only trigger when the user isn't already
-   watching an ad or mid-task-countdown so they never interrupt a
-   rewarded flow. */
-const APP_OPEN_TIME = Date.now();
-const FORCED_AD_GRACE_MS = 5 * 60 * 1000;   // 5 minutes before the first forced ad can show
-const FORCED_AD_INTERVAL_MS = 4 * 60 * 1000; // then every 4 minutes after that
-
-function maybeShowForcedAd(){
-  const elapsed = Date.now() - APP_OPEN_TIME;
-  if(elapsed < FORCED_AD_GRACE_MS) return;      // still in the quiet grace period
-  if(adRunning) return;                          // don't interrupt a real/rewarded ad or bonus ad already playing
-  if(document.getElementById('gameModal')?.classList.contains('open')) return; // don't interrupt gameplay
-  if(document.visibilityState !== 'visible') return; // app is backgrounded — wait until it's foregrounded
-
-  adRunning = true;
-  isBonusAd = true; // reuse the exact same "no reward" ad path as the bonus/extra ad
-  document.getElementById('adCloseBtn').style.display='none';
-  document.getElementById('adTitle').textContent='ማስታወቂያ';
-  document.getElementById('adDesc').textContent='አጭር ማስታወቂያ';
-
-  if(typeof show_11460944 === 'function'){
-    show_11460944().then(()=>{
-      finishBonusAd();
-    }).catch(()=>{
-      runFallbackCountdown();
-    });
-  } else {
-    runFallbackCountdown();
-  }
-}
-setInterval(maybeShowForcedAd, FORCED_AD_INTERVAL_MS);
-</script>
-</body>
-</html>
+ 
