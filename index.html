@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swap Money - Fight Prediction Arena</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
             margin: 0;
@@ -31,6 +33,34 @@
             max-width: 520px;
             width: 100%;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 193, 7, 0.1);
+        }
+
+        /* Top Navigation & Header */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .back-btn {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
         }
 
         .header {
@@ -147,6 +177,34 @@
             color: #fff;
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffc107;
+        }
+
         .fighters-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -166,27 +224,6 @@
             overflow: hidden;
         }
 
-        .fighter-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .fighter-card:hover::before {
-            left: 100%;
-        }
-
-        .fighter-card:hover {
-            border-color: rgba(255, 193, 7, 0.6);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.15);
-        }
-
         .fighter-card.selected {
             background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 193, 7, 0.1) 100%);
             border-color: #ffc107;
@@ -194,8 +231,8 @@
         }
 
         .fighter-image-container {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 12px;
             position: relative;
         }
@@ -208,20 +245,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 38px;
             border: 3px solid rgba(255, 193, 7, 0.3);
-            box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
-            overflow: hidden;
-        }
-
-        .fighter-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .fighter-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 6px;
             color: #ffc107;
@@ -234,7 +263,7 @@
         }
 
         .fighter-odds {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #ffc107;
             background: rgba(255, 193, 7, 0.1);
@@ -280,15 +309,10 @@
             transition: all 0.3s ease;
         }
 
-        .stake-input::placeholder {
-            color: #666;
-        }
-
         .stake-input:focus {
             outline: none;
             border-color: #ffc107;
             background: rgba(255, 193, 7, 0.1);
-            box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
         }
 
         .quick-amounts {
@@ -307,13 +331,6 @@
             font-weight: 600;
             color: #ffc107;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .quick-btn:hover {
-            background: rgba(255, 193, 7, 0.2);
-            border-color: #ffc107;
-            box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
         }
 
         .prediction-summary {
@@ -334,7 +351,6 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
-            align-items: center;
         }
 
         .summary-row:last-child {
@@ -343,15 +359,6 @@
             border-top: 1px solid rgba(255, 193, 7, 0.2);
             font-weight: bold;
             color: #ffc107;
-        }
-
-        .label {
-            color: #999;
-        }
-
-        .value {
-            color: #ffc107;
-            font-weight: 600;
         }
 
         .payment-methods {
@@ -369,19 +376,12 @@
             color: #ffc107;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 12px;
-        }
-
-        .payment-btn:hover {
-            border-color: #ffc107;
-            background: rgba(255, 193, 7, 0.15);
         }
 
         .payment-btn.active {
             background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 193, 7, 0.1));
             border-color: #ffc107;
-            box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
         }
 
         .mpesa-section {
@@ -406,7 +406,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
         }
 
         .mpesa-blur {
@@ -414,57 +413,73 @@
             font-weight: bold;
             color: #ffc107;
             letter-spacing: 3px;
-            font-family: 'Courier New', monospace;
-            flex: 1;
+            font-family: monospace;
         }
 
         .mpesa-blur.blurred {
             filter: blur(6px);
-            cursor: pointer;
         }
 
-        .copy-btn {
-            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+        .copy-btn, .reveal-btn {
+            background: #ffc107;
             border: none;
             color: #000;
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 11px;
             cursor: pointer;
-            margin-left: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .copy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+            margin-left: 4px;
         }
 
         .reveal-btn {
             background: rgba(255, 193, 7, 0.2);
-            border: 1px solid rgba(255, 193, 7, 0.4);
             color: #ffc107;
-            padding: 8px 12px;
+            border: 1px solid rgba(255, 193, 7, 0.4);
+        }
+
+        .screenshot-section {
+            background: rgba(255, 193, 7, 0.08);
+            border: 2px dashed rgba(255, 193, 7, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        #screenshotInput {
+            display: none;
+        }
+
+        .screenshot-preview {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .screenshot-preview.show {
+            display: block;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            object-fit: contain;
+        }
+
+        .remove-screenshot-btn {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            color: #f44336;
+            padding: 6px 12px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 11px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .reveal-btn:hover {
-            background: rgba(255, 193, 7, 0.3);
-        }
-
-        .mpesa-instructions {
-            font-size: 11px;
-            color: #999;
-            line-height: 1.6;
-            background: rgba(255, 193, 7, 0.05);
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
+            margin-top: 8px;
+            width: 100%;
         }
 
         .submit-btn {
@@ -477,19 +492,8 @@
             font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
             margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
         }
 
         .submit-btn:disabled {
@@ -497,132 +501,42 @@
             cursor: not-allowed;
         }
 
-        .success-message {
+        .success-message, .error-message {
             display: none;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .success-message {
             background: rgba(76, 175, 80, 0.15);
             border: 1px solid rgba(76, 175, 80, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
             color: #4caf50;
-            margin-top: 12px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .success-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .success-title {
-            font-size: 15px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        .success-text {
-            font-size: 12px;
         }
 
         .error-message {
             background: rgba(244, 67, 54, 0.15);
             border: 1px solid rgba(244, 67, 54, 0.4);
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 12px;
             color: #f44336;
-            margin-top: 12px;
-            display: none;
         }
 
-        .error-message.show {
+        .success-message.show, .error-message.show {
             display: block;
-        }
-
-        .info-box {
-            background: rgba(255, 193, 7, 0.1);
-            border-left: 3px solid #ffc107;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 11px;
-            color: #ffc107;
-            margin-top: 12px;
-            line-height: 1.6;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .stat-box {
-            background: rgba(255, 193, 7, 0.08);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 9px;
-            color: #999;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffc107;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 14px;
-            }
-
-            .fighters-container {
-                gap: 10px;
-            }
-
-            .fighter-card {
-                padding: 12px;
-            }
-
-            .fighter-image-container {
-                width: 80px;
-                height: 80px;
-            }
-
-            .fighter-image {
-                font-size: 36px;
-            }
-
-            .countdown-timer {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Top Navigation with Back Button -->
+        <div class="top-nav">
+            <button class="back-btn" id="backBtn">
+                ⬅ Back
+            </button>
+            <div style="font-size:11px; color:#999;" id="userInfo">Guest</div>
+        </div>
+
         <!-- Header -->
         <div class="header">
             <div class="logo">⚡ SWAP MONEY</div>
@@ -633,22 +547,10 @@
         <div class="countdown-section">
             <div class="countdown-title">⏰ Fight Starts In</div>
             <div class="countdown-timer">
-                <div class="countdown-item">
-                    <div class="countdown-number" id="days">0</div>
-                    <div class="countdown-label">Days</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="hours">0</div>
-                    <div class="countdown-label">Hours</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="minutes">0</div>
-                    <div class="countdown-label">Minutes</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="seconds">0</div>
-                    <div class="countdown-label">Seconds</div>
-                </div>
+                <div class="countdown-item"><div class="countdown-number" id="days">00</div><div class="countdown-label">Days</div></div>
+                <div class="countdown-item"><div class="countdown-number" id="hours">00</div><div class="countdown-label">Hours</div></div>
+                <div class="countdown-item"><div class="countdown-number" id="minutes">00</div><div class="countdown-label">Min</div></div>
+                <div class="countdown-item"><div class="countdown-number" id="seconds">00</div><div class="countdown-label">Sec</div></div>
             </div>
         </div>
 
@@ -656,55 +558,22 @@
         <div class="prize-section">
             <div class="prize-title">🏆 Prize Pool</div>
             <div class="prize-pool">
-                <div class="prize-item">
-                    <div class="prize-rank">🥇 1st</div>
-                    <div class="prize-amount">200K</div>
-                </div>
-                <div class="prize-item">
-                    <div class="prize-rank">🥈 2nd</div>
-                    <div class="prize-amount">100K</div>
-                </div>
-                <div class="prize-item">
-                    <div class="prize-rank">🥉 3rd</div>
-                    <div class="prize-amount">50K</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistics -->
-        <div class="stats-grid">
-            <div class="stat-box">
-                <div class="stat-label">Total Bets</div>
-                <div class="stat-value" id="totalBets">0</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">Active Users</div>
-                <div class="stat-value" id="activeUsers">0</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">Pool Value</div>
-                <div class="stat-value" id="poolValue">350K</div>
+                <div class="prize-item"><div class="prize-rank">🥇 1st</div><div class="prize-amount">200K</div></div>
+                <div class="prize-item"><div class="prize-rank">🥈 2nd</div><div class="prize-amount">100K</div></div>
+                <div class="prize-item"><div class="prize-rank">🥉 3rd</div><div class="prize-amount">50K</div></div>
             </div>
         </div>
 
         <!-- Fighters -->
         <div class="fighters-container">
             <div class="fighter-card" data-fighter="sedo">
-                <div class="fighter-image-container">
-                    <div class="fighter-image">
-                        🥋
-                    </div>
-                </div>
+                <div class="fighter-image-container"><div class="fighter-image">🥋</div></div>
                 <div class="fighter-name">SEDO</div>
                 <div class="fighter-stats">Record: 15-3-2</div>
                 <div class="fighter-odds">2.15x Odds</div>
             </div>
             <div class="fighter-card" data-fighter="johni">
-                <div class="fighter-image-container">
-                    <div class="fighter-image">
-                        👊
-                    </div>
-                </div>
+                <div class="fighter-image-container"><div class="fighter-image">👊</div></div>
                 <div class="fighter-name">JOHNI</div>
                 <div class="fighter-stats">Record: 12-5-1</div>
                 <div class="fighter-odds">1.85x Odds</div>
@@ -713,41 +582,21 @@
 
         <!-- Prediction Section -->
         <div class="prediction-section">
-            <div class="section-title">Your Prediction Stake</div>
-            <div class="input-label">Amount (ETB)</div>
-            <input 
-                type="number" 
-                id="stakeInput" 
-                class="stake-input" 
-                placeholder="Enter amount (min: 500 ETB)"
-                min="500"
-                max="100000"
-                value="5000"
-            >
+            <div class="section-title">Your Stake</div>
+            <input type="number" id="stakeInput" class="stake-input" placeholder="Min: 500 ETB" min="500" value="5000">
             <div class="quick-amounts">
                 <button class="quick-btn" data-amount="500">500</button>
                 <button class="quick-btn" data-amount="1000">1K</button>
                 <button class="quick-btn" data-amount="5000">5K</button>
                 <button class="quick-btn" data-amount="10000">10K</button>
-                <button class="quick-btn" data-amount="25000">25K</button>
-                <button class="quick-btn" data-amount="50000">50K</button>
             </div>
         </div>
 
         <!-- Summary -->
         <div class="prediction-summary" id="summary">
-            <div class="summary-row">
-                <span class="label">Fighter:</span>
-                <span class="value" id="summaryFighter">-</span>
-            </div>
-            <div class="summary-row">
-                <span class="label">Your Stake:</span>
-                <span class="value" id="summaryStake">0 ETB</span>
-            </div>
-            <div class="summary-row">
-                <span class="label">If You Win:</span>
-                <span class="value" id="summaryWin">0 ETB</span>
-            </div>
+            <div class="summary-row"><span>Fighter:</span><span id="summaryFighter">-</span></div>
+            <div class="summary-row"><span>Stake:</span><span id="summaryStake">0 ETB</span></div>
+            <div class="summary-row"><span>Potential Win:</span><span id="summaryWin">0 ETB</span></div>
         </div>
 
         <!-- Payment Methods -->
@@ -761,331 +610,229 @@
 
         <!-- M-Pesa Section -->
         <div class="mpesa-section" id="mpesaSection">
-            <div class="section-title">M-Pesa Payment</div>
             <div class="mpesa-number">
                 <div class="mpesa-blur blurred" id="mpesaBlur">●●●●●●●●●●</div>
-                <button class="reveal-btn" id="revealBtn">Reveal</button>
-                <button class="copy-btn" id="copyBtn">Copy</button>
+                <div>
+                    <button class="reveal-btn" id="revealBtn">Reveal</button>
+                    <button class="copy-btn" id="copyBtn">Copy</button>
+                </div>
             </div>
-            <div class="mpesa-instructions">
-                <strong>📲 Instructions:</strong><br>
-                1️⃣ Click "Reveal" to show phone number<br>
-                2️⃣ Click "Copy" to copy to clipboard<br>
-                3️⃣ Open M-Pesa on your phone<br>
-                4️⃣ Send payment to copied number<br>
-                5️⃣ Take screenshot and confirm
+
+            <!-- Screenshot Attachment -->
+            <div class="screenshot-section" id="screenshotSection">
+                <div style="font-size:24px;">📸</div>
+                <div style="color:#ffc107; font-size:12px; font-weight:600;">Attach Payment Proof</div>
+                <div style="color:#999; font-size:10px;">Click to select M-Pesa screenshot</div>
+            </div>
+            <input type="file" id="screenshotInput" accept="image/*" />
+
+            <!-- Screenshot Preview -->
+            <div class="screenshot-preview" id="screenshotPreview">
+                <img id="previewImage" class="preview-image" src="" alt="Payment proof">
+                <button class="remove-screenshot-btn" id="removeScreenshotBtn">Remove Screenshot</button>
             </div>
         </div>
 
-        <!-- Error Message -->
+        <!-- Error & Success Messages -->
         <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage">
+            ✅ Prediction Submitted Successfully!
+        </div>
 
         <!-- Submit Button -->
-        <button class="submit-btn" id="submitBtn" disabled>
-            PLACE PREDICTION
-        </button>
-
-        <!-- Info Box -->
-        <div class="info-box">
-            ✨ <strong>Secure Payment:</strong> All payments are encrypted and verified through M-Pesa. Your prediction is final once payment is confirmed.
-        </div>
-
-        <!-- Success Message -->
-        <div class="success-message" id="successMessage">
-            <div class="success-icon">✅</div>
-            <div class="success-title">Prediction Confirmed!</div>
-            <div class="success-text">Your bet has been placed. Check back on Aug 27 @ 4:00 PM for results! Good luck! 🍀</div>
-        </div>
+        <button class="submit-btn" id="submitBtn" disabled>PLACE PREDICTION</button>
     </div>
 
     <script>
-        // Telegram Bot Token
+        // Init Telegram WebApp
+        const tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            if (tg.initDataUnsafe?.user) {
+                document.getElementById('userInfo').textContent = `@${tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name}`;
+            }
+        }
+
         const TELEGRAM_BOT_TOKEN = '8666783314:AAEzdZ0VOUJ7MFH8-UeT900z-fm80ds7NVk';
         const TELEGRAM_CHAT_ID = '-1002232449821';
-
-        // M-Pesa Phone Number
         const MPESA_NUMBER = '0704969106';
-        const MPESA_MASKED = '●●●●●●●●●●';
 
-        // State
         let selectedFighter = null;
         let selectedMethod = 'mpesa';
         let stakeAmount = 5000;
         let numberRevealed = false;
+        let screenshotBase64 = null;
 
-        // Fighter odds
-        const odds = {
-            sedo: 2.15,
-            johni: 1.85
-        };
+        const odds = { sedo: 2.15, johni: 1.85 };
 
-        // Fight countdown (Aug 27, 2026 @ 4:00 PM)
-        const fightDate = new Date('2026-08-27T16:00:00').getTime();
-
-        // Initialize countdown
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = fightDate - now;
-
-            if (distance < 0) {
-                document.getElementById('days').textContent = '0';
-                document.getElementById('hours').textContent = '0';
-                document.getElementById('minutes').textContent = '0';
-                document.getElementById('seconds').textContent = '0';
-                return;
+        // Navigation Back Button action
+        document.getElementById('backBtn').addEventListener('click', () => {
+            if (tg && tg.BackButton.isVisible) {
+                tg.close();
+            } else if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                alert("Returning to main menu...");
             }
+        });
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Countdown Timer
+        const fightDate = new Date('2026-08-27T16:00:00').getTime();
+        setInterval(() => {
+            const distance = fightDate - new Date().getTime();
+            if (distance < 0) return;
+            document.getElementById('days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+        }, 1000);
 
-            document.getElementById('days').textContent = String(days).padStart(2, '0');
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        // Load stats
-        function loadStats() {
-            const stats = JSON.parse(localStorage.getItem('fightStats')) || {
-                totalBets: 1247,
-                activeUsers: 482
-            };
-            document.getElementById('totalBets').textContent = stats.totalBets;
-            document.getElementById('activeUsers').textContent = stats.activeUsers;
-        }
-
-        loadStats();
-
-        // Fighter selection
+        // Fighter Selection
         document.querySelectorAll('.fighter-card').forEach(card => {
             card.addEventListener('click', function() {
+                tg?.HapticFeedback?.selectionChanged();
                 document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
                 selectedFighter = this.dataset.fighter;
                 updateSummary();
-                updateSubmitBtn();
             });
         });
 
-        // Payment method selection
+        // Payment Toggle
         document.querySelectorAll('.payment-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 selectedMethod = this.dataset.method;
-                
-                if (selectedMethod === 'mpesa') {
-                    document.getElementById('mpesaSection').classList.add('show');
-                } else {
-                    document.getElementById('mpesaSection').classList.remove('show');
-                }
+                document.getElementById('mpesaSection').style.display = selectedMethod === 'mpesa' ? 'block' : 'none';
             });
         });
 
-        // Reveal M-Pesa number
+        // Reveal/Copy
         document.getElementById('revealBtn').addEventListener('click', function() {
             const blur = document.getElementById('mpesaBlur');
-            if (!numberRevealed) {
-                blur.textContent = MPESA_NUMBER;
-                blur.classList.remove('blurred');
-                this.textContent = 'Hide';
-                numberRevealed = true;
-            } else {
-                blur.textContent = MPESA_MASKED;
-                blur.classList.add('blurred');
-                this.textContent = 'Reveal';
-                numberRevealed = false;
-            }
+            numberRevealed = !numberRevealed;
+            blur.textContent = numberRevealed ? MPESA_NUMBER : '●●●●●●●●●●';
+            blur.classList.toggle('blurred', !numberRevealed);
+            this.textContent = numberRevealed ? 'Hide' : 'Reveal';
         });
 
-        // Copy M-Pesa number
         document.getElementById('copyBtn').addEventListener('click', function() {
-            navigator.clipboard.writeText(MPESA_NUMBER).then(() => {
-                const originalText = this.textContent;
-                this.textContent = '✓ Copied!';
-                setTimeout(() => {
-                    this.textContent = originalText;
-                }, 2000);
-            });
+            navigator.clipboard.writeText(MPESA_NUMBER);
+            this.textContent = 'Copied!';
+            setTimeout(() => this.textContent = 'Copy', 2000);
         });
 
-        // Stake input
+        // Screenshot Upload Handlers
+        document.getElementById('screenshotSection').addEventListener('click', () => {
+            document.getElementById('screenshotInput').click();
+        });
+
+        document.getElementById('screenshotInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                screenshotBase64 = event.target.result;
+                document.getElementById('previewImage').src = screenshotBase64;
+                document.getElementById('screenshotPreview').classList.add('show');
+                document.getElementById('screenshotSection').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('removeScreenshotBtn').addEventListener('click', () => {
+            screenshotBase64 = null;
+            document.getElementById('screenshotInput').value = '';
+            document.getElementById('screenshotPreview').classList.remove('show');
+            document.getElementById('screenshotSection').style.display = 'block';
+        });
+
+        // Inputs & Quick Buttons
         const stakeInput = document.getElementById('stakeInput');
         stakeInput.addEventListener('input', function() {
-            const value = parseInt(this.value) || 0;
-            if (value >= 500 && value <= 100000) {
-                stakeAmount = value;
-            }
+            stakeAmount = parseInt(this.value) || 0;
             updateSummary();
-            updateSubmitBtn();
         });
 
-        // Quick amount buttons
         document.querySelectorAll('.quick-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 stakeAmount = parseInt(this.dataset.amount);
                 stakeInput.value = stakeAmount;
                 updateSummary();
-                updateSubmitBtn();
             });
         });
 
-        // Update summary
         function updateSummary() {
             if (selectedFighter) {
-                const summary = document.getElementById('summary');
-                summary.classList.add('show');
-                
-                const fighterName = selectedFighter === 'sedo' ? 'SEDO' : 'JOHNI';
-                const currentOdds = odds[selectedFighter];
-                const potentialWin = Math.round(stakeAmount * currentOdds);
-                
-                document.getElementById('summaryFighter').textContent = fighterName;
-                document.getElementById('summaryStake').textContent = stakeAmount.toLocaleString() + ' ETB';
-                document.getElementById('summaryWin').textContent = potentialWin.toLocaleString() + ' ETB';
-            } else {
-                document.getElementById('summary').classList.remove('show');
+                document.getElementById('summary').classList.add('show');
+                document.getElementById('summaryFighter').textContent = selectedFighter.toUpperCase();
+                document.getElementById('summaryStake').textContent = `${stakeAmount.toLocaleString()} ETB`;
+                document.getElementById('summaryWin').textContent = `${Math.round(stakeAmount * odds[selectedFighter]).toLocaleString()} ETB`;
+                document.getElementById('submitBtn').disabled = false;
             }
         }
 
-        // Update submit button
-        function updateSubmitBtn() {
-            const submitBtn = document.getElementById('submitBtn');
-            if (selectedFighter && stakeAmount >= 500) {
-                submitBtn.disabled = false;
-            } else {
-                submitBtn.disabled = true;
-            }
-        }
-
-        // Send data to Telegram
-        async function sendToTelegram(predictionData) {
-            try {
-                const message = `
-📊 NEW PREDICTION PLACED!
-━━━━━━━━━━━━━━━━━
-🥊 Fighter: ${predictionData.fighter.toUpperCase()}
-💰 Stake: ${predictionData.stake.toLocaleString()} ETB
-🎯 Potential Win: ${predictionData.potentialWin.toLocaleString()} ETB
-📱 Payment: ${predictionData.method}
-⏰ Time: ${new Date().toLocaleString()}
-━━━━━━━━━━━━━━━━━
-`;
-
-                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-                
-                await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-
-                return true;
-            } catch (error) {
-                console.error('Telegram error:', error);
-                return false;
-            }
-        }
-
-        // Submit prediction
+        // Send Submission to Telegram
         document.getElementById('submitBtn').addEventListener('click', async function() {
-            if (!selectedFighter) {
-                showError('❌ Please select a fighter');
-                return;
-            }
-
-            if (stakeAmount < 500 || stakeAmount > 100000) {
-                showError('❌ Stake must be between 500 and 100,000 ETB');
-                return;
-            }
-
-            if (selectedMethod === 'mpesa' && !numberRevealed) {
-                showError('❌ Please reveal and verify the M-Pesa number');
-                return;
-            }
+            if (!selectedFighter) return showError('Please select a fighter!');
+            if (selectedMethod === 'mpesa' && !screenshotBase64) return showError('Please attach a screenshot of your payment.');
 
             this.disabled = true;
-            this.textContent = 'PROCESSING...';
+            this.textContent = 'SUBMITTING...';
 
-            const predictionData = {
+            const payload = {
                 fighter: selectedFighter,
                 stake: stakeAmount,
                 potentialWin: Math.round(stakeAmount * odds[selectedFighter]),
-                method: selectedMethod,
-                timestamp: new Date().toISOString()
+                user: tg?.initDataUnsafe?.user?.username || 'Guest'
             };
 
-            // Send to Telegram
-            await sendToTelegram(predictionData);
+            const text = `🥊 <b>NEW PREDICTION</b>\n👤 User: @${payload.user}\n⚔️ Fighter: ${payload.fighter.toUpperCase()}\n💰 Stake: ${payload.stake} ETB\n🏆 Win: ${payload.potentialWin} ETB`;
 
-            // Update stats
-            const stats = JSON.parse(localStorage.getItem('fightStats')) || { totalBets: 0, activeUsers: 0 };
-            stats.totalBets += 1;
-            stats.activeUsers += 1;
-            localStorage.setItem('fightStats', JSON.stringify(stats));
+            try {
+                if (screenshotBase64) {
+                    const base64Data = screenshotBase64.split(',')[1];
+                    const binary = atob(base64Data);
+                    const array = [];
+                    for (let i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+                    const blob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
 
-            setTimeout(() => {
-                const successMsg = document.getElementById('successMessage');
-                successMsg.classList.add('show');
-                
-                setTimeout(() => {
-                    resetForm();
-                    successMsg.classList.remove('show');
-                }, 4000);
-            }, 1500);
+                    const formData = new FormData();
+                    formData.append('chat_id', TELEGRAM_CHAT_ID);
+                    formData.append('photo', blob, 'screenshot.jpg');
+                    formData.append('caption', text);
+                    formData.append('parse_mode', 'HTML');
+
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+                } else {
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'HTML' })
+                    });
+                }
+
+                document.getElementById('successMessage').classList.add('show');
+                tg?.HapticFeedback?.notificationOccurred('success');
+            } catch (err) {
+                showError('Failed to submit prediction. Try again.');
+            } finally {
+                this.textContent = 'PLACE PREDICTION';
+                this.disabled = false;
+            }
         });
 
-        // Show error
-        function showError(message) {
-            const errorMsg = document.getElementById('errorMessage');
-            errorMsg.textContent = message;
-            errorMsg.classList.add('show');
-            
-            setTimeout(() => {
-                errorMsg.classList.remove('show');
-            }, 4000);
+        function showError(msg) {
+            const errEl = document.getElementById('errorMessage');
+            errEl.textContent = msg;
+            errEl.classList.add('show');
+            setTimeout(() => errEl.classList.remove('show'), 3000);
         }
 
-        // Reset form
-        function resetForm() {
-            selectedFighter = null;
-            stakeAmount = 5000;
-            selectedMethod = 'mpesa';
-            numberRevealed = false;
-            
-            document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
-            document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.payment-btn')[0].classList.add('active');
-            
-            stakeInput.value = 5000;
-            document.getElementById('summary').classList.remove('show');
-            document.getElementById('mpesaSection').classList.add('show');
-            
-            const blur = document.getElementById('mpesaBlur');
-            blur.textContent = MPESA_MASKED;
-            blur.classList.add('blurred');
-            document.getElementById('revealBtn').textContent = 'Reveal';
-            
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitBtn').textContent = 'PLACE PREDICTION';
-
-            loadStats();
-        }
-
-        // Initialize
-        updateSubmitBtn();
-        document.getElementById('mpesaSection').classList.add('show');
+        document.getElementById('mpesaSection').style.display = 'block';
     </script>
 </body>
 </html>
