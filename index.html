@@ -1,1902 +1,1091 @@
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Swap Money V3 💰</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src='//libtl.com/sdk.js' data-zone='11460944' data-sdk='show_11460944'></script>
-<style>
-:root{
-  --bg:#07080d;--surface:#0d0f1a;--card:#111520;--card2:#161d2a;
-  --border:rgba(255,198,26,.15);--border2:rgba(255,255,255,.06);
-  --gold:#FFD700;--gold2:#FFA500;
-  --gold-grad:linear-gradient(135deg,#FFD700 0%,#FFA500 60%,#B8860B 100%);
-  --gold-glow:rgba(255,198,26,.2);
-  --green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#8b5cf6;
-  --text:#ffffff;--muted:#8892aa;--muted2:#3d4a63;
-  --font:'Segoe UI',-apple-system,Roboto,sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow-x:hidden}
-body{
-  background:var(--bg);
-  background-image:radial-gradient(rgba(255,198,26,.05) 1px,transparent 0);
-  background-size:24px 24px;
-  color:var(--text);font-family:var(--font);font-size:13px;
-  padding-bottom:72px;min-height:100vh;
-}
-::-webkit-scrollbar{width:2px;height:2px}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Money - Fight Prediction Arena</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* ── HEADER ── */
-header{
-  position:sticky;top:0;z-index:80;
-  background:rgba(7,8,13,.97);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  padding:8px 14px;display:flex;align-items:center;gap:8px;
-}
-.hdr-av{width:36px;height:36px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#000;box-shadow:0 0 12px var(--gold-glow);flex-shrink:0}
-.hdr-info{flex:1;min-width:0}
-.hdr-info h4{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hdr-info p{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:5px}
-.hdr-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.hdr-bal{background:rgba(255,198,26,.1);border:1px solid rgba(255,198,26,.28);border-radius:20px;padding:5px 11px;font-size:12px;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap}
-.hdr-bal img{width:14px;height:14px;object-fit:contain}
-.hdr-btn{width:32px;height:32px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.hdr-btn svg{width:16px;height:16px;fill:var(--muted)}
-.level-chip{background:rgba(255,198,26,.12);border:1px solid rgba(255,198,26,.3);border-radius:12px;padding:1px 7px;font-size:9px;font-weight:800;color:var(--gold)}
-.streak-chip{font-size:11px;font-weight:800;color:#FF6B35}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
 
-/* ── PAGES ── */
-.page{display:none;padding:10px 14px;animation:fadeUp .2s ease}
-.page.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        .container {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 193, 7, 0.1);
+        }
 
-/* ── BOTTOM NAV ── */
-.bnav{position:fixed;bottom:0;left:0;width:100%;background:rgba(7,8,13,.98);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0 calc(5px + env(safe-area-inset-bottom));z-index:90}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;background:none;border:none;color:var(--muted);font-size:9px;font-weight:800;padding:3px 8px;transition:color .2s;flex:1;font-family:var(--font)}
-.ni svg{width:20px;height:20px;fill:var(--muted);transition:fill .2s}
-.ni.active{color:var(--gold)}.ni.active svg{fill:var(--gold)}
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+            padding-bottom: 16px;
+        }
 
-/* ── CARD ── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
-.card-title{font-size:13px;font-weight:900;display:flex;align-items:center;gap:6px;margin-bottom:10px}
-.card-title i{color:var(--gold)}
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
 
-/* ── SECTION HEADER ── */
-.sh{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}
-.sh h3{font-size:13px;font-weight:900}
-.sh a{font-size:11px;color:var(--gold);font-weight:700;cursor:pointer}
+        .event-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffc107;
+            margin: 12px 0 8px 0;
+        }
 
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:12px;font-weight:800;font-size:12px;cursor:pointer;transition:all .15s;padding:10px 16px;font-family:var(--font)}
-.btn:active{transform:scale(.96)}
-.btn-gold{background:var(--gold-grad);color:#000;box-shadow:0 4px 14px var(--gold-glow)}
-.btn-gold:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--gold)}
-.btn-green{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
-.btn-block{width:100%}
+        .countdown-section {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-/* ── HERO WALLET ── */
-.hero-wallet{
-  background:linear-gradient(145deg,#1a1508,#0e1018,#080a12);
-  border:1px solid rgba(255,215,0,.28);border-radius:20px;padding:16px;
-  margin-bottom:10px;position:relative;overflow:hidden;
-}
-.hero-wallet::before{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.1),transparent 70%)}
-.hw-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-.hw-logo{font-size:11px;font-weight:900;color:var(--gold);letter-spacing:.5px}
-.hw-wallet-img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(255,198,26,.25))}
-.hw-label{font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
-.hw-amount{font-size:42px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px;text-shadow:0 0 40px rgba(255,208,0,.4);display:flex;align-items:baseline;gap:6px}
-.hw-currency{font-size:18px;font-weight:700;color:var(--gold)}
-.hw-sub{font-size:10px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:5px}
-.hw-sub .up{color:var(--green)}
+        .countdown-title {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-/* ── SC CARD ── */
-.sc-card{background:linear-gradient(145deg,#0f1520,#0a0e18);border:1px solid rgba(255,198,26,.2);border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;position:relative;overflow:hidden}
-.sc-card::after{content:'';position:absolute;right:0;top:0;bottom:0;width:35%;background:linear-gradient(90deg,transparent,rgba(255,198,26,.03))}
-.sc-img{width:44px;height:44px;flex-shrink:0;object-fit:contain}
-.sc-info{flex:1}
-.sc-title-row{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:900}
-.sc-new-badge{font-size:8px;background:var(--gold-grad);color:#000;padding:1px 6px;border-radius:10px;font-weight:900}
-.sc-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.sc-amount{font-size:20px;font-weight:900;color:var(--gold);margin-top:3px}
-.sc-etb{font-size:10px;color:var(--muted)}
-.sc-rate{font-size:10px;color:var(--green);font-weight:700}
+        .countdown-timer {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
+        }
 
-/* ── QA ROW ── */
-.qa-row{display:flex;justify-content:space-around;margin:10px 0 12px}
-.qa-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-.qa-circle{width:46px;height:46px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px var(--gold-glow);transition:.15s}
-.qa-circle:active{transform:scale(.92)}
-.qa-circle svg{width:21px;height:21px;fill:#000}
-.qa-label{font-size:9px;font-weight:800;color:var(--muted)}
+        .countdown-item {
+            background: rgba(255, 193, 7, 0.15);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+            padding: 12px 8px;
+            backdrop-filter: blur(10px);
+        }
 
-/* ── STATS GRID ── */
-.stats-4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
-.stat-box{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:11px;display:flex;align-items:center;gap:10px}
-.stat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stat-icon svg{width:18px;height:18px}
-.stat-info b{display:block;font-size:14px;font-weight:900;color:#fff}
-.stat-info span{font-size:9px;color:var(--muted);font-weight:700}
-.stat-change{font-size:9px;font-weight:700;color:var(--green);margin-top:1px}
+        .countdown-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffc107;
+            line-height: 1;
+        }
 
-/* ── BANNER ── */
-.banner-wrap{width:100%;border-radius:16px;overflow:hidden;position:relative;height:110px;margin-bottom:10px;border:1px solid var(--border);box-shadow:0 6px 20px rgba(0,0,0,.5);cursor:grab}
-.banner-wrap img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;opacity:0;transition:opacity .5s;pointer-events:none}
-.banner-wrap img.active{opacity:1}
-.b-dots{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
-.b-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);transition:.3s}
-.b-dot.active{background:var(--gold);width:12px;border-radius:6px}
+        .countdown-label {
+            font-size: 9px;
+            color: #999;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
 
-/* ── TASKS GRID ── */
-.tasks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
-.task-grid-item{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;text-align:center;transition:.15s}
-.task-grid-item:active{transform:scale(.96);background:rgba(255,198,26,.06)}
-.task-grid-item .tgi-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.task-grid-item .tgi-icon img{width:100%;height:100%;object-fit:contain}
-.task-grid-item h4{font-size:11px;font-weight:800}
-.task-grid-item .tgi-reward{font-size:10px;color:var(--gold);font-weight:700}
-.task-grid-item .tgi-btn{background:var(--gold-grad);color:#000;border:none;border-radius:8px;padding:5px 14px;font-size:10px;font-weight:900;cursor:pointer;font-family:var(--font);width:100%}
-.task-grid-item .tgi-btn:disabled{background:var(--card2);color:var(--muted);cursor:not-allowed}
+        .prize-section {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0.05) 100%);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-/* ── INVITE BANNER ── */
-.invite-banner{background:linear-gradient(135deg,#1a1005,#0e1018);border:1px solid rgba(255,198,26,.25);border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;position:relative;overflow:hidden}
-.invite-gift{width:56px;height:56px;object-fit:contain;flex-shrink:0}
-.invite-info h3{font-size:14px;font-weight:900;margin-bottom:3px}
-.invite-info p{font-size:10px;color:var(--muted);line-height:1.5;margin-bottom:7px}
-.invite-pct{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;background:var(--gold-grad);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;line-height:1.1}
-.invite-pct small{font-size:7px;font-weight:900}
+        .prize-title {
+            font-size: 12px;
+            color: #ffc107;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-/* ── LIVE FEED ── */
-.feed-item{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
-.feed-av{width:34px;height:34px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#000;flex-shrink:0}
-.feed-info h5{font-size:12px;font-weight:800}
-.feed-info p{font-size:10px;color:var(--muted);margin-top:1px}
-.feed-amount{font-size:14px;font-weight:900;color:var(--gold)}
+        .prize-pool {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
 
-/* ── EXCHANGE TAB ── */
-.exch-hero{background:linear-gradient(145deg,#1a1508,#0e1018);border:1px solid rgba(255,198,26,.28);border-radius:18px;padding:16px;text-align:center;margin-bottom:10px}
-.exch-hero-rate{font-size:28px;font-weight:900;color:var(--gold);margin:8px 0 4px}
-.exch-hero-sub{font-size:11px;color:var(--muted)}
-.exch-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px}
-.exch-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.exch-input-wrap{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
-.exch-input-label{font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
-.exch-input{width:100%;background:none;border:none;color:#fff;font-size:18px;font-weight:900;outline:none;font-family:var(--font)}
-.exch-arrow{width:32px;height:32px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;box-shadow:0 3px 10px var(--gold-glow)}
-.exch-arrow svg{width:16px;height:16px;fill:#000}
-.exch-info-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:10px;padding:8px 10px;background:var(--card2);border-radius:10px}
-.exch-info-row span{font-weight:700;color:var(--gold)}
-.exch-history-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2)}
-.exch-history-item:last-child{border-bottom:none}
-.exch-h-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.exch-h-info{flex:1;margin-left:8px}
-.exch-h-info h5{font-size:11px;font-weight:800}
-.exch-h-info p{font-size:10px;color:var(--muted)}
-.exch-h-amt{font-size:12px;font-weight:900}
+        .prize-item {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+            padding: 10px 6px;
+            backdrop-filter: blur(10px);
+        }
 
-/* ── EARN TAB ── */
-.earn-hero{background:linear-gradient(135deg,#1a1008,#0d1018);border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;margin-bottom:10px;display:flex;flex-direction:column;align-items:center;gap:6px}
-.earn-hero img{width:56px;height:56px;object-fit:contain}
-.earn-hero h2{font-size:18px;font-weight:900}
-.earn-hero p{font-size:11px;color:var(--muted);line-height:1.5}
+        .prize-rank {
+            font-size: 11px;
+            color: #ffc107;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
 
-/* ── GAME CARDS (compact, 1 row of 4) ── */
-.games-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:10px}
-.game-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:9px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
-.game-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.35))}
-.game-card:active{transform:scale(.96)}
-.game-card-img{width:34px;height:34px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
-.game-card-name{font-size:9.5px;font-weight:900;position:relative;z-index:1;text-align:center;line-height:1.2}
-.game-card-sub{display:none}
-.game-card-btn{background:var(--gold-grad);color:#000;border:none;border-radius:8px;padding:4px 0;font-size:9px;font-weight:900;cursor:pointer;position:relative;z-index:1;width:100%;font-family:var(--font)}
+        .prize-amount {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
 
-/* ── TASKS + ADS UNIFIED GRID ── */
-.earn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
-.earn-grid-item{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:10px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative;overflow:hidden}
-.earn-grid-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.earn-grid-item.tg-type::before{background:linear-gradient(90deg,#0088cc,#00b4d8)}
-.earn-grid-item.yt-type::before{background:linear-gradient(90deg,#ff0000,#ff4444)}
-.earn-grid-item.ad-type::before{background:linear-gradient(90deg,var(--gold),var(--gold2))}
-.egi-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.egi-icon img{width:100%;height:100%;object-fit:contain}
-.egi-icon svg{width:16px;height:16px}
-.egi-title{font-size:9.5px;font-weight:800;line-height:1.25}
-.egi-reward{font-size:11px;font-weight:900;color:var(--gold)}
-.egi-meta{font-size:8px;color:var(--muted);font-weight:700}
-.egi-btn{width:100%;padding:5px 0;background:var(--gold-grad);border:none;border-radius:7px;font-size:9px;font-weight:900;color:#000;cursor:pointer;font-family:var(--font);transition:.15s;margin-top:1px}
-.egi-btn:disabled{background:var(--card2);color:var(--muted);cursor:not-allowed}
-.egi-btn:active{transform:scale(.95)}
-.egi-done-badge{position:absolute;top:6px;right:6px;font-size:10px}
+        .fighters-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
 
-/* ── STREAK (EARN TAB) ── */
-.streak-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:10px}
-.streak-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.streak-top h4{font-size:13px;font-weight:900}
-.streak-top p{font-size:10px;color:var(--muted)}
-.streak-days{display:flex;gap:5px;justify-content:space-between}
-.streak-day{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:7px 3px;font-size:8px;font-weight:800;color:var(--muted)}
-.streak-day.done{background:rgba(255,198,26,.1);border-color:rgba(255,198,26,.35);color:var(--gold)}
-.streak-day.today{background:rgba(255,198,26,.14);border-color:var(--gold);color:var(--gold)}
-.streak-day-icon{font-size:14px}
+        .fighter-card {
+            background: rgba(255, 193, 7, 0.08);
+            border: 2px solid rgba(255, 193, 7, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* ── AD LIST ── */
-.ad-item{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
-.ad-thumb{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ad-play{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
-.ad-play svg{width:14px;height:14px;fill:#000;margin-left:2px}
-.ad-info{flex:1}
-.ad-info h4{font-size:12.5px;font-weight:800}
-.ad-meta{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:10px;color:var(--muted);font-weight:700}
-.ad-meta .reward{color:var(--gold);font-weight:800}
-.ad-btn{background:var(--gold-grad);color:#000;border:none;border-radius:10px;padding:8px 12px;font-size:11px;font-weight:900;cursor:pointer;flex-shrink:0;font-family:var(--font);transition:.15s}
-.ad-btn:active{transform:scale(.95)}
-.badge-hot{font-size:8px;background:rgba(239,68,68,.2);color:var(--red);padding:2px 6px;border-radius:8px;font-weight:800}
-.badge-new{font-size:8px;background:rgba(59,130,246,.2);color:var(--blue);padding:2px 6px;border-radius:8px;font-weight:800}
-.badge-easy{font-size:8px;background:rgba(16,185,129,.2);color:var(--green);padding:2px 6px;border-radius:8px;font-weight:800}
+        .fighter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-/* ── TOP TAB ── */
-.podium-row{display:flex;gap:6px;align-items:flex-end;margin-bottom:14px}
-.pod{flex:1;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px 6px;text-align:center;position:relative}
-.pod.p1{background:linear-gradient(180deg,#201808,#111520);border-color:var(--gold);transform:scale(1.04);z-index:2}
-.pod-av{width:38px;height:38px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#000;margin:0 auto 6px}
-.pod.p2 .pod-av{background:linear-gradient(135deg,#b0b8c8,#8899aa)}
-.pod.p3 .pod-av{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
-.pod-name{font-size:10px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pod-amt{font-size:11px;font-weight:900;color:var(--gold)}
-.pod-tag{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);background:var(--gold-grad);color:#000;font-size:8px;font-weight:900;padding:1px 7px;border-radius:8px}
-.lb-item{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.lb-left{display:flex;align-items:center;gap:8px}
-.lb-rank{width:24px;height:24px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--muted)}
-.lb-av{width:30px;height:30px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
-.lb-name{font-size:12px;font-weight:800}
-.lb-score{font-size:13px;font-weight:900;color:var(--gold)}
+        .fighter-card:hover::before {
+            left: 100%;
+        }
 
-/* ── REFERRAL TAB ── */
-.ref-hero{background:linear-gradient(145deg,#1a1208,#0d1018);border:1px solid rgba(255,198,26,.3);border-radius:18px;padding:16px;text-align:center;margin-bottom:10px}
-.ref-hero h2{font-size:24px;font-weight:900;margin:6px 0}
-.ref-hero p{font-size:11px;color:var(--muted);line-height:1.5}
-.ref-prog-bg{width:100%;height:7px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-top:10px}
-.ref-prog-fill{height:100%;background:var(--gold-grad);border-radius:10px;transition:.4s}
-.ref-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-.ref-stat{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:11px;text-align:center}
-.ref-stat b{display:block;font-size:18px;font-weight:900;color:var(--gold)}
-.ref-stat span{font-size:9px;color:var(--muted);font-weight:700}
-.ref-link-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px}
-.ref-link-inp{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:#fff;font-size:11px;font-weight:700;outline:none;margin-bottom:10px;font-family:var(--font)}
-.share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.share-btn{background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:9px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.15s}
-.share-btn:active{transform:scale(.94)}
-.share-btn img{width:28px;height:28px;object-fit:contain}
-.share-btn span{font-size:9px;font-weight:800;color:var(--muted)}
-.how-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px;margin-bottom:10px}
-.how-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
-.how-step:last-child{border-bottom:none}
-.how-num{width:28px;height:28px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#000;flex-shrink:0}
-.how-text h5{font-size:12px;font-weight:800}
-.how-text p{font-size:10px;color:var(--muted);line-height:1.5;margin-top:1px}
+        .fighter-card:hover {
+            border-color: rgba(255, 193, 7, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.15);
+        }
 
-/* ── WITHDRAW TAB ── */
-.wd-balance{background:var(--gold-grad);border-radius:16px;padding:16px;text-align:center;margin-bottom:10px;box-shadow:0 8px 24px var(--gold-glow)}
-.wd-balance h3{font-size:11px;font-weight:800;color:rgba(0,0,0,.6);margin-bottom:4px}
-.wd-balance .amt{font-size:36px;font-weight:900;color:#000;line-height:1}
-.wd-balance .amt span{font-size:16px}
-.wd-balance p{font-size:10px;color:rgba(0,0,0,.55);font-weight:700;margin-top:3px}
-.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
-.method-btn{background:var(--card);border:2px solid var(--border2);border-radius:12px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:.15s}
-.method-btn:active{transform:scale(.95)}
-.method-btn.sel{border-color:var(--gold);background:rgba(255,198,26,.07)}
-.method-btn img{width:34px;height:34px;object-fit:contain;border-radius:7px}
-.method-btn span{font-size:9px;font-weight:800;color:var(--muted)}
-.method-btn.sel span{color:var(--gold)}
-.wd-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
-.form-label{display:block;font-size:10px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
-.form-input{width:100%;padding:11px 13px;background:var(--card2);border:1px solid var(--border);border-radius:11px;color:#fff;font-size:13px;font-weight:700;outline:none;font-family:var(--font);margin-bottom:10px;transition:border-color .2s}
-.form-input:focus{border-color:rgba(255,198,26,.4)}
-.min-notice{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);border-radius:10px;padding:8px 12px;font-size:11px;font-weight:700;color:var(--red);margin-bottom:10px}
-.wd-task-notice{display:none;background:rgba(255,198,26,.07);border:1px solid rgba(255,198,26,.22);border-radius:10px;padding:8px 12px;font-size:11px;font-weight:700;color:var(--gold);margin-bottom:10px}
-.wd-btn{width:100%;padding:14px;background:var(--gold-grad);border:none;border-radius:13px;font-size:14px;font-weight:900;color:#000;cursor:pointer;box-shadow:0 6px 18px var(--gold-glow);font-family:var(--font);transition:.15s}
-.wd-btn:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed}
+        .fighter-card.selected {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 193, 7, 0.1) 100%);
+            border-color: #ffc107;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.3), inset 0 0 20px rgba(255, 193, 7, 0.1);
+        }
 
-/* ── GAME MODAL ── */
-.game-modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:200;display:none;flex-direction:column}
-.game-modal.open{display:flex}
-.gm-hdr{background:rgba(7,8,13,.98);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.gm-title{font-size:14px;font-weight:900;color:var(--gold)}
-.gm-right{display:flex;align-items:center;gap:8px}
-.gm-sc-pill{display:flex;align-items:center;gap:4px;background:rgba(255,198,26,.1);border:1px solid rgba(255,198,26,.25);border-radius:14px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--gold)}
-.gm-sc-pill img{width:14px;height:14px;object-fit:contain}
-.gm-close{width:30px;height:30px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--muted)}
-.gm-iframe{flex:1;border:none;width:100%;background:var(--bg)}
-.gm-footer{background:rgba(7,8,13,.98);border-top:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.gm-session{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--gold)}
-.gm-session img{width:18px;height:18px;object-fit:contain}
+        .fighter-image-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 12px;
+            position: relative;
+        }
 
-/* ── AD MODAL ── */
-.ad-modal{position:fixed;inset:0;background:rgba(7,8,13,.95);backdrop-filter:blur(14px);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}
-.ad-modal.active{display:flex}
-.ad-modal-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:24px 20px;text-align:center;max-width:340px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.9)}
-.ad-play-ring{width:60px;height:60px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 0 20px var(--gold-glow)}
-.ad-play-ring svg{width:26px;height:26px;fill:#fff;margin-left:3px}
-.ad-title{font-size:16px;font-weight:900;margin-bottom:5px}
-.ad-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:16px}
-.ad-bar-bg{width:100%;height:7px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:8px}
-.ad-bar-fill{height:100%;background:var(--gold-grad);border-radius:10px;width:0%;transition:width 1s linear}
-.ad-timer-txt{font-size:12px;font-weight:900;color:var(--gold)}
+        .fighter-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 3px solid rgba(255, 193, 7, 0.3);
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
+            overflow: hidden;
+        }
 
-/* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:400;display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.active{display:flex}
-.modal-sheet{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;padding:20px 16px 28px;width:100%;max-width:480px}
-.modal-handle{width:36px;height:3px;background:var(--border);border-radius:3px;margin:0 auto 16px}
-.modal-title{font-size:16px;font-weight:900;color:var(--gold);margin-bottom:10px}
-.modal-body{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:16px}
+        .fighter-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-/* ── TOAST ── */
-#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--gold);color:#fff;padding:10px 16px;border-radius:12px;font-size:12px;font-weight:800;box-shadow:0 10px 28px rgba(0,0,0,.8);opacity:0;pointer-events:none;transition:.22s;z-index:600;width:86%;max-width:360px;text-align:center}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-</style>
+        .fighter-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #ffc107;
+        }
+
+        .fighter-stats {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+
+        .fighter-odds {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .prediction-section {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffc107;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #999;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .stake-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 193, 7, 0.05);
+            border: 2px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .stake-input::placeholder {
+            color: #666;
+        }
+
+        .stake-input:focus {
+            outline: none;
+            border-color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+        }
+
+        .quick-amounts {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffc107;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-btn:hover {
+            background: rgba(255, 193, 7, 0.2);
+            border-color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+        }
+
+        .prediction-summary {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .prediction-summary.show {
+            display: block;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 193, 7, 0.2);
+            font-weight: bold;
+            color: #ffc107;
+        }
+
+        .label {
+            color: #999;
+        }
+
+        .value {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .payment-btn {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            color: #ffc107;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .payment-btn:hover {
+            border-color: #ffc107;
+            background: rgba(255, 193, 7, 0.15);
+        }
+
+        .payment-btn.active {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 193, 7, 0.1));
+            border-color: #ffc107;
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .mpesa-section {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 12px;
+            padding: 14px;
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .mpesa-section.show {
+            display: block;
+        }
+
+        .mpesa-number {
+            background: rgba(255, 193, 7, 0.15);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .mpesa-blur {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffc107;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+            flex: 1;
+        }
+
+        .mpesa-blur.blurred {
+            filter: blur(6px);
+            cursor: pointer;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            border: none;
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+        }
+
+        .reveal-btn {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.4);
+            color: #ffc107;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reveal-btn:hover {
+            background: rgba(255, 193, 7, 0.3);
+        }
+
+        .mpesa-instructions {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            background: rgba(255, 193, 7, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: #4caf50;
+            margin-top: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .success-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .success-text {
+            font-size: 12px;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 12px;
+            color: #f44336;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .info-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 3px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 11px;
+            color: #ffc107;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: rgba(255, 193, 7, 0.08);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffc107;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 14px;
+            }
+
+            .fighters-container {
+                gap: 10px;
+            }
+
+            .fighter-card {
+                padding: 12px;
+            }
+
+            .fighter-image-container {
+                width: 80px;
+                height: 80px;
+            }
+
+            .fighter-image {
+                font-size: 36px;
+            }
+
+            .countdown-timer {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- ── AD MODAL ── -->
-<div class="ad-modal" id="adModal">
-  <div class="ad-modal-card">
-    <button id="adCloseBtn" onclick="closeAdAndShowAnother()" style="display:none;position:absolute;top:12px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer;font-family:var(--font)">✕</button>
-    <div class="ad-play-ring"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <div class="ad-title" id="adTitle">ማስታወቂያ #1 በሂደት ላይ</div>
-    <div class="ad-desc" id="adDesc">30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">50 ETB</strong> ይጨምራሉ!</div>
-    <div class="ad-bar-bg"><div class="ad-bar-fill" id="adBarFill"></div></div>
-    <div class="ad-timer-txt" id="adTimerTxt">30s ቀርቷል</div>
-  </div>
-</div>
-
-<!-- ── GAME MODAL ── -->
-<div class="game-modal" id="gameModal">
-  <div class="gm-hdr">
-    <span class="gm-title" id="gmTitle">🎮 Game</span>
-    <div class="gm-right">
-      <div class="gm-sc-pill">
-        <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
-        <span id="gmSCDisplay">0 SC</span>
-      </div>
-      <div class="gm-close" onclick="closeGame()">✕</div>
-    </div>
-  </div>
-  <iframe class="gm-iframe" id="gmIframe" title="Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
-  <div class="gm-footer">
-    <div class="gm-session">
-      <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
-      ይህ ጨዋታ: <span id="gmSessionCoins">0 SC</span>
-    </div>
-    <button class="btn btn-green" style="padding:7px 14px;font-size:11px" onclick="closeGame()">✓ ጨርስ</button>
-  </div>
-</div>
-
-<!-- ── WD NOTICE MODAL ── -->
-<div class="modal-overlay" id="wdModal">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div style="font-size:44px;text-align:center;margin-bottom:8px">✅</div>
-    <div class="modal-title" style="text-align:center">ጥያቄዎ ተቀብሏል!</div>
-    <div class="modal-body" style="text-align:center">የማውጫ ጥያቄዎ ተቀብሏል። <strong>በ24 ሰዓት ውስጥ</strong> ወደ አካውንትዎ ይላካል።</div>
-    <button class="btn btn-gold btn-block" onclick="document.getElementById('wdModal').classList.remove('active')">እሺ</button>
-  </div>
-</div>
-
-<!-- ════════════════════════
-     HEADER
-════════════════════════ -->
-<header>
-  <div class="hdr-av" id="hdrAv">U</div>
-  <div class="hdr-info">
-    <h4 id="hdrWelcome">Welcome Back 👋🔥</h4>
-    <p>
-      <span id="hdrUser">@user</span>
-      <span class="level-chip" id="levelChip">⭐ Level 1</span>
-      <span class="streak-chip" id="streakChip"></span>
-    </p>
-  </div>
-  <div class="hdr-right">
-    <div class="hdr-bal" onclick="showPage('withdraw')" id="hdrBal">
-      <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="sc">
-      <span id="hdrSC">0.00</span> SWAP
-    </div>
-    <div class="hdr-btn" onclick="syncFromSheet()" title="Refresh" style="position:relative">
-      <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-      <span id="syncDot" style="display:none;position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 4px var(--green)"></span>
-    </div>
-  </div>
-</header>
-
-<!-- ════════════════════════
-     HOME PAGE
-════════════════════════ -->
-<section class="page active" id="page-home">
-
-  <!-- Hero Wallet -->
-  <div class="hero-wallet">
-    <div class="hw-top">
-      <div class="hw-logo">SWAP Money 💰</div>
-      <img class="hw-wallet-img" src="https://i.postimg.cc/gkQTRy6n/20260809-161458.png" alt="wallet">
-    </div>
-    <div class="hw-label">Wallet Balance <span style="opacity:.5;cursor:pointer">👁</span></div>
-    <div class="hw-amount">
-      <span id="mainBalance">0</span>
-      <span class="hw-currency">ETB</span>
-    </div>
-    <div class="hw-sub">
-      <span class="up">↑ Syncing…</span>
-      <span id="balSub">ሂሳቡ ከ sheet ይመጣል</span>
-    </div>
-  </div>
-
-  <!-- SC Card -->
-  <div class="sc-card">
-    <img class="sc-img" src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" alt="SC">
-    <div class="sc-info">
-      <div class="sc-title-row">Swap Coin <span class="sc-new-badge">New</span></div>
-      <div class="sc-sub">Trade, Swap &amp; Earn More</div>
-      <div class="sc-amount"><span id="scBalance">0</span> SC</div>
-      <div class="sc-etb">≈ <span id="scEtbEquiv">0.00</span> ETB</div>
-    </div>
-    <div style="text-align:right;flex-shrink:0">
-      <div class="sc-rate">1 ETB = 2 SC</div>
-      <button class="btn btn-gold" style="padding:6px 12px;font-size:10px;margin-top:6px" onclick="showPage('exchange')">Exchange</button>
-    </div>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="qa-row">
-    <div class="qa-item" onclick="toast('⏳ Deposit coming soon!')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
-      <span class="qa-label">Deposit</span>
-    </div>
-    <div class="qa-item" onclick="showPage('exchange')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></div>
-      <span class="qa-label">Exchange</span>
-    </div>
-    <div class="qa-item" onclick="showPage('withdraw')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg></div>
-      <span class="qa-label">Withdraw</span>
-    </div>
-    <div class="qa-item" onclick="toast('⏳ History coming soon!')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
-      <span class="qa-label">History</span>
-    </div>
-    <div class="qa-item" onclick="showPage('invite')">
-      <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-      <span class="qa-label">Invite</span>
-    </div>
-  </div>
-
-  <!-- Stats -->
-  <div class="stats-4">
-    <div class="stat-box">
-      <div class="stat-icon" style="background:rgba(16,185,129,.12)"><svg viewBox="0 0 24 24" style="fill:var(--green)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg></div>
-      <div class="stat-info"><b id="stEarn">0 ETB</b><span>Total Earnings</span><div class="stat-change" id="stEarnSub">↑ Today</div></div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-icon" style="background:rgba(239,68,68,.12)"><svg viewBox="0 0 24 24" style="fill:var(--red)"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg></div>
-      <div class="stat-info"><b id="stAds">0</b><span>Ads Watched</span><div class="stat-change">↑ Total</div></div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-icon" style="background:rgba(139,92,246,.12)"><svg viewBox="0 0 24 24" style="fill:var(--purple)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-      <div class="stat-info"><b id="stRefs">0</b><span>Referrals</span><div class="stat-change">+<span id="stRefBonus">0</span> ETB</div></div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-icon" style="background:rgba(255,198,26,.1)"><svg viewBox="0 0 24 24" style="fill:var(--gold)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
-      <div class="stat-info"><b id="stSC">0 SC</b><span>Swap Coins</span><div class="stat-change">≈ <span id="stSCEtb">0</span> ETB</div></div>
-    </div>
-  </div>
-
-  <!-- Banner -->
-  <div class="banner-wrap" id="bannerSlider">
-    <img src="https://i.postimg.cc/VLr7YSHL/20260809-161005.jpg" class="active" alt="">
-    <img src="https://i.postimg.cc/nLZTY3VT/20260809-161044.jpg" alt="">
-    <img src="https://i.postimg.cc/rmZJTc15/20260809-161113.jpg" alt="">
-    <img src="https://i.postimg.cc/T1ycYSQp/20260809-161154.jpg" alt="">
-    <img src="https://i.postimg.cc/QtCQ0P2x/20260809-161227.jpg" alt="">
-    <img src="https://i.postimg.cc/PfLcqFCP/20260809-161327.jpg" alt="">
-    <img src="https://i.postimg.cc/9FZndRtz/20260809-161351.jpg" alt="">
-    <div class="b-dots" id="bDots"></div>
-  </div>
-
-  <!-- Tasks Grid (Home) -->
-  <div class="sh"><h3>📋 Tasks</h3><a onclick="showPage('earn')">ሁሉም →</a></div>
-  <div class="tasks-grid" id="homeTasksGrid"></div>
-
-  <!-- Invite Banner -->
-  <div class="invite-banner">
-    <img class="invite-gift" src="https://i.postimg.cc/cJwy699g/20260809-161701.png" alt="gift">
-    <div class="invite-info">
-      <h3>Invite &amp; Earn More!</h3>
-      <p>ጓደኛ ሲጋብዙ <span style="color:var(--gold);font-weight:800">50 ETB</span> ቦነስ!</p>
-      <button class="btn btn-gold" style="padding:7px 16px;font-size:11px" onclick="showPage('invite')">Invite Now</button>
-    </div>
-    <div class="invite-pct">10%<small>bonus</small></div>
-  </div>
-
-  <!-- Live Withdrawal -->
-  <div class="sh"><h3>💸 Live Withdrawals</h3><span style="font-size:9px;background:rgba(16,185,129,.15);color:var(--green);padding:2px 7px;border-radius:8px;font-weight:800">● LIVE</span></div>
-  <div id="liveFeed"></div>
-
-</section>
-
-<!-- ════════════════════════
-     EXCHANGE PAGE
-════════════════════════ -->
-<section class="page" id="page-exchange">
-
-  <div class="exch-hero">
-    <img src="https://i.postimg.cc/DwzKHM7q/20260805-173329.png" style="width:44px;height:44px;object-fit:contain;margin-bottom:6px" alt="SC">
-    <div style="font-size:11px;font-weight:700;color:var(--muted)">Current Exchange Rate</div>
-    <div class="exch-hero-rate">1 ETB = 2 SC</div>
-    <div class="exch-hero-sub">1 SC = 0.50 ETB · ወደፊት Market Cap ይቀየራል</div>
-  </div>
-
-  <!-- SC → ETB -->
-  <div class="exch-card">
-    <div class="card-title">🔄 SC → ETB (ወደ ETB ቀይር)</div>
-    <div class="exch-row">
-      <div class="exch-input-wrap">
-        <div class="exch-input-label">Swap Coins (SC)</div>
-        <input class="exch-input" type="number" id="sc2etbInput" placeholder="0" min="1" oninput="calcSC2ETB()">
-      </div>
-      <div class="exch-arrow">
-        <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-      </div>
-      <div class="exch-input-wrap">
-        <div class="exch-input-label">Ethiopian Birr (ETB)</div>
-        <input class="exch-input" id="sc2etbOut" placeholder="0.00" readonly style="color:var(--gold)">
-      </div>
-    </div>
-    <div class="exch-info-row">
-      <span>ያለዎ SC: <span id="exchAvailSC">0</span></span>
-      <span>ይቀበላሉ: <span id="exchWillGet">0.00 ETB</span></span>
-    </div>
-    <button class="btn btn-gold btn-block" onclick="doExchange('sc2etb')">SC → ETB Exchange አድርግ</button>
-  </div>
-
-  <!-- ETB → SC -->
-  <div class="exch-card">
-    <div class="card-title">🔄 ETB → SC (Swap Coin ግዛ)</div>
-    <div class="exch-row">
-      <div class="exch-input-wrap">
-        <div class="exch-input-label">Ethiopian Birr (ETB)</div>
-        <input class="exch-input" type="number" id="etb2scInput" placeholder="0" min="1" oninput="calcETB2SC()">
-      </div>
-      <div class="exch-arrow">
-        <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
-      </div>
-      <div class="exch-input-wrap">
-        <div class="exch-input-label">Swap Coins (SC)</div>
-        <input class="exch-input" id="etb2scOut" placeholder="0" readonly style="color:var(--purple)">
-      </div>
-    </div>
-    <div class="exch-info-row">
-      <span>ያለዎ ETB: <span id="exchAvailETB">0</span></span>
-      <span>ይቀበላሉ: <span id="exchSCWillGet">0 SC</span></span>
-    </div>
-    <button class="btn btn-gold btn-block" onclick="doExchange('etb2sc')">ETB → SC Exchange አድርግ</button>
-  </div>
-
-  <!-- Exchange History -->
-  <div class="card">
-    <div class="card-title">📋 Exchange ታሪክ</div>
-    <div id="exchHistoryList">
-      <div style="text-align:center;padding:16px;color:var(--muted);font-size:12px">ምንም exchange ታሪክ የለም</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- ════════════════════════
-     EARN PAGE
-════════════════════════ -->
-<section class="page" id="page-earn">
-
-  <div class="earn-hero">
-    <img src="https://i.postimg.cc/cJwy699g/20260809-161701.png" alt="earn">
-    <h2>Earn &amp; Get Rewards ✨</h2>
-    <p>ማስታወቂያ ያዩ፣ Tasks ያጠናቅቁ — ዕለታዊ ሽልማት ያግኙ!</p>
-  </div>
-
-  <!-- Games -->
-  <div class="sh"><h3>🎮 Mini Games</h3><div style="font-size:9px;background:rgba(255,198,26,.1);border:1px solid rgba(255,198,26,.25);border-radius:8px;padding:2px 8px;color:var(--gold);font-weight:800">SC ያስገኛሉ</div></div>
-  <div class="games-grid">
-    <div class="game-card" onclick="openGame('spin')" style="background:linear-gradient(145deg,#1a1008,#111520)">
-      <img class="game-card-img" src="https://i.postimg.cc/RZj4tTzf/20260805-175624.png" alt="Spin">
-      <div class="game-card-name">Spin Wheel</div>
-      <div class="game-card-sub">Spin &amp; Win SC</div>
-      <button class="game-card-btn">Spin Now</button>
-    </div>
-    <div class="game-card" onclick="openGame('scratch')" style="background:linear-gradient(145deg,#0e1520,#111520)">
-      <img class="game-card-img" src="https://i.postimg.cc/LX97gqhV/20260805-175646.png" alt="Scratch">
-      <div class="game-card-name">Scratch Card</div>
-      <div class="game-card-sub">Win Big SC</div>
-      <button class="game-card-btn">Scratch</button>
-    </div>
-    <div class="game-card" onclick="openGame('coin')" style="background:linear-gradient(145deg,#0e1808,#111520)">
-      <img class="game-card-img" src="https://i.postimg.cc/zvWP9TQf/20260805-175704.png" alt="Coin">
-      <div class="game-card-name">Coin Flip</div>
-      <div class="game-card-sub">Flip &amp; Earn SC</div>
-      <button class="game-card-btn">Flip Now</button>
-    </div>
-    <div class="game-card" onclick="openGame('guess')" style="background:linear-gradient(145deg,#12081a,#111520)">
-      <img class="game-card-img" src="https://i.postimg.cc/rsCN1jbr/20260805-175722.png" alt="Guess">
-      <div class="game-card-name">Number Guess</div>
-      <div class="game-card-sub">Guess &amp; Win SC</div>
-      <button class="game-card-btn">Play Now</button>
-    </div>
-  </div>
-
-  <!-- Daily Streak -->
-  <div class="streak-card">
-    <div class="streak-top">
-      <span style="font-size:20px">🔥</span>
-      <div><h4>Daily Streak</h4><p>ዕለታዊ ቦነስ ያግኙ!</p></div>
-      <div style="margin-left:auto;font-size:11px;font-weight:800;color:var(--gold)" id="earnStreakCount">0🔥</div>
-    </div>
-    <div class="streak-days" id="streakDaysEl"></div>
-    <button class="btn btn-gold btn-block" id="streakClaimBtn" style="margin-top:8px" onclick="claimStreakReward()">ይቀበሉ</button>
-  </div>
-
-  <!-- Tasks Grid -->
-  <div class="sh"><h3>📋 Tasks</h3>
-    <span style="font-size:9px;background:rgba(16,185,129,.12);color:var(--green);padding:2px 8px;border-radius:8px;font-weight:800">Daily</span>
-  </div>
-  <div class="earn-grid" id="earnTaskGrid"></div>
-
-  <!-- Ads Grid -->
-  <div class="sh">
-    <h3>📺 Watch Ads &amp; Earn</h3>
-    <span style="font-size:9px;background:rgba(239,68,68,.15);color:var(--red);padding:2px 6px;border-radius:8px;font-weight:800">HOT</span>
-  </div>
-  <p style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600">30 ሰከንድ ያዩ — 50 ETB ወደ ሂሳብዎ ይገባል</p>
-  <div class="earn-grid" id="earnAdGrid"></div>
-
-</section>
-
-<!-- ════════════════════════
-     TOP PAGE
-════════════════════════ -->
-<section class="page" id="page-top">
-  <div class="sh" style="margin-top:0"><h3>🏆 Top Earners</h3><span style="font-size:9px;background:rgba(16,185,129,.12);color:var(--green);padding:2px 7px;border-radius:8px;font-weight:800">● LIVE</span></div>
-  <div class="podium-row" id="podiumEl"></div>
-  <div id="lbListEl"></div>
-</section>
-
-<!-- ════════════════════════
-     INVITE PAGE
-════════════════════════ -->
-<section class="page" id="page-invite">
-  <div class="ref-hero">
-    <img src="https://i.postimg.cc/cJwy699g/20260809-161701.png" style="width:64px;height:64px;object-fit:contain;margin-bottom:6px" alt="gift">
-    <p style="font-size:11px;font-weight:800;color:var(--muted)">10 ሰው ሲጋብዙ</p>
-    <h2>500 ETB</h2>
-    <p>አንድ ሰው ሲጋብዙ 50 ETB ቦነስ ያኛሉ</p>
-    <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-top:8px;margin-bottom:4px">
-      <span>Progress</span><span id="refProgText" style="color:var(--gold)">0/10</span>
-    </div>
-    <div class="ref-prog-bg"><div class="ref-prog-fill" id="refProgFill" style="width:0%"></div></div>
-  </div>
-  <div class="ref-stats">
-    <div class="ref-stat"><b id="refCount">0</b><span>Referrals</span></div>
-    <div class="ref-stat"><b id="refEarned">0</b><span>ETB Earned</span></div>
-    <div class="ref-stat"><b>50 ETB</b><span>Per Invite</span></div>
-  </div>
-  <div class="ref-link-box">
-    <label class="form-label">የግብዣ ሊንክ</label>
-    <input class="ref-link-inp" id="refLinkInp" readonly>
-    <div class="sh" style="margin:0 0 8px"><h3 style="font-size:12px">Share via</h3></div>
-    <div class="share-grid">
-      <div class="share-btn" onclick="shareSocial('telegram')">
-        <img src="https://static.vecteezy.com/system/resources/previews/023/986/562/non_2x/telegram-logo-telegram-logo-transparent-telegram-icon-transparent-free-free-png.png" alt="Telegram">
-        <span>Telegram</span>
-      </div>
-      <div class="share-btn" onclick="shareSocial('whatsapp')">
-        <img src="https://static.vecteezy.com/system/resources/previews/022/493/583/non_2x/3d-render-whatsapp-logo-icon-with-new-notification-isolated-on-transparent-background-free-png.png" alt="WhatsApp">
-        <span>WhatsApp</span>
-      </div>
-      <div class="share-btn" onclick="shareSocial('facebook')">
-        <img src="https://marketplace.canva.com/KrzKM/MAGzNqKrzKM/1/tl/canva-facebook-logo-MAGzNqKrzKM.png" alt="Facebook">
-        <span>Facebook</span>
-      </div>
-      <div class="share-btn" onclick="shareSocial('messenger')">
-        <img src="https://static.vecteezy.com/system/resources/previews/021/495/995/non_2x/messenger-social-media-logo-icon-free-png.png" alt="Messenger">
-        <span>Messenger</span>
-      </div>
-      <div class="share-btn" onclick="copyRefLink()" style="grid-column:span 2;background:rgba(255,198,26,.07);border-color:rgba(255,198,26,.25)">
-        <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:var(--gold)"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-        <span style="color:var(--gold)">Copy Link</span>
-      </div>
-    </div>
-  </div>
-  <div class="sh"><h3>How it Works</h3></div>
-  <div class="how-card">
-    <div class="how-step"><div class="how-num">1</div><div class="how-text"><h5>ሊንክ ያጋሩ</h5><p>ልዩ የግብዣ ሊንክዎን ከጓደኞችዎ ጋር ያጋሩ</p></div></div>
-    <div class="how-step"><div class="how-num">2</div><div class="how-text"><h5>ጓደኛዎ ይቀላቀሉ</h5><p>ጓደኛዎ Swap Money ያዎርዱ &amp; ይቀላቀሉ</p></div></div>
-    <div class="how-step"><div class="how-num">3</div><div class="how-text"><h5>ቦነስ ያግኙ</h5><p>ወዲያውኑ 50 ETB ወደ ሂሳብዎ ይገባል</p></div></div>
-    <div class="how-step"><div class="how-num">4</div><div class="how-text"><h5>500 ETB Milestone!</h5><p>10 ሰው ሲሞላ ልዩ 500 ETB bonus ያኛሉ</p></div></div>
-  </div>
-</section>
-
-<!-- ════════════════════════
-     WITHDRAW PAGE
-════════════════════════ -->
-<section class="page" id="page-withdraw">
-  <div class="wd-balance">
-    <h3>ጠቅላላ ቀሪ ሂሳብ</h3>
-    <div class="amt"><span id="wdBalDisplay">0</span><span> ETB</span></div>
-    <p>Min: 2,500 ETB · SC ☞ Exchange ከፍቶ ወደ ETB ቀይር</p>
-  </div>
-
-  <!-- SC quick exchange -->
-  <div class="card" style="margin-bottom:10px">
-    <div class="card-title">🔄 SC → ETB (Quick)</div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <input class="form-input" type="number" id="wdScInput" placeholder="SC amount" style="margin:0;flex:1" oninput="document.getElementById('wdScOut').value=(parseFloat(this.value||0)*0.5).toFixed(2)+' ETB'">
-      <div style="font-size:18px;color:var(--gold)">⇄</div>
-      <input class="form-input" id="wdScOut" readonly placeholder="0.00 ETB" style="margin:0;flex:1;color:var(--gold)">
-    </div>
-    <button class="btn btn-gold btn-block" style="margin-top:8px" onclick="quickExchangeSC()">Exchange &amp; Add to ETB</button>
-  </div>
-
-  <div class="sh"><h3>Bank / Provider</h3></div>
-  <div class="method-grid" id="methodGrid">
-    <div class="method-btn sel" id="mb_tele" onclick="selMethod('Telebirr',this)">
-      <img src="https://i.postimg.cc/1zH5wqRj/20260805-174415.png" alt="Telebirr"><span>Telebirr</span>
-    </div>
-    <div class="method-btn" id="mb_cbe" onclick="selMethod('CBE Bank',this)">
-      <img src="https://i.postimg.cc/Hk1pN2VS/20260805-174301.png" alt="CBE"><span>CBE Bank</span>
-    </div>
-    <div class="method-btn" id="mb_awash" onclick="selMethod('Awash Bank',this)">
-      <img src="https://i.postimg.cc/NMntk7hh/20260805-174324.png" alt="Awash"><span>Awash</span>
-    </div>
-    <div class="method-btn" id="mb_aby" onclick="selMethod('Abyssinia',this)">
-      <img src="https://i.postimg.cc/BbCdwxk4/20260805-174346.png" alt="Abyssinia"><span>Abyssinia</span>
-    </div>
-    <div class="method-btn" id="mb_ethio" onclick="selMethod('Ethio Telecom',this)">
-      <img src="https://i.postimg.cc/8kHyrPVY/20260805-181423.png" alt="Ethio"><span>Ethio Telecom</span>
-    </div>
-    <div class="method-btn" id="mb_safari" onclick="selMethod('Safaricom',this)">
-      <img src="https://i.postimg.cc/kgDhCrzw/20260805-181354.png" alt="Safaricom"><span>Safaricom</span>
-    </div>
-  </div>
-
-  <div class="wd-form">
-    <div class="min-notice">⚠️ አነስተኛ የማውጫ መጠን: 2,500 ETB</div>
-    <label class="form-label" id="wdAcctLabel">የስልክ ቁጥር (Telebirr)</label>
-    <input class="form-input" id="wdAcct" placeholder="09... ወይም 07...">
-    <label class="form-label">Amount (ETB)</label>
-    <input class="form-input" id="wdAmt" type="number" placeholder="2500+" min="2500">
-    <div class="wd-task-notice" id="wdTaskNotice"></div>
-    <button class="wd-btn" id="wdBtn" onclick="submitWithdraw()">Confirm Withdrawal</button>
-  </div>
-</section>
-
-<!-- ── BOTTOM NAV ── -->
-<nav class="bnav">
-  <button class="ni active" data-p="home" onclick="showPage('home')">
-    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home
-  </button>
-  <button class="ni" data-p="earn" onclick="showPage('earn')">
-    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>Earn
-  </button>
-  <button class="ni" data-p="exchange" onclick="showPage('exchange')">
-    <svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>Exchange
-  </button>
-  <button class="ni" data-p="invite" onclick="showPage('invite')">
-    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Referral
-  </button>
-  <button class="ni" data-p="withdraw" onclick="showPage('withdraw')">
-    <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8z"/></svg>Withdraw
-  </button>
-</nav>
-<div id="toast"></div>
-
-<script>
-/* ═══════════════ CONFIG ═══════════════ */
-const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxDii62Bjz7KNxIFY9deeDDxnjNx1ifHu93GRxkhmpC9srZ_ZFSAtQgttQYh8o1pXmIgQ/exec';
-const BOT_USERNAME = 'Swapmoney_bot';
-const SC_TO_ETB    = 0.5;   // 1 SC = 0.50 ETB
-const ETB_TO_SC    = 2;     // 1 ETB = 2 SC
-const WELCOME_ETB  = 50;
-const REF_BONUS    = 50;
-const MIN_WD       = 2500;
-
-/* ── Ad reward tiers ──
-   Ads 1–6   → 50 ETB each
-   Ads 7–26  → 30 ETB each  (20 ads)
-   Ads 27–41 → 20 ETB each  (15 ads)
-   Ads 42–91 → 10 ETB each  (50 ads)
-   Total: 91 ETB-rewarded ads.
-
-   After all 91 are used up, watching more ads no longer pays ETB.
-   Instead, each additional ad COSTS 10 Swap Coins (paid up front,
-   before the ad plays) and is otherwise unlimited — this lets
-   active users keep engaging with ads by spending SC they've
-   earned from games, without printing unlimited free ETB. */
-const AD_TIERS = [
-  {upTo:6,  reward:50},
-  {upTo:26, reward:30},
-  {upTo:41, reward:20},
-  {upTo:91, reward:10},
-];
-const UNLIMITED_AD_SC_COST = 10;
-function getAdReward(adsWatchedSoFar){
-  const adNumber = adsWatchedSoFar + 1; // the ad about to be watched
-  for(const tier of AD_TIERS){
-    if(adNumber <= tier.upTo) return tier.reward;
-  }
-  return 0; // beyond 91 — no ETB reward; these are SC-cost "unlimited" ads instead
-}
-function isUnlimitedAdSlot(adsWatchedSoFar){
-  return (adsWatchedSoFar + 1) > 91;
-}
-const TG_CHANNEL1  = 'https://t.me/SwapMoney_ETH';
-const TG_CHANNEL2  = 'https://t.me/swapmoneybirr';
-const TG_BOT       = 'https://t.me/Swapmoney_bot';         // ← still placeholder unless you gave a different one
-const YT_SUB       = 'https://www.youtube.com/@swapmoneyeth';
-const YT_SUB2      = 'https://www.youtube.com/@ethioonlinework1';
-
-/* Game URLs (GitHub Pages) */
-const GAME_URLS = {
-  spin:    'https://aymenkemal189.github.io/Spin-wheel/',
-  scratch: 'https://aymenkemal189.github.io/Scrach-card/',
-  coin:    'https://aymenkemal189.github.io/Coin-flip/',
-  guess:   'https://aymenkemal189.github.io/Number-guss/',
-};
-const GAME_TITLES = {
-  spin:'🌀 Spin Wheel', scratch:'🎟 Scratch Card',
-  coin:'🪙 Coin Flip',  guess:'🔢 Number Guess',
-};
-
-/* ═══════════════ TELEGRAM INIT ═══════════════ */
-const tg = window.Telegram?.WebApp || null;
-let tgUser = null, referrerId = 'None';
-if(tg){
-  tg.ready(); tg.expand();
-  tgUser = tg.initDataUnsafe?.user || null;
-  const sp = tg.initDataUnsafe?.start_param || '';
-  if(sp.startsWith('ref_')) referrerId = sp.replace('ref_','');
-  if(tgUser){
-    document.getElementById('hdrAv').textContent = (tgUser.first_name||'U')[0].toUpperCase();
-    document.getElementById('hdrWelcome').textContent = `Welcome Back, ${tgUser.first_name} 👋🔥`;
-    document.getElementById('hdrUser').textContent = `@${tgUser.username||tgUser.first_name}`;
-    document.getElementById('refLinkInp').value = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${tgUser.id}`;
-  }
-}
-
-/* ═══════════════ STATE ═══════════════ */
-const KEY = tgUser ? `sm_v3_${tgUser.id}` : 'sm_v3_guest';
-function loadState(){
-  const d = {
-    balance:0, swapCoins:0, adsWatched:0,
-    completedTasks:[], referrals:[], totalRefs:0,
-    isWdTaskActive:false, hasWelcomed:false,
-    selectedMethod:'Telebirr', streakDays:0,
-    lastLoginDate:'', streakClaimedFor:'', exchangeHistory:[],
-  };
-  try{ return Object.assign(d, JSON.parse(localStorage.getItem(KEY)||'{}')); }
-  catch(e){ return d; }
-}
-function saveState(){ localStorage.setItem(KEY, JSON.stringify(S)); }
-let S = loadState();
-
-/* ═══════════════ LEVEL ═══════════════ */
-function getLevel(bal){
-  if(bal>=50000)return{n:10,label:'Level 10'};
-  if(bal>=20000)return{n:9,label:'Level 9'};
-  if(bal>=10000)return{n:8,label:'Level 8'};
-  if(bal>=7000)return{n:7,label:'Level 7'};
-  if(bal>=5000)return{n:6,label:'Level 6'};
-  if(bal>=3000)return{n:5,label:'Level 5'};
-  if(bal>=2000)return{n:4,label:'Level 4'};
-  if(bal>=1000)return{n:3,label:'Level 3'};
-  if(bal>=500)return{n:2,label:'Level 2'};
-  return{n:1,label:'Level 1'};
-}
-
-/* ═══════════════ STREAK ═══════════════
-   Day-based login streak. Uses simple YYYY-MM-DD date keys
-   (not toDateString(), which can behave inconsistently across
-   locales/timezones) for reliable same-day / consecutive-day
-   comparisons.
-   Rule: first ever login = 1🔥. Logging in on the very next
-   calendar day = streak+1. Any gap of a day or more = reset to 1. */
-function dateKey(d){
-  // YYYY-MM-DD in the user's local time — stable and easy to diff
-  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
-}
-function checkAndUpdateStreak(){
-  const todayKey = dateKey(new Date());
-
-  if(!S.lastLoginDate){
-    // Very first login ever recorded on this device
-    S.streakDays = 1;
-    S.lastLoginDate = todayKey;
-    saveState();
-    return;
-  }
-
-  if(S.lastLoginDate === todayKey){
-    // Already counted today — do nothing (avoids double-count on refresh)
-    if(!S.streakDays || S.streakDays < 1) S.streakDays = 1; // safety floor
-    return;
-  }
-
-  const yesterdayKey = dateKey(new Date(Date.now() - 86400000));
-
-  if(S.lastLoginDate === yesterdayKey){
-    // Consecutive day — streak continues
-    S.streakDays = (Number(S.streakDays) || 0) + 1;
-  } else {
-    // Missed one or more days — streak resets, today counts as day 1
-    S.streakDays = 1;
-  }
-
-  S.lastLoginDate = todayKey;
-  saveState();
-}
-checkAndUpdateStreak();
-
-/* ═══════════════ TOAST ═══════════════ */
-let _tt;
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2700);
-}
-
-/* ═══════════════ NAV ═══════════════ */
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ni').forEach(b=>b.classList.remove('active'));
-  const pg=document.getElementById('page-'+id);
-  if(pg)pg.classList.add('active');
-  const nb=document.querySelector(`.ni[data-p="${id}"]`);
-  if(nb)nb.classList.add('active');
-  if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
-  render();
-}
-
-/* ═══════════════ RENDER ═══════════════ */
-function render(){
-  const bal  = S.balance||0;
-  const sc   = S.swapCoins||0;
-  const refs = S.totalRefs||0;
-  const lv   = getLevel(bal);
-
-  // Header
-  setText('hdrSC', sc.toFixed(2));
-  setText('levelChip', `⭐ ${lv.label}`);
-  const streak = S.streakDays||0;
-  document.getElementById('streakChip').textContent = streak>0 ? `${streak}🔥` : '';
-
-  // Home
-  setText('mainBalance', bal.toLocaleString());
-  setText('balSub', `Level ${lv.n} — ${lv.label}`);
-  setText('scBalance', sc.toFixed(2));
-  setText('scEtbEquiv', (sc*SC_TO_ETB).toFixed(2));
-  setText('stEarn', bal.toLocaleString()+' ETB');
-  setText('stAds', S.adsWatched||0);
-  setText('stRefs', refs);
-  setText('stRefBonus', (refs*REF_BONUS).toLocaleString());
-  setText('stSC', sc.toFixed(2)+' SC');
-  setText('stSCEtb', (sc*SC_TO_ETB).toFixed(2));
-
-  // Withdraw
-  setText('wdBalDisplay', bal.toLocaleString());
-  renderWdButton();
-
-  // Exchange
-  setText('exchAvailSC', sc.toFixed(2));
-  setText('exchAvailETB', bal.toLocaleString());
-
-  // Referral
-  const prog = refs%10;
-  setText('refProgText', `${prog}/10`);
-  setText('refCount', refs);
-  setText('refEarned', (Math.floor(refs/10)*500 + (refs%10)*REF_BONUS).toLocaleString()+' ETB');
-  document.getElementById('refProgFill').style.width = `${prog/10*100}%`;
-
-  // Streak in Earn
-  renderStreakDays();
-
-  // Tasks (renderEarnTasks now renders both tasks AND ads grid)
-  renderHomeTasks();
-  renderEarnTasks();
-  renderLeaderboard();
-  renderExchangeHistory();
-  saveState();
-}
-
-/* ═══════════════ STREAK DAYS RENDER ═══════════════
-   Rewards in ETB (per user's spec). Day 7 grants a special
-   "Level 3" boost message instead of plain ETB. */
-const STREAK_LABELS = ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'];
-const STREAK_SC      = [10,20,40,60,80,100,0];   // Day 7 handled specially (Level 3)
-function renderStreakDays(){
-  const el = document.getElementById('streakDaysEl');
-  if(!el)return;
-  const streak = S.streakDays||0;
-  const claimedToday = S.streakClaimedFor === S.lastLoginDate;
-  el.innerHTML = STREAK_LABELS.map((d,i)=>{
-    const dayNum = i+1;
-    const passed = dayNum < streak;                 // already-lived-through day
-    const isToday = dayNum === streak;               // today's slot
-    const rewardLabel = dayNum===7 ? 'Level 3' : `+${STREAK_SC[i]}SC`;
-    let cls = '';
-    if(passed) cls='done';
-    else if(isToday) cls='today';
-    return `<div class="streak-day ${cls}">
-      <div class="streak-day-icon">${passed?'✅':(isToday?'🎁':'🔒')}</div>
-      <div style="font-size:7px">${d}</div>
-      <div style="font-size:7px;color:var(--gold)">${rewardLabel}</div>
-    </div>`;
-  }).join('');
-  setText('earnStreakCount', `${streak}🔥`);
-
-  // Claim button state
-  const btn = document.getElementById('streakClaimBtn');
-  if(btn){
-    if(claimedToday){
-      btn.disabled = true;
-      btn.textContent = '✅ ዛሬ ተቀብለዋል';
-    } else {
-      btn.disabled = false;
-      const idx = Math.min(streak,7)-1;
-      const label = (idx+1)===7 ? 'Level 3 ማዕረግ ያግኙ 🏆' : `+${STREAK_SC[idx]} SC ይቀበሉ`;
-      btn.textContent = label;
-    }
-  }
-}
-function claimStreakReward(){
-  if(S.streakClaimedFor === S.lastLoginDate){toast('ዛሬ አስቀድመው ተቀብለዋል!');return;}
-  const day = Math.min(S.streakDays||1, 7);
-  if(day === 7){
-    // Special Level-3 style bonus — grant a generous SC reward too
-    S.swapCoins = (S.swapCoins||0) + 200;
-    toast('🏆 7 ቀን ተከታታይ Streak! Level 3 ማዕረግ ስጦታ +200 SC!');
-  } else {
-    const reward = STREAK_SC[day-1];
-    S.swapCoins = (S.swapCoins||0) + reward;
-    toast(`🔥 Day ${day} ቦነስ +${reward} SC ተጨምሯል!`);
-  }
-  S.streakClaimedFor = S.lastLoginDate;
-  saveState();
-  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  render();
-  if(syncReady) syncToSheet(); else pendingSyncAfterInit = true;
-}
-
-/* ═══════════════ TASKS (shared: Home grid + Earn grid) ═══════════════
-   Rewards exactly as specified:
-   Telegram join 1  = 100 ETB
-   Telegram join 2  = 100 ETB
-   YouTube channel 1 subscribe = 100 ETB
-   YouTube channel 2 subscribe = 100 ETB
-   YouTube video 1 view = 50 ETB
-   YouTube video 2 view = 50 ETB */
-const TG_ICON = 'https://static.vecteezy.com/system/resources/previews/023/986/562/non_2x/telegram-logo-telegram-logo-transparent-telegram-icon-transparent-free-free-png.png';
-const YT_ICON = 'https://static.vecteezy.com/system/resources/thumbnails/018/930/572/small_2x/youtube-logo-youtube-icon-transparent-free-png.png';
-
-const YT_VID1 = 'https://youtu.be/WgRzYGYDDOs?si=gg6xUP5LBMeBk4fW';
-const BUNA_BOT = 'https://t.me/Bunaairdropbot/buna';
-
-const ALL_TASKS = [
-  {id:'tg1',    label:'Telegram Channel 1',     reward:100, dur:30, link:TG_CHANNEL1, icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
-  {id:'tg2',    label:'Telegram Channel 2',     reward:100, dur:30, link:TG_CHANNEL2, icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
-  {id:'ytsub1', label:'YouTube Channel 1 Sub',  reward:100, dur:60, link:YT_SUB,      icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
-  {id:'ytsub2', label:'YouTube Channel 2 Sub',  reward:100, dur:60, link:YT_SUB2,     icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
-  {id:'ytvid1', label:'YouTube Video 1 ይመልከቱ',  reward:50,  dur:60, link:YT_VID1,     icon:YT_ICON, bg:'rgba(239,68,68,.15)', type:'yt-type'},
-  {id:'bunabot',label:'Buna Bot ይቀላቀሉ',        reward:50,  dur:30, link:BUNA_BOT,    icon:TG_ICON, bg:'rgba(0,136,204,.15)', type:'tg-type'},
-];
-
-/* ── HOME: compact grid (2 cols) ── */
-/* Track which task IDs currently have an active countdown running,
-   so renderHomeTasks/renderEarnTasks never clobber a live countdown
-   button back to "Start" mid-timer. This was the root cause of the
-   countdown appearing to randomly reset/flicker ("on/off") — the
-   whole grid's innerHTML gets rebuilt every time render() runs
-   (e.g. every 20s auto-sync, or after any state change), which
-   wiped out the in-progress button text and re-created a fresh
-   "Start" button with no timer attached. */
-const activeTaskTimers = new Set();
-
-function renderHomeTasks(){
-  const el = document.getElementById('homeTasksGrid');
-  if(!el)return;
-  // If nothing is currently counting down, do a normal full rebuild.
-  if(activeTaskTimers.size === 0){
-    el.innerHTML = ALL_TASKS.map(t=>taskGridItemHTML(t,'htb_')).join('');
-    return;
-  }
-  // Otherwise, rebuild only the tasks that do NOT have a live
-  // countdown running, and leave the counting-down button's DOM
-  // node completely untouched so its live "27s / 26s / ..." text
-  // (written directly by startTask()'s own interval) is never
-  // reset back to "Start". This was the root cause of the
-  // countdown appearing to randomly flicker/reset.
-  ALL_TASKS.forEach(t=>{
-    if(activeTaskTimers.has(t.id)) return; // leave it alone
-    const wrap = document.getElementById('htb_'+t.id)?.closest('.task-grid-item');
-    if(wrap) wrap.outerHTML = taskGridItemHTML(t,'htb_');
-  });
-}
-function taskGridItemHTML(t, prefix){
-  const done = S.completedTasks.includes(t.id);
-  return `<div class="task-grid-item">
-    <div class="tgi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
-    <h4>${t.label}</h4>
-    <div class="tgi-reward">+${t.reward} ETB</div>
-    <button class="tgi-btn" id="${prefix}${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'✅ ተቀብለዋል':'Start'}</button>
-  </div>`;
-}
-
-/* ── EARN TAB: 3-column unified grid ── */
-function earnGridItemHTML(t){
-  const done = S.completedTasks.includes(t.id);
-  return `<div class="earn-grid-item ${t.type}">
-    ${done?'<div class="egi-done-badge">✅</div>':''}
-    <div class="egi-icon" style="background:${t.bg}"><img src="${t.icon}" alt="${t.label}"></div>
-    <div class="egi-title">${t.label}</div>
-    <div class="egi-reward">+${t.reward} ETB</div>
-    <div class="egi-meta">⏱️ ${t.dur}s</div>
-    <button class="egi-btn" id="etb_${t.id}" ${done?'disabled':''} onclick="startTask('${t.id}','${t.link}',${t.reward},${t.dur})">${done?'ተቀብለዋል':'Start'}</button>
-  </div>`;
-}
-function renderEarnTasks(){
-  // Tasks grid — same "don't clobber a live countdown" strategy as
-  // renderHomeTasks() above.
-  const tEl = document.getElementById('earnTaskGrid');
-  if(tEl){
-    if(activeTaskTimers.size === 0){
-      tEl.innerHTML = ALL_TASKS.map(earnGridItemHTML).join('');
-    } else {
-      ALL_TASKS.forEach(t=>{
-        if(activeTaskTimers.has(t.id)) return; // leave the live countdown button alone
-        const wrap = document.getElementById('etb_'+t.id)?.closest('.earn-grid-item');
-        if(wrap) wrap.outerHTML = earnGridItemHTML(t);
-      });
-    }
-  }
-
-  // Ads grid — shows the next 6 upcoming ads with their real tier reward
-  const aEl = document.getElementById('earnAdGrid');
-  if(!aEl)return;
-  const BADGES = ['HOT','NEW','NEW','HOT','EASY','NEW'];
-  const BGS = [
-    'linear-gradient(135deg,#1a0a05,#2a1205)','linear-gradient(135deg,#050a1a,#0a1530)',
-    'linear-gradient(135deg,#0a051a,#180a30)','linear-gradient(135deg,#051a0a,#0a3015)',
-    'linear-gradient(135deg,#1a1005,#302005)','linear-gradient(135deg,#1a0510,#30081a)',
-  ];
-  const BADGE_COLOR = {HOT:'var(--red)',NEW:'var(--blue)',EASY:'var(--green)'};
-  const ADS = Array.from({length:6},(_,i)=>({
-    num: S.adsWatched+i+1,
-    reward: getAdReward(S.adsWatched+i),
-    unlimited: isUnlimitedAdSlot(S.adsWatched+i),
-    badge: BADGES[i],
-    bg: BGS[i],
-  }));
-  aEl.innerHTML = ADS.map(ad=>`
-    <div class="earn-grid-item ad-type">
-      <div class="egi-icon" style="background:${ad.bg}">
-        <div style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center">
-          <svg viewBox="0 0 24 24" style="width:11px;height:11px;fill:#000;margin-left:1px"><path d="M8 5v14l11-7z"/></svg>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">⚡ SWAP MONEY</div>
+            <div class="event-title">🥊 FIGHT PREDICTION ARENA</div>
         </div>
-      </div>
-      <div class="egi-title">${ad.unlimited ? 'Bonus Ad ∞' : 'Ad #'+ad.num}</div>
-      <div class="egi-reward" style="${ad.unlimited?'color:var(--purple)':''}">${ad.unlimited ? '-'+UNLIMITED_AD_SC_COST+' SC' : '+'+ad.reward+' ETB'}</div>
-      <div class="egi-meta">⏱️30s · <span style="color:${BADGE_COLOR[ad.badge]};font-weight:800">${ad.unlimited?'∞':ad.badge}</span></div>
-      <button class="egi-btn" onclick="watchAd(this)">Watch</button>
-    </div>`).join('');
-}
 
-const taskTimers = {};
-function startTask(id, url, reward, dur){
-  if(S.completedTasks.includes(id)){toast('አስቀድሞ ተቀብለዋል!');return;}
-  if(tg?.openLink) tg.openLink(url); else window.open(url,'_blank');
-  if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        <!-- Countdown Timer -->
+        <div class="countdown-section">
+            <div class="countdown-title">⏰ Fight Starts In</div>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">0</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">0</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">0</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">0</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </div>
 
-  const setBtn=(txt,dis=false)=>{
-    [`htb_${id}`,`etb_${id}`].forEach(bid=>{
-      const b=document.getElementById(bid);
-      if(b){b.textContent=txt;b.disabled=dis;}
-    });
-  };
-  toast(`⏱️ ${dur}s ቆጣሪ ጀምሯል!`);
+        <!-- Prize Pool -->
+        <div class="prize-section">
+            <div class="prize-title">🏆 Prize Pool</div>
+            <div class="prize-pool">
+                <div class="prize-item">
+                    <div class="prize-rank">🥇 1st</div>
+                    <div class="prize-amount">200K</div>
+                </div>
+                <div class="prize-item">
+                    <div class="prize-rank">🥈 2nd</div>
+                    <div class="prize-amount">100K</div>
+                </div>
+                <div class="prize-item">
+                    <div class="prize-rank">🥉 3rd</div>
+                    <div class="prize-amount">50K</div>
+                </div>
+            </div>
+        </div>
 
-  // Mark this task as "actively counting down" so any render() call
-  // (e.g. from the 20s auto-sync, or after claiming a different
-  // task/ad) will render its button in a disabled/counting state
-  // instead of resetting it back to a fresh "Start" — this was the
-  // exact cause of the countdown appearing to flicker on/off.
-  activeTaskTimers.add(id);
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Total Bets</div>
+                <div class="stat-value" id="totalBets">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Active Users</div>
+                <div class="stat-value" id="activeUsers">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Pool Value</div>
+                <div class="stat-value" id="poolValue">350K</div>
+            </div>
+        </div>
 
-  // Use a wall-clock deadline (Date.now()) instead of counting
-  // interval ticks. When Telegram opens an external link, the
-  // WebView is often backgrounded and setInterval ticks get
-  // throttled or paused by the OS/browser — a tick-counter would
-  // undercount and never reach 0. Measuring elapsed real time
-  // fixes this: even if ticks are delayed, the moment the user
-  // returns to the app we correctly detect that dur seconds
-  // (or more) have actually passed.
-  const deadline = Date.now() + dur*1000;
+        <!-- Fighters -->
+        <div class="fighters-container">
+            <div class="fighter-card" data-fighter="sedo">
+                <div class="fighter-image-container">
+                    <div class="fighter-image">
+                        🥋
+                    </div>
+                </div>
+                <div class="fighter-name">SEDO</div>
+                <div class="fighter-stats">Record: 15-3-2</div>
+                <div class="fighter-odds">2.15x Odds</div>
+            </div>
+            <div class="fighter-card" data-fighter="johni">
+                <div class="fighter-image-container">
+                    <div class="fighter-image">
+                        👊
+                    </div>
+                </div>
+                <div class="fighter-name">JOHNI</div>
+                <div class="fighter-stats">Record: 12-5-1</div>
+                <div class="fighter-odds">1.85x Odds</div>
+            </div>
+        </div>
 
-  function finishCountdown(){
-    activeTaskTimers.delete(id);
-    clearInterval(taskTimers[id]);
-    document.removeEventListener('visibilitychange', onVisible);
-    if(S.completedTasks.includes(id)) return; // already claimed via another path
-    setBtn(`+${reward} ✨`,false);
-    [`htb_${id}`,`etb_${id}`].forEach(bid=>{
-      const b=document.getElementById(bid);
-      if(b) b.onclick=()=>claimTask(id,reward);
-    });
-    toast(`✅ ጨርሰዋል! +${reward} ETB ይቀበሉ`);
-  }
+        <!-- Prediction Section -->
+        <div class="prediction-section">
+            <div class="section-title">Your Prediction Stake</div>
+            <div class="input-label">Amount (ETB)</div>
+            <input 
+                type="number" 
+                id="stakeInput" 
+                class="stake-input" 
+                placeholder="Enter amount (min: 500 ETB)"
+                min="500"
+                max="100000"
+                value="5000"
+            >
+            <div class="quick-amounts">
+                <button class="quick-btn" data-amount="500">500</button>
+                <button class="quick-btn" data-amount="1000">1K</button>
+                <button class="quick-btn" data-amount="5000">5K</button>
+                <button class="quick-btn" data-amount="10000">10K</button>
+                <button class="quick-btn" data-amount="25000">25K</button>
+                <button class="quick-btn" data-amount="50000">50K</button>
+            </div>
+        </div>
 
-  clearInterval(taskTimers[id]);
-  taskTimers[id]=setInterval(()=>{
-    const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
-    if(remaining>0){
-      setBtn(`⏱️${remaining}s`,true);
-    } else {
-      finishCountdown();
-    }
-  },500); // check twice a second so the button catches up quickly once the tab is foregrounded again
+        <!-- Summary -->
+        <div class="prediction-summary" id="summary">
+            <div class="summary-row">
+                <span class="label">Fighter:</span>
+                <span class="value" id="summaryFighter">-</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Your Stake:</span>
+                <span class="value" id="summaryStake">0 ETB</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">If You Win:</span>
+                <span class="value" id="summaryWin">0 ETB</span>
+            </div>
+        </div>
 
-  // Also catch up immediately the moment the user comes back to
-  // this tab/app (visibilitychange fires reliably even after the
-  // WebView was backgrounded, unlike setInterval).
-  const onVisible = ()=>{
-    if(document.visibilityState==='visible'){
-      const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
-      if(remaining<=0 && !S.completedTasks.includes(id)){
-        finishCountdown();
-      }
-    }
-  };
-  document.addEventListener('visibilitychange', onVisible);
-}
-function claimTask(id,reward){
-  if(S.completedTasks.includes(id)){toast('አስቀድሞ!');return;}
-  // Always credit locally immediately — never make the user lose
-  // a reward they already earned by completing the task.
-  S.completedTasks.push(id);
-  S.balance+=reward;
-  saveState();
-  toast(`🎉 +${reward} ETB ተጨምሯል!`);
-  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  render();
-  if(syncReady){
-    syncToSheet();
-  } else {
-    pendingSyncAfterInit = true;
-  }
-}
+        <!-- Payment Methods -->
+        <div class="prediction-section">
+            <div class="section-title">Payment Method</div>
+            <div class="payment-methods">
+                <button class="payment-btn active" data-method="mpesa">📱 M-Pesa</button>
+                <button class="payment-btn" data-method="bank">🏦 Bank</button>
+            </div>
+        </div>
 
-/* ═══════════════ AD WATCH LOGIC ═══════════════
-   IMPORTANT: the real ad SDK (show_11460944) can resolve in as
-   little as ~15 seconds depending on the ad network's own content,
-   which was letting users get rewarded faster than intended. To
-   guarantee a full, consistent 30-second watch time regardless of
-   how long the underlying ad actually plays, we ALWAYS run our own
-   visible 30s on-screen countdown as the single source of truth
-   for when the reward is granted. The real ad SDK (if available)
-   is still triggered at the same time purely so a real ad
-   impression happens, but it no longer controls the timing.
+        <!-- M-Pesa Section -->
+        <div class="mpesa-section" id="mpesaSection">
+            <div class="section-title">M-Pesa Payment</div>
+            <div class="mpesa-number">
+                <div class="mpesa-blur blurred" id="mpesaBlur">●●●●●●●●●●</div>
+                <button class="reveal-btn" id="revealBtn">Reveal</button>
+                <button class="copy-btn" id="copyBtn">Copy</button>
+            </div>
+            <div class="mpesa-instructions">
+                <strong>📲 Instructions:</strong><br>
+                1️⃣ Click "Reveal" to show phone number<br>
+                2️⃣ Click "Copy" to copy to clipboard<br>
+                3️⃣ Open M-Pesa on your phone<br>
+                4️⃣ Send payment to copied number<br>
+                5️⃣ Take screenshot and confirm
+            </div>
+        </div>
 
-   After the FIRST (rewarded) ad's 30s finishes, an "✕" close
-   button appears. If the user taps it, we don't just close the
-   modal — we immediately show one more ad automatically (same 30s
-   flow) but this one pays NOTHING; it's purely an extra
-   impression. Tapping ✕ on that bonus ad simply closes everything
-   with no further chaining. */
-let adRunning=false, adTimerInterval, adClickCount=0;
-let isBonusAd=false; // true while showing the no-reward follow-up ad
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage"></div>
 
-function watchAd(btn){
-  if(adRunning)return;
+        <!-- Submit Button -->
+        <button class="submit-btn" id="submitBtn" disabled>
+            PLACE PREDICTION
+        </button>
 
-  const unlimited = isUnlimitedAdSlot(S.adsWatched);
-  if(unlimited){
-    if((S.swapCoins||0) < UNLIMITED_AD_SC_COST){
-      toast(`⚠️ 91 ነጻ ማስታወቂያ አልቋል — ተጨማሪ ማስታወቂያ ለማየት ${UNLIMITED_AD_SC_COST} SC ያስፈልጋል`);
-      return;
-    }
-    // Charge the SC cost UP FRONT, before the ad even starts, so
-    // there's no way to watch the ad and then back out of paying.
-    S.swapCoins -= UNLIMITED_AD_SC_COST;
-    saveState();
-    render();
-  }
+        <!-- Info Box -->
+        <div class="info-box">
+            ✨ <strong>Secure Payment:</strong> All payments are encrypted and verified through M-Pesa. Your prediction is final once payment is confirmed.
+        </div>
 
-  btn.disabled=true;
-  adClickCount++;
-  adRunning=true;
-  isBonusAd=false;
-  document.getElementById('adCloseBtn').style.display='none';
-  document.getElementById('adDesc').innerHTML = unlimited
-    ? `30 ሰከንድ ያዩ — ${UNLIMITED_AD_SC_COST} SC ተከፍሏል (ያልተገደበ ማስታወቂያ)`
-    : `30 ሰከንድ ያዩ — ካጠናቀቁ <strong style="color:var(--gold)">${getAdReward(S.adsWatched)} ETB</strong> ይጨምራሉ!`;
-
-  // Fire the real ad SDK in the background purely for a genuine ad
-  // impression/revenue — but its resolve time no longer decides
-  // when the reward is granted. If it errors out that's fine too;
-  // it doesn't affect our own countdown below.
-  if(typeof show_11460944 === 'function'){
-    show_11460944().catch((err)=>{
-      console.warn('[Swap Money] Real ad SDK reported an issue (non-fatal, our own 30s countdown still governs reward timing):', err);
-    });
-  } else {
-    console.warn('[Swap Money] Ad SDK (show_11460944) not found — showing the standard 30s countdown only.');
-  }
-
-  // Our own visible countdown is now ALWAYS the thing that grants
-  // the reward, guaranteeing a full 30 seconds every time.
-  runFallbackCountdown();
-}
-
-function runFallbackCountdown(durationMs){
-  durationMs = durationMs || 30000; // default stays 30s for normal/bonus ads
-  const durSec = Math.round(durationMs/1000);
-  const modal=document.getElementById('adModal');
-  const fill=document.getElementById('adBarFill');
-  const txt=document.getElementById('adTimerTxt');
-  document.getElementById('adTitle').textContent = isBonusAd
-    ? 'ተጨማሪ ማስታወቂያ'
-    : `Ad #${S.adsWatched+1} በሂደት ላይ`;
-  modal.classList.add('active');
-  fill.style.width='0%';txt.textContent=`${durSec}s ቀርቷል`;
-  const deadline = Date.now()+durationMs;
-  clearInterval(adTimerInterval);
-  adTimerInterval=setInterval(()=>{
-    const remaining = Math.max(0, Math.ceil((deadline-Date.now())/1000));
-    fill.style.width=`${(durSec-remaining)/durSec*100}%`;
-    txt.textContent=`${remaining}s ቀርቷል`;
-    if(remaining<=0){
-      clearInterval(adTimerInterval);
-      if(isBonusAd){
-        finishBonusAd();
-      } else {
-        creditAdReward();
-      }
-    }
-  },500);
-}
-
-function creditAdReward(){
-  adRunning=false;
-  const wasUnlimited = isUnlimitedAdSlot(S.adsWatched);
-  // Compute the reward BEFORE incrementing adsWatched, so it
-  // matches exactly what was shown to the user on the button.
-  const earnedReward = getAdReward(S.adsWatched);
-  S.adsWatched++;
-
-  if(wasUnlimited){
-    // SC was already deducted up front in watchAd() — no ETB reward
-    // for these, just confirm the ad was watched.
-    saveState();
-    toast('✅ ማስታወቂያውን አጠናቀዋል');
-    render();
-    if(syncReady){ syncToSheet(); } else { pendingSyncAfterInit = true; }
-    document.getElementById('adDesc').innerHTML = `✅ ማስታወቂያ ታይቷል። ✕ ይንኩ ለመዝጋት`;
-  } else {
-    // User watched the full ad — ALWAYS credit them locally right away.
-    // This guarantees "watched ad but got no money" can never happen.
-    S.balance+=earnedReward;
-    saveState();
-    toast(`🎉 +${earnedReward} ETB ተጨምሯል!`);
-    render();
-    if(syncReady){ syncToSheet(); } else { pendingSyncAfterInit = true; }
-    // Reward is locked in — now offer the option to close, or the
-    // user can tap ✕ to trigger one bonus (unpaid) ad automatically.
-    document.getElementById('adDesc').innerHTML = `🎉 <strong style="color:var(--gold)">+${earnedReward} ETB</strong> ተጨምሯል! ✕ ይንኩ ለመዝጋት`;
-  }
-
-  if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
-  document.getElementById('adCloseBtn').style.display='flex';
-  document.getElementById('adCloseBtn').style.alignItems='center';
-  document.getElementById('adCloseBtn').style.justifyContent='center';
-}
-
-function closeAdAndShowAnother(){
-  const modal=document.getElementById('adModal');
-  if(isBonusAd){
-    // This was already the no-reward bonus ad — just close for good.
-    modal.classList.remove('active');
-    document.getElementById('adCloseBtn').style.display='none';
-    adRunning=false;
-    isBonusAd=false;
-    return;
-  }
-  // First close tap after a REWARDED ad — automatically queue one
-  // more ad with no payout, exactly as requested. Uses the same
-  // guaranteed 30s on-screen countdown (not the SDK's own timing)
-  // for a consistent experience.
-  isBonusAd=true;
-  document.getElementById('adCloseBtn').style.display='none';
-  document.getElementById('adTitle').textContent='ተጨማሪ ማስታወቂያ';
-  document.getElementById('adDesc').textContent='ይህ ተጨማሪ ማስታወቂያ ነው — ክፍያ የለውም';
-
-  if(typeof show_11460944 === 'function'){
-    show_11460944().catch(()=>{
-      console.warn('[Swap Money] Bonus ad SDK issue (non-fatal)');
-    });
-  }
-  runFallbackCountdown();
-}
-
-function finishBonusAd(){
-  // No reward — just close out cleanly.
-  const modal=document.getElementById('adModal');
-  modal.classList.remove('active');
-  adRunning=false;
-  isBonusAd=false;
-  document.getElementById('adCloseBtn').style.display='none';
-}
-
-/* ═══════════════ BANNER ═══════════════ */
-(()=>{
-  const box=document.getElementById('bannerSlider');
-  if(!box)return;
-  const imgs=box.querySelectorAll('img');
-  const dotsEl=document.getElementById('bDots');
-  let idx=0,timer;
-  imgs.forEach((_,i)=>{const d=document.createElement('div');d.className='b-dot'+(i===0?' active':'');dotsEl.appendChild(d);});
-  function go(n){
-    imgs.forEach((im,i)=>im.classList.toggle('active',i===n));
-    document.querySelectorAll('.b-dot').forEach((d,i)=>d.classList.toggle('active',i===n));
-    idx=n;
-  }
-  timer=setInterval(()=>go((idx+1)%imgs.length),4200);
-  let sx=0;
-  box.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;clearInterval(timer);});
-  box.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>40)go(dx<0?(idx+1)%imgs.length:(idx-1+imgs.length)%imgs.length);
-    timer=setInterval(()=>go((idx+1)%imgs.length),4200);
-  });
-})();
-
-/* ═══════════════ LEADERBOARD ═══════════════ */
-const LB_DATA=[
-  {n:'Adoniyas H',a:32564},{n:'Ezedin K',a:24675},{n:'Lidia Y',a:20370},
-  {n:'Yonas T',a:11250},{n:'Selam M',a:9940},{n:'Kaleb A',a:8820},
-  {n:'Makeda G',a:7450},{n:'Sami K',a:6980},{n:'Hanan R',a:6120},{n:'Dawit S',a:5400},
-];
-function renderLeaderboard(){
-  const pod=document.getElementById('podiumEl');
-  if(pod) pod.innerHTML=`
-    <div class="pod p2"><div class="pod-av" style="color:#000">E</div><div class="pod-name">Ezedin K</div><div class="pod-amt">24,675</div><div class="pod-tag">#2</div></div>
-    <div class="pod p1"><div style="font-size:16px;margin-bottom:4px">👑</div><div class="pod-av">A</div><div class="pod-name">Adoniyas H</div><div class="pod-amt">32,564</div><div class="pod-tag">#1</div></div>
-    <div class="pod p3"><div class="pod-av" style="color:#fff">L</div><div class="pod-name">Lidia Y</div><div class="pod-amt">20,370</div><div class="pod-tag">#3</div></div>`;
-  const lb=document.getElementById('lbListEl');
-  if(lb) lb.innerHTML=LB_DATA.slice(3).map((d,i)=>`
-    <div class="lb-item"><div class="lb-left"><div class="lb-rank">${i+4}</div><div class="lb-av">${d.n[0]}</div><div class="lb-name">${d.n}</div></div><div class="lb-score">${d.a.toLocaleString()}</div></div>`).join('');
-}
-
-/* ═══════════════ LIVE FEED ═══════════════ */
-const FEED_NAMES=['Bruk B','Sara Y','Dawit T','Makeda A','Henok G','Eyerusalem H','Kaleb B','Selamawit W'];
-const FEED_BANKS=['Telebirr','CBE Bank','Awash Bank','Abyssinia','Ethio Telecom'];
-function rotateFeed(){
-  const el=document.getElementById('liveFeed');
-  if(!el)return;
-  const n=FEED_NAMES[~~(Math.random()*FEED_NAMES.length)];
-  const b=FEED_BANKS[~~(Math.random()*FEED_BANKS.length)];
-  const a=(~~(Math.random()*80)+25)*100;
-  const m=~~(Math.random()*9)+1;
-  el.innerHTML=`<div class="feed-item">
-    <div style="display:flex;align-items:center;gap:8px">
-      <div class="feed-av">${n[0]}</div>
-      <div class="feed-info"><h5>${n} ወጪ አድርጓል</h5><p>${b} · ${m}min ago</p></div>
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✅</div>
+            <div class="success-title">Prediction Confirmed!</div>
+            <div class="success-text">Your bet has been placed. Check back on Aug 27 @ 4:00 PM for results! Good luck! 🍀</div>
+        </div>
     </div>
-    <div class="feed-amount">${a.toLocaleString()} ETB</div>
-  </div>`;
-}
-setInterval(rotateFeed,5000);rotateFeed();
 
-/* ═══════════════ EXCHANGE ═══════════════ */
-function calcSC2ETB(){
-  const sc=parseFloat(document.getElementById('sc2etbInput').value)||0;
-  document.getElementById('sc2etbOut').value=(sc*SC_TO_ETB).toFixed(2);
-  setText('exchWillGet',(sc*SC_TO_ETB).toFixed(2)+' ETB');
-}
-function calcETB2SC(){
-  const etb=parseFloat(document.getElementById('etb2scInput').value)||0;
-  document.getElementById('etb2scOut').value=Math.floor(etb*ETB_TO_SC);
-  setText('exchSCWillGet',Math.floor(etb*ETB_TO_SC)+' SC');
-}
-function doExchange(type){
-  if(type==='sc2etb'){
-    const sc=parseFloat(document.getElementById('sc2etbInput').value)||0;
-    if(sc<=0){toast('SC amount ያስገቡ');return;}
-    if(sc>S.swapCoins){toast('በቂ SC የለዎትም');return;}
-    const etb=sc*SC_TO_ETB;
-    S.swapCoins-=sc; S.balance+=etb;
-    addExchHistory(`${sc} SC → ${etb.toFixed(2)} ETB`,'sc2etb');
-    toast(`✅ ${etb.toFixed(2)} ETB ተጨምሯል!`);
-    document.getElementById('sc2etbInput').value='';
-    document.getElementById('sc2etbOut').value='';
-    saveState(); render();
-    exchangeOnServer('sc2etb', sc, null);
-  } else {
-    const etb=parseFloat(document.getElementById('etb2scInput').value)||0;
-    if(etb<=0){toast('ETB amount ያስገቡ');return;}
-    if(etb>S.balance){toast('በቂ ETB ቀሪ ሂሳብ የለዎትም');return;}
-    const sc=Math.floor(etb*ETB_TO_SC);
-    S.balance-=etb; S.swapCoins+=sc;
-    addExchHistory(`${etb} ETB → ${sc} SC`,'etb2sc');
-    toast(`✅ ${sc} SC ተጨምሯል!`);
-    document.getElementById('etb2scInput').value='';
-    document.getElementById('etb2scOut').value='';
-    saveState(); render();
-    exchangeOnServer('etb2sc', null, etb);
-  }
-  if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
-}
-function quickExchangeSC(){
-  const sc=parseFloat(document.getElementById('wdScInput').value)||0;
-  if(sc<=0){toast('SC amount ያስገቡ');return;}
-  if(sc>S.swapCoins){toast('በቂ SC የለዎትም');return;}
-  const etb=sc*SC_TO_ETB;
-  S.swapCoins-=sc; S.balance+=etb;
-  addExchHistory(`${sc} SC → ${etb.toFixed(2)} ETB (Quick)`,'sc2etb');
-  toast(`✅ ${etb.toFixed(2)} ETB ወደ ሂሳብ ተጨምሯል!`);
-  document.getElementById('wdScInput').value='';
-  document.getElementById('wdScOut').value='';
-  saveState(); render();
-  exchangeOnServer('sc2etb', sc, null);
-}
-/* Dedicated exchange sync — uses the backend's exchangeSC action
-   (not syncUser) because exchanges legitimately DECREASE one side
-   of the balance, which the syncUser max()-guard would otherwise
-   reject as a suspicious decrease. */
-async function exchangeOnServer(type, scAmount, etbAmount){
-  if(!tgUser || !syncReady) return; // will simply stay local-only until ready; safe (no data loss)
-  try{
-    const res = await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'exchangeSC',userId:String(tgUser.id),type,scAmount,etbAmount})});
-    const data = await res.json();
-    if(data.result!=='success'){
-      console.warn('Exchange sync mismatch — will reconcile on next full sync', data);
-    }
-    // NOTE: we deliberately do NOT call syncToSheet() here.
-    // exchangeSC already updated balance/SC directly on the sheet
-    // (server-side, using its own stored values — not ours). If we
-    // immediately followed up with a syncUser call using our local
-    // (already-decreased) numbers, that's a redundant write that
-    // could race with the exchange write and cause the two values
-    // to briefly disagree. The next scheduled syncFromSheet (every
-    // 20s) or the next natural syncToSheet from a task/ad claim
-    // will keep totalAds/referrals current — exchanges don't touch
-    // those fields anyway.
-  }catch(e){
-    console.error('[Swap Money] Exchange failed to reach server — your LOCAL balance already changed, but the sheet may be out of sync until the next successful connection:', e);
-  }
-}
-function addExchHistory(label, type){
-  if(!S.exchangeHistory) S.exchangeHistory=[];
-  S.exchangeHistory.unshift({label,type,date:new Date().toLocaleString()});
-  if(S.exchangeHistory.length>20) S.exchangeHistory.pop();
-}
-function renderExchangeHistory(){
-  const el=document.getElementById('exchHistoryList');
-  if(!el)return;
-  if(!S.exchangeHistory||S.exchangeHistory.length===0){
-    el.innerHTML='<div style="text-align:center;padding:12px;color:var(--muted);font-size:11px">ምንም exchange ታሪክ የለም</div>';
-    return;
-  }
-  el.innerHTML=S.exchangeHistory.map(h=>`
-    <div class="exch-history-item">
-      <div class="exch-h-icon" style="background:${h.type==='sc2etb'?'rgba(16,185,129,.15)':'rgba(139,92,246,.15)'}">
-        ${h.type==='sc2etb'?'💰':'🪙'}
-      </div>
-      <div class="exch-h-info"><h5>${h.label}</h5><p>${h.date}</p></div>
-      <div class="exch-h-amt" style="color:${h.type==='sc2etb'?'var(--green)':'var(--purple)'}">${h.type==='sc2etb'?'+ETB':'+SC'}</div>
-    </div>`).join('');
-}
+    <script>
+        // Telegram Bot Token
+        const TELEGRAM_BOT_TOKEN = '8666783314:AAEzdZ0VOUJ7MFH8-UeT900z-fm80ds7NVk';
+        const TELEGRAM_CHAT_ID = '-1002232449821';
 
-/* ═══════════════ WITHDRAW ═══════════════ */
-function selMethod(name, el){
-  S.selectedMethod=name;
-  document.querySelectorAll('.method-btn').forEach(b=>b.classList.remove('sel'));
-  if(el)el.classList.add('sel');
-  const isPhone=name.includes('Telebirr')||name.includes('Telecom')||name.includes('Safaricom');
-  document.getElementById('wdAcctLabel').textContent=isPhone?`የስልክ ቁጥር (${name})`:`Account Number (${name})`;
-  document.getElementById('wdAcct').placeholder=isPhone?'09... ወይም 07...':'Account Number';
-  saveState(); toast(`✓ ${name} ተመርጧል`);
-}
-function renderWdButton(){
-  const btn=document.getElementById('wdBtn');
-  const notice=document.getElementById('wdTaskNotice');
-  const refs=S.totalRefs||0;
-  if(S.isWdTaskActive&&refs<10){
-    notice.style.display='block';
-    notice.textContent=`⏳ ገንዘብ ለማውጣት 10 ሰዎችን ይጋብዙ (${refs}/10)`;
-    btn.disabled=true; btn.textContent=`${refs}/10 ሰው ሲሞላ`;
-  } else {
-    notice.style.display='none';
-    btn.disabled=false; btn.textContent='Confirm Withdrawal';
-  }
-}
-async function submitWithdraw(){
-  const acct=document.getElementById('wdAcct').value.trim();
-  const amt=parseFloat(document.getElementById('wdAmt').value);
-  if(!acct){toast('ሂሳብ/ስልክ ቁጥር ያስገቡ');return;}
-  if(isNaN(amt)||amt<MIN_WD){toast(`Min ${MIN_WD} ETB ያስፈልጋል`);return;}
-  if(amt>S.balance){toast('በቂ ቀሪ ሂሳብ የለዎትም');return;}
-  const refs=S.totalRefs||0;
-  if(refs<10){
-    S.isWdTaskActive=true; saveState(); render();
-    toast('10 ሰዎችን ጋብዘው ያጠናቅቁ!'); return;
-  }
-  const btn=document.getElementById('wdBtn');
-  btn.disabled=true; btn.textContent='Processing…';
-  const uid=tgUser?tgUser.id:('GUEST_'+Date.now());
-  try{
-    // NOTE: no 'no-cors' here — we need to read the actual server
-    // response so we only deduct the balance if the withdrawal was
-    // truly accepted (e.g. server verified sufficient funds).
-    const res  = await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({action:'withdraw',userId:String(uid),method:S.selectedMethod,account:acct,amount:amt})});
-    const data = await res.json();
+        // M-Pesa Phone Number
+        const MPESA_NUMBER = '0704969106';
+        const MPESA_MASKED = '●●●●●●●●●●';
 
-    if(data.result === 'success'){
-      S.balance-=amt; saveState(); render();
-      document.getElementById('wdModal').classList.add('active');
-      if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('warning');
-      document.getElementById('wdAcct').value='';
-      document.getElementById('wdAmt').value='';
-    } else {
-      // Server rejected it (e.g. insufficient balance on record) —
-      // do NOT touch local balance, just inform the user.
-      toast('❌ '+(data.message||'Withdrawal failed — please try again'));
-    }
-  }catch(e){
-    toast('❌ Network error — your balance was NOT deducted. Try again.');
-  }
-  finally{btn.disabled=false;btn.textContent='Confirm Withdrawal';}
-}
+        // State
+        let selectedFighter = null;
+        let selectedMethod = 'mpesa';
+        let stakeAmount = 5000;
+        let numberRevealed = false;
 
-/* ═══════════════ GAME MODAL ═══════════════ */
-let gameSessionCoins=0, currentGame=null;
-function openGame(key){
-  currentGame=key; gameSessionCoins=0;
-  setText('gmSessionCoins','0 SC');
-  setText('gmTitle', GAME_TITLES[key]);
-  setText('gmSCDisplay', (S.swapCoins||0).toFixed(2)+' SC');
-  const iframe=document.getElementById('gmIframe');
-  // Pass SC balance as URL param so game can display it
-  iframe.src=GAME_URLS[key]+'?sc='+(S.swapCoins||0)+'&uid='+(tgUser?.id||'guest');
-  document.getElementById('gameModal').classList.add('open');
-  document.body.style.overflow='hidden';
-  if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('medium');
-}
-function closeGame(){
-  if(gameSessionCoins>0){
-    // Note: S.swapCoins was already credited live as each 'sc_earned'
-    // message arrived (see the message listener below), so we do
-    // NOT add it again here — only show the summary + final sync.
-    toast(`🎉 +${gameSessionCoins} SC ጌሙ ላይ አግኝተዋል!`);
-    if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
-    if(syncReady){
-      syncToSheet();
-    } else {
-      pendingSyncAfterInit = true;
-    }
-  }
-  document.getElementById('gameModal').classList.remove('open');
-  document.getElementById('gmIframe').src='';
-  document.body.style.overflow='';
-  currentGame=null; render();
-}
-// Listen for messages from the game iframe.
-// IMPORTANT: we credit S.swapCoins the moment the message arrives
-// (not when the modal is closed) and save immediately, so coins
-// can never be lost even if the player abruptly switches apps or
-// closes the browser without tapping "✓ ጨርስ".
-let lastGameAdTime = 0;
-const GAME_AD_MIN_GAP_MS = 20000; // don't allow a game to spam-trigger ads faster than this
-window.addEventListener('message',e=>{
-  if(!e.data)return;
-  if(e.data.type==='sc_earned'&&typeof e.data.amount==='number'){
-    const amt = e.data.amount;
-    gameSessionCoins += amt;                 // session-total, for the footer display only
-    S.swapCoins = (S.swapCoins||0) + amt;     // real balance — credited immediately
-    saveState();
-    setText('gmSessionCoins', gameSessionCoins.toFixed(2)+' SC');
-    setText('gmSCDisplay', S.swapCoins.toFixed(2)+' SC');
-  }
-  if(e.data.type==='sc_balance_request'){
-    document.getElementById('gmIframe')?.contentWindow?.postMessage(
-      {type:'sc_balance',amount:S.swapCoins||0},'*'
-    );
-  }
-  if(e.data.type==='trigger_game_ad'){
-    // A mini-game (Spin Wheel / Scratch Card / Coin Flip / Number
-    // Guess) is asking the MAIN app to show an ad on its behalf,
-    // since the game itself runs inside a sandboxed iframe and
-    // can't reliably trigger ad SDK popups on its own — Telegram's
-    // WebView often blocks ad calls made from inside an iframe.
-    // Only honor this while the game modal is actually open (never
-    // trust postMessage blindly — some other origin/script could
-    // otherwise spam ad triggers), and rate-limit so a buggy or
-    // malicious game page can't spam ad after ad.
-    const gameModalOpen = document.getElementById('gameModal')?.classList.contains('open');
-    if(!gameModalOpen) return;
-    if(adRunning) return; // already showing an ad — ignore duplicate triggers
-    const now = Date.now();
-    if(now - lastGameAdTime < GAME_AD_MIN_GAP_MS) return;
-    lastGameAdTime = now;
+        // Fighter odds
+        const odds = {
+            sedo: 2.15,
+            johni: 1.85
+        };
 
-    adRunning = true;
-    isBonusAd = true; // no ETB/SC reward for game-triggered ads — same "bonus" no-payout path
-    document.getElementById('adCloseBtn').style.display='none';
-    document.getElementById('adTitle').textContent='ማስታወቂያ';
-    document.getElementById('adDesc').textContent='አጭር ማስታወቂያ';
+        // Fight countdown (Aug 27, 2026 @ 4:00 PM)
+        const fightDate = new Date('2026-08-27T16:00:00').getTime();
 
-    if(typeof show_11460944 === 'function'){
-      show_11460944('pop').catch(()=>{
-        return show_11460944().catch(()=>{});
-      }).finally(()=>{
-        finishBonusAd();
-      });
-    } else {
-      // No SDK available — still show a short on-screen countdown
-      // so the flow completes gracefully instead of doing nothing.
-      runFallbackCountdown(15000);
-    }
-  }
-});
+        // Initialize countdown
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = fightDate - now;
 
-/* ═══════════════ SHARE ═══════════════ */
-function copyRefLink(){
-  const v=document.getElementById('refLinkInp').value;
-  try{navigator.clipboard.writeText(v);}catch(e){const i=document.createElement('input');i.value=v;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove();}
-  toast('📋 ሊንክ ኮፒ ሆኗል!');
-}
-function shareSocial(p){
-  const url=encodeURIComponent(document.getElementById('refLinkInp').value);
-  const txt=encodeURIComponent('Swap Money ላይ ተቀላቀሉ — ዕለታዊ ገንዘብ ያግኙ!');
-  if(p==='telegram') window.open(`https://t.me/share/url?url=${url}&text=${txt}`,'_blank');
-  else if(p==='whatsapp') window.open(`https://api.whatsapp.com/send?text=${txt}%20${url}`,'_blank');
-  else if(p==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,'_blank');
-  else if(p==='messenger') window.open(`https://www.facebook.com/dialog/send?link=${url}`,'_blank');
-  else copyRefLink();
-}
+            if (distance < 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
 
-/* ═══════════════ GOOGLE SHEETS SYNC ═══════════════ */
-async function syncFromSheet(){
-  if(!tgUser)return;
-  try{
-    const res=await fetch(`${SCRIPT_URL}?action=getUser&userId=${tgUser.id}`);
-    const data=await res.json();
-    if(data.result==='success'&&data.user){
-      const u=data.user;
-      // Only update from sheet if sheet values are >= local (prevent data loss)
-      if(typeof u.balance!=='undefined') S.balance=Math.max(S.balance, Number(u.balance)||0);
-      if(typeof u.totalAds!=='undefined') S.adsWatched=Math.max(S.adsWatched, Number(u.totalAds)||0);
-      if(typeof u.swapCoins!=='undefined') S.swapCoins=Math.max(S.swapCoins, Number(u.swapCoins)||0);
-      if(typeof u.totalReferrals!=='undefined') S.totalRefs=Math.max(S.totalRefs||0, Number(u.totalReferrals)||0);
-      render(); flashSyncDot();
-    } else {
-      console.warn('[Swap Money] syncFromSheet got non-success result:', data);
-    }
-  }catch(e){
-    console.error('[Swap Money] syncFromSheet failed — check SCRIPT_URL and deployment. Error:', e);
-  }
-}
-async function syncToSheet(){
-  if(!tgUser)return;
-  if(!syncReady){
-    // Refuse to push until we've confirmed the user's real balance
-    // from the sheet — prevents wiping an existing user's data.
-    console.warn('[Swap Money] syncToSheet blocked: not ready yet, will retry after init');
-    return;
-  }
-  try{
-    // NOTE: mode:'no-cors' means we can NEVER read the response here
-    // (browser blocks it), so we can't tell success from failure this
-    // way. That's fine for this fire-and-forget sync call — but if
-    // NOTHING is appearing in your Google Sheet at all, the most
-    // common causes are:
-    //   1) SCRIPT_URL is wrong / not the deployed Web App URL
-    //   2) The Apps Script deployment access is not set to "Anyone"
-    //   3) You edited the script after deploying but created a NEW
-    //      deployment instead of updating the existing one, so this
-    //      URL still points to old/broken code
-    //   4) The "Users" sheet tab name doesn't exactly match "Users"
-    const res = await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        action:'syncUser',
-        userId:String(tgUser.id),
-        username:tgUser.username||tgUser.first_name||'Guest',
-        balance:S.balance,
-        totalAds:S.adsWatched,
-        swapCoins:S.swapCoins,
-        referredBy:String(referrerId||'None')
-      })});
-    console.log('[Swap Money] syncToSheet request sent (no-cors — response not readable, this is normal). If your Sheet still shows nothing after this, check the SCRIPT_URL/deployment as noted above.');
-    setTimeout(syncFromSheet,1500);
-  }catch(e){
-    console.error('[Swap Money] syncToSheet request itself failed to send (network/URL problem):', e);
-  }
-}
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-/* ═══════════════ HELPERS ═══════════════ */
-function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
-let _syncDotT;
-function flashSyncDot(){
-  // Tiny green dot on the refresh icon instead of a full toast —
-  // shows briefly every time a background sync succeeds, without
-  // interrupting the user.
-  const dot = document.getElementById('syncDot');
-  if(!dot) return;
-  dot.style.display = 'block';
-  clearTimeout(_syncDotT);
-  _syncDotT = setTimeout(()=>{ dot.style.display='none'; }, 1200);
-}
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
 
-/* ═══════════════ SAFE INIT SEQUENCE ═══════════════
-   CRITICAL: We must NEVER write to the sheet before we've
-   successfully pulled the user's real balance from it first.
-   Otherwise a fresh/cleared browser could overwrite a real
-   user's balance with 0/50 and wipe their earnings.
-   syncReady stays false until the first successful pull
-   (or we confirm this is truly a brand-new user). All
-   syncToSheet() calls are blocked while syncReady is false. */
-let syncReady = false;
-let pendingSyncAfterInit = false; // true if user earned something before init finished
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
 
-async function safeInit(){
-  render(); // paint whatever we have locally first (no network call yet)
+        // Load stats
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('fightStats')) || {
+                totalBets: 1247,
+                activeUsers: 482
+            };
+            document.getElementById('totalBets').textContent = stats.totalBets;
+            document.getElementById('activeUsers').textContent = stats.activeUsers;
+        }
 
-  if(!tgUser){
-    // No Telegram user context (e.g. testing outside Telegram in a
-    // plain browser / onecompiler.com preview). There is no real
-    // account to sync against, so we stay fully local. This is
-    // expected and not an error — but it DOES mean Google Sheet
-    // sync will never happen until this is opened as a real
-    // Telegram Mini App (via the bot), where tgUser is populated.
-    console.warn('[Swap Money] No Telegram user detected — running in local-only/demo mode. Google Sheet sync requires opening this inside Telegram via the bot.');
-    syncReady = true;
-    if(!S.hasWelcomed){
-      S.hasWelcomed = true;
-      if(S.balance === 0) S.balance = WELCOME_ETB;
-      saveState(); render();
-    }
-    return;
-  }
+        loadStats();
 
-  try{
-    const res  = await fetch(`${SCRIPT_URL}?action=getUser&userId=${tgUser.id}`);
-    const data = await res.json();
+        // Fighter selection
+        document.querySelectorAll('.fighter-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFighter = this.dataset.fighter;
+                updateSummary();
+                updateSubmitBtn();
+            });
+        });
 
-    if(data.result === 'success' && data.user){
-      // ── EXISTING USER ── pull their real numbers from the sheet.
-      const u = data.user;
-      S.balance    = Math.max(S.balance,    Number(u.balance)        || 0);
-      S.adsWatched = Math.max(S.adsWatched, Number(u.totalAds)       || 0);
-      S.swapCoins  = Math.max(S.swapCoins,  Number(u.swapCoins)      || 0);
-      S.totalRefs  = Math.max(S.totalRefs||0, Number(u.totalReferrals) || 0);
-      S.hasWelcomed = true; // they already exist — never re-grant welcome bonus
-      saveState();
-      toast('✅ ውሂብዎ ከ server ተመልሷል');
+        // Payment method selection
+        document.querySelectorAll('.payment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedMethod = this.dataset.method;
+                
+                if (selectedMethod === 'mpesa') {
+                    document.getElementById('mpesaSection').classList.add('show');
+                } else {
+                    document.getElementById('mpesaSection').classList.remove('show');
+                }
+            });
+        });
 
-    } else if(data.result === 'not_found'){
-      // ── BRAND NEW USER ── confirmed not in the sheet, safe to welcome
-      if(!S.hasWelcomed){
-        S.hasWelcomed = true;
-        if(S.balance === 0) S.balance = WELCOME_ETB;
-        saveState();
-        setTimeout(()=>{
- 
+        // Reveal M-Pesa number
+        document.getElementById('revealBtn').addEventListener('click', function() {
+            const blur = document.getElementById('mpesaBlur');
+            if (!numberRevealed) {
+                blur.textContent = MPESA_NUMBER;
+                blur.classList.remove('blurred');
+                this.textContent = 'Hide';
+                numberRevealed = true;
+            } else {
+                blur.textContent = MPESA_MASKED;
+                blur.classList.add('blurred');
+                this.textContent = 'Reveal';
+                numberRevealed = false;
+            }
+        });
+
+        // Copy M-Pesa number
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            navigator.clipboard.writeText(MPESA_NUMBER).then(() => {
+                const originalText = this.textContent;
+                this.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    this.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // Stake input
+        const stakeInput = document.getElementById('stakeInput');
+        stakeInput.addEventListener('input', function() {
+            const value = parseInt(this.value) || 0;
+            if (value >= 500 && value <= 100000) {
+                stakeAmount = value;
+            }
+            updateSummary();
+            updateSubmitBtn();
+        });
+
+        // Quick amount buttons
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                stakeAmount = parseInt(this.dataset.amount);
+                stakeInput.value = stakeAmount;
+                updateSummary();
+                updateSubmitBtn();
+            });
+        });
+
+        // Update summary
+        function updateSummary() {
+            if (selectedFighter) {
+                const summary = document.getElementById('summary');
+                summary.classList.add('show');
+                
+                const fighterName = selectedFighter === 'sedo' ? 'SEDO' : 'JOHNI';
+                const currentOdds = odds[selectedFighter];
+                const potentialWin = Math.round(stakeAmount * currentOdds);
+                
+                document.getElementById('summaryFighter').textContent = fighterName;
+                document.getElementById('summaryStake').textContent = stakeAmount.toLocaleString() + ' ETB';
+                document.getElementById('summaryWin').textContent = potentialWin.toLocaleString() + ' ETB';
+            } else {
+                document.getElementById('summary').classList.remove('show');
+            }
+        }
+
+        // Update submit button
+        function updateSubmitBtn() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (selectedFighter && stakeAmount >= 500) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Send data to Telegram
+        async function sendToTelegram(predictionData) {
+            try {
+                const message = `
+📊 NEW PREDICTION PLACED!
+━━━━━━━━━━━━━━━━━
+🥊 Fighter: ${predictionData.fighter.toUpperCase()}
+💰 Stake: ${predictionData.stake.toLocaleString()} ETB
+🎯 Potential Win: ${predictionData.potentialWin.toLocaleString()} ETB
+📱 Payment: ${predictionData.method}
+⏰ Time: ${new Date().toLocaleString()}
+━━━━━━━━━━━━━━━━━
+`;
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                
+                await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                return true;
+            } catch (error) {
+                console.error('Telegram error:', error);
+                return false;
+            }
+        }
+
+        // Submit prediction
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+            if (!selectedFighter) {
+                showError('❌ Please select a fighter');
+                return;
+            }
+
+            if (stakeAmount < 500 || stakeAmount > 100000) {
+                showError('❌ Stake must be between 500 and 100,000 ETB');
+                return;
+            }
+
+            if (selectedMethod === 'mpesa' && !numberRevealed) {
+                showError('❌ Please reveal and verify the M-Pesa number');
+                return;
+            }
+
+            this.disabled = true;
+            this.textContent = 'PROCESSING...';
+
+            const predictionData = {
+                fighter: selectedFighter,
+                stake: stakeAmount,
+                potentialWin: Math.round(stakeAmount * odds[selectedFighter]),
+                method: selectedMethod,
+                timestamp: new Date().toISOString()
+            };
+
+            // Send to Telegram
+            await sendToTelegram(predictionData);
+
+            // Update stats
+            const stats = JSON.parse(localStorage.getItem('fightStats')) || { totalBets: 0, activeUsers: 0 };
+            stats.totalBets += 1;
+            stats.activeUsers += 1;
+            localStorage.setItem('fightStats', JSON.stringify(stats));
+
+            setTimeout(() => {
+                const successMsg = document.getElementById('successMessage');
+                successMsg.classList.add('show');
+                
+                setTimeout(() => {
+                    resetForm();
+                    successMsg.classList.remove('show');
+                }, 4000);
+            }, 1500);
+        });
+
+        // Show error
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+            
+            setTimeout(() => {
+                errorMsg.classList.remove('show');
+            }, 4000);
+        }
+
+        // Reset form
+        function resetForm() {
+            selectedFighter = null;
+            stakeAmount = 5000;
+            selectedMethod = 'mpesa';
+            numberRevealed = false;
+            
+            document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.payment-btn')[0].classList.add('active');
+            
+            stakeInput.value = 5000;
+            document.getElementById('summary').classList.remove('show');
+            document.getElementById('mpesaSection').classList.add('show');
+            
+            const blur = document.getElementById('mpesaBlur');
+            blur.textContent = MPESA_MASKED;
+            blur.classList.add('blurred');
+            document.getElementById('revealBtn').textContent = 'Reveal';
+            
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'PLACE PREDICTION';
+
+            loadStats();
+        }
+
+        // Initialize
+        updateSubmitBtn();
+        document.getElementById('mpesaSection').classList.add('show');
+    </script>
+</body>
+</html>
