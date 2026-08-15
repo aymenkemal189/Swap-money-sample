@@ -6,833 +6,810 @@
     <title>Swap Money - Fight Prediction Arena</title>
     <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        :root {
+            --primary: #00ff88;
+            --primary-glow: rgba(0, 255, 136, 0.4);
+            --bg-dark: #0a0f0d;
+            --card-bg: rgba(16, 26, 21, 0.85);
+            --border: rgba(0, 255, 136, 0.25);
+            --text: #ffffff;
+            --text-dim: #8fa89b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            user-select: none;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(0, 200, 83, 0.08) 0%, transparent 50%);
             min-height: 100vh;
             padding: 12px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--text);
+            overflow-x: hidden;
         }
 
         .container {
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 24px;
-            padding: 20px;
-            max-width: 520px;
+            max-width: 480px;
             width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 193, 7, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 24px;
         }
 
-        /* Top Navigation & Header */
+        /* Top Nav */
         .top-nav {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            align-items: center;
         }
 
-        .back-btn {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            color: #ffc107;
+        .btn-back {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--border);
+            color: var(--primary);
             padding: 8px 14px;
             border-radius: 12px;
+            font-weight: 700;
             font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.2s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s;
         }
 
-        .back-btn:hover {
-            background: rgba(255, 193, 7, 0.2);
-            border-color: #ffc107;
+        .btn-back:active {
+            transform: scale(0.95);
         }
 
+        .user-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-dim);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Hero Header */
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
-            padding-bottom: 16px;
+            position: relative;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+        .brand-title {
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .event-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffc107;
-            margin: 12px 0 8px 0;
-        }
-
-        .countdown-section {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .countdown-title {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            filter: drop-shadow(0 0 12px var(--primary-glow));
         }
 
-        .countdown-timer {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 8px;
-        }
-
-        .countdown-item {
-            background: rgba(255, 193, 7, 0.15);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 12px;
-            padding: 12px 8px;
-            backdrop-filter: blur(10px);
-        }
-
-        .countdown-number {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ffc107;
-            line-height: 1;
-        }
-
-        .countdown-label {
-            font-size: 9px;
-            color: #999;
-            margin-top: 4px;
-            text-transform: uppercase;
-        }
-
-        .prize-section {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0.05) 100%);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 16px;
-            padding: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .prize-title {
+        .event-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(90deg, rgba(0,255,136,0.2), rgba(0,200,83,0.1));
+            border: 1px solid var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--primary);
             font-size: 12px;
-            color: #ffc107;
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-weight: 800;
+            margin-top: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
         }
 
-        .prize-pool {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
         }
 
-        .prize-item {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 12px;
-            padding: 10px 6px;
-            backdrop-filter: blur(10px);
-        }
-
-        .prize-rank {
-            font-size: 11px;
-            color: #ffc107;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        .prize-amount {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .stat-box {
-            background: rgba(255, 193, 7, 0.08);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 9px;
-            color: #999;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffc107;
-        }
-
-        .fighters-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-
-        .fighter-card {
-            background: rgba(255, 193, 7, 0.08);
-            border: 2px solid rgba(255, 193, 7, 0.2);
-            border-radius: 16px;
+        /* 3D Glass Card Container */
+        .card-3d {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        .fighter-card.selected {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3) 0%, rgba(255, 193, 7, 0.1) 100%);
-            border-color: #ffc107;
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.3), inset 0 0 20px rgba(255, 193, 7, 0.1);
+        /* Fighter Selection Section */
+        .arena-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            perspective: 1000px;
         }
 
-        .fighter-image-container {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 12px;
+        .fighter-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,255,136,0.02) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            transform-style: preserve-3d;
         }
 
-        .fighter-image {
-            width: 100%;
-            height: 100%;
+        .fighter-card:hover {
+            transform: translateY(-4px) rotateX(4deg);
+            border-color: rgba(0, 255, 136, 0.5);
+        }
+
+        .fighter-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 255, 136, 0.02) 100%);
+            box-shadow: 0 0 20px var(--primary-glow), inset 0 0 15px rgba(0, 255, 136, 0.2);
+            transform: scale(1.02);
+        }
+
+        .fighter-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--primary);
+            color: #000;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            font-weight: 900;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 38px;
-            border: 3px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .fighter-avatar-wrapper {
+            width: 86px;
+            height: 86px;
+            margin: 0 auto 10px;
+            position: relative;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary), transparent);
+        }
+
+        .fighter-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #111;
         }
 
         .fighter-name {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #ffc107;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 2px;
         }
 
-        .fighter-stats {
+        .fighter-subname {
             font-size: 11px;
-            color: #999;
-            margin-bottom: 6px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
         }
 
-        .fighter-odds {
-            font-size: 12px;
-            font-weight: 600;
-            color: #ffc107;
-            background: rgba(255, 193, 7, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
+        .odds-pill {
+            background: rgba(0, 255, 136, 0.12);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 12px;
             display: inline-block;
         }
 
-        .prediction-section {
-            background: rgba(255, 193, 7, 0.08);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
+        /* Stake Controls */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .section-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #ffc107;
-            margin-bottom: 12px;
+        .label-text {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .input-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #999;
-            margin-bottom: 8px;
-            display: block;
-            text-transform: uppercase;
+        .stake-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .stake-input-wrapper i {
+            position: absolute;
+            left: 14px;
+            color: var(--primary);
         }
 
         .stake-input {
             width: 100%;
-            padding: 12px;
-            background: rgba(255, 193, 7, 0.05);
-            border: 2px solid rgba(255, 193, 7, 0.2);
-            border-radius: 12px;
-            font-size: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 14px 14px 42px;
             color: #fff;
-            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 700;
+            outline: none;
+            transition: all 0.2s;
         }
 
         .stake-input:focus {
-            outline: none;
-            border-color: #ffc107;
-            background: rgba(255, 193, 7, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 12px var(--primary-glow);
         }
 
-        .quick-amounts {
-            display: flex;
+        .quick-chips {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 6px;
-            margin-top: 10px;
-            flex-wrap: wrap;
+            margin-top: 8px;
         }
 
-        .quick-btn {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #ffc107;
-            cursor: pointer;
-        }
-
-        .prediction-summary {
-            background: rgba(255, 193, 7, 0.08);
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 16px;
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 0;
+            border-radius: 10px;
             font-size: 12px;
-            display: none;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
         }
 
-        .prediction-summary.show {
-            display: block;
+        .chip:active {
+            background: var(--primary);
+            color: #000;
         }
 
-        .summary-row {
+        /* Dynamic Return Display */
+        .payout-box {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            border: 1px dashed var(--primary);
+            border-radius: 14px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
         }
 
-        .summary-row:last-child {
-            margin-bottom: 0;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 193, 7, 0.2);
-            font-weight: bold;
-            color: #ffc107;
+        .payout-amount {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
-        .payment-methods {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .payment-btn {
-            background: rgba(255, 193, 7, 0.1);
-            border: 2px solid rgba(255, 193, 7, 0.2);
-            border-radius: 12px;
-            padding: 12px;
-            color: #ffc107;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .payment-btn.active {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 193, 7, 0.1));
-            border-color: #ffc107;
-        }
-
-        .mpesa-section {
-            background: rgba(255, 193, 7, 0.08);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-            border-radius: 12px;
-            padding: 14px;
-            display: none;
-            margin-bottom: 16px;
-        }
-
-        .mpesa-section.show {
-            display: block;
-        }
-
-        .mpesa-number {
-            background: rgba(255, 193, 7, 0.15);
-            border: 1px solid rgba(255, 193, 7, 0.3);
+        /* Payment Section */
+        .mpesa-banner {
+            width: 100%;
+            height: 48px;
+            background: #fff;
             border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            padding: 6px;
+            margin-bottom: 12px;
         }
 
-        .mpesa-blur {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffc107;
-            letter-spacing: 3px;
-            font-family: monospace;
-        }
-
-        .mpesa-blur.blurred {
-            filter: blur(6px);
-        }
-
-        .copy-btn, .reveal-btn {
-            background: #ffc107;
-            border: none;
-            color: #000;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 11px;
-            cursor: pointer;
-            margin-left: 4px;
-        }
-
-        .reveal-btn {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-            border: 1px solid rgba(255, 193, 7, 0.4);
-        }
-
-        .screenshot-section {
-            background: rgba(255, 193, 7, 0.08);
-            border: 2px dashed rgba(255, 193, 7, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-
-        #screenshotInput {
-            display: none;
-        }
-
-        .screenshot-preview {
-            margin-top: 12px;
-            display: none;
-        }
-
-        .screenshot-preview.show {
-            display: block;
-        }
-
-        .preview-image {
-            width: 100%;
-            max-height: 200px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 193, 7, 0.3);
+        .mpesa-banner img {
+            max-height: 100%;
             object-fit: contain;
         }
 
-        .remove-screenshot-btn {
-            background: rgba(244, 67, 54, 0.2);
-            border: 1px solid rgba(244, 67, 54, 0.4);
-            color: #f44336;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 11px;
-            cursor: pointer;
-            margin-top: 8px;
-            width: 100%;
+        .number-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
         }
 
-        .submit-btn {
+        .num-text {
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-sm {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Screenshot Upload Drag Box */
+        .upload-area {
+            border: 2px dashed rgba(0, 255, 136, 0.4);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            background: rgba(0, 255, 136, 0.02);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover {
+            background: rgba(0, 255, 136, 0.06);
+            border-color: var(--primary);
+        }
+
+        .preview-img {
+            max-height: 140px;
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* CTA Button */
+        .btn-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #00ff88 0%, #00b359 100%);
             color: #000;
             border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 12px;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px var(--primary-glow);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .submit-btn:disabled {
-            opacity: 0.5;
+        .btn-cta:active {
+            transform: scale(0.98);
+        }
+
+        .btn-cta:disabled {
+            opacity: 0.4;
             cursor: not-allowed;
+            box-shadow: none;
         }
 
-        .success-message, .error-message {
+        /* TICKET / RECEIPT MODAL (Optimized for Screenshots) */
+        .ticket-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 100;
             display: none;
-            border-radius: 12px;
-            padding: 12px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .ticket-modal.active {
+            display: flex;
+        }
+
+        .ticket {
+            background: #0f1914;
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 360px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 0 40px var(--primary-glow);
+            background-image: radial-gradient(circle at top right, rgba(0,255,136,0.15), transparent);
+        }
+
+        .ticket-header {
             text-align: center;
-            margin-top: 12px;
-            font-size: 12px;
+            border-bottom: 2px dashed rgba(0, 255, 136, 0.3);
+            padding-bottom: 16px;
+            margin-bottom: 16px;
         }
 
-        .success-message {
-            background: rgba(76, 175, 80, 0.15);
-            border: 1px solid rgba(76, 175, 80, 0.4);
-            color: #4caf50;
+        .ticket-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
 
-        .error-message {
-            background: rgba(244, 67, 54, 0.15);
-            border: 1px solid rgba(244, 67, 54, 0.4);
-            color: #f44336;
+        .ticket-label {
+            color: var(--text-dim);
         }
 
-        .success-message.show, .error-message.show {
-            display: block;
+        .ticket-val {
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .receipt-badge {
+            background: var(--primary);
+            color: #000;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            display: inline-block;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- Top Navigation with Back Button -->
+        <!-- Top Nav -->
         <div class="top-nav">
-            <button class="back-btn" id="backBtn">
-                ⬅ Back
+            <button class="btn-back" id="backBtn">
+                <i data-lucide="arrow-left" size="16"></i> Back
             </button>
-            <div style="font-size:11px; color:#999;" id="userInfo">Guest</div>
+            <div class="user-tag">
+                <i data-lucide="user" size="14"></i>
+                <span id="usernameDisplay">@Player</span>
+            </div>
         </div>
 
         <!-- Header -->
         <div class="header">
-            <div class="logo">⚡ SWAP MONEY</div>
-            <div class="event-title">🥊 FIGHT PREDICTION ARENA</div>
-        </div>
-
-        <!-- Countdown Timer -->
-        <div class="countdown-section">
-            <div class="countdown-title">⏰ Fight Starts In</div>
-            <div class="countdown-timer">
-                <div class="countdown-item"><div class="countdown-number" id="days">00</div><div class="countdown-label">Days</div></div>
-                <div class="countdown-item"><div class="countdown-number" id="hours">00</div><div class="countdown-label">Hours</div></div>
-                <div class="countdown-item"><div class="countdown-number" id="minutes">00</div><div class="countdown-label">Min</div></div>
-                <div class="countdown-item"><div class="countdown-number" id="seconds">00</div><div class="countdown-label">Sec</div></div>
+            <div class="brand-title">Swap Money</div>
+            <div class="event-badge">
+                <i data-lucide="swords" size="14"></i> Fight Prediction Arena
             </div>
         </div>
 
-        <!-- Prize Pool -->
-        <div class="prize-section">
-            <div class="prize-title">🏆 Prize Pool</div>
-            <div class="prize-pool">
-                <div class="prize-item"><div class="prize-rank">🥇 1st</div><div class="prize-amount">200K</div></div>
-                <div class="prize-item"><div class="prize-rank">🥈 2nd</div><div class="prize-amount">100K</div></div>
-                <div class="prize-item"><div class="prize-rank">🥉 3rd</div><div class="prize-amount">50K</div></div>
+        <!-- Fighter Selection Card -->
+        <div class="card-3d">
+            <div class="label-text" style="margin-bottom: 12px;">
+                <span>1. Select Fighter</span>
+                <span style="color: var(--primary);">Live Odds</span>
+            </div>
+
+            <div class="arena-grid">
+                <!-- Fighter 1: Sedo -->
+                <div class="fighter-card" data-fighter="sedo" data-odds="2.15" onclick="selectFighter(this)">
+                    <div class="fighter-avatar-wrapper">
+                        <img src="https://i.postimg.cc/DyX6v31v/Screenshot-20260815-105218-Tik-Tok.jpg" class="fighter-avatar" alt="Sedo">
+                    </div>
+                    <div class="fighter-name">SEDO</div>
+                    <div class="fighter-subname">Pro Fighter</div>
+                    <div class="odds-pill">2.15x</div>
+                </div>
+
+                <!-- Fighter 2: Johni -->
+                <div class="fighter-card" data-fighter="johni" data-odds="1.85" onclick="selectFighter(this)">
+                    <div class="fighter-avatar-wrapper">
+                        <img src="https://i.postimg.cc/ydGhKLdz/Screenshot-20260815-105401-Tik-Tok.jpg" class="fighter-avatar" alt="Johni">
+                    </div>
+                    <div class="fighter-name">JOHNI</div>
+                    <div class="fighter-subname">በቀሉ</div>
+                    <div class="odds-pill">1.85x</div>
+                </div>
             </div>
         </div>
 
-        <!-- Fighters -->
-        <div class="fighters-container">
-            <div class="fighter-card" data-fighter="sedo">
-                <div class="fighter-image-container"><div class="fighter-image">🥋</div></div>
-                <div class="fighter-name">SEDO</div>
-                <div class="fighter-stats">Record: 15-3-2</div>
-                <div class="fighter-odds">2.15x Odds</div>
-            </div>
-            <div class="fighter-card" data-fighter="johni">
-                <div class="fighter-image-container"><div class="fighter-image">👊</div></div>
-                <div class="fighter-name">JOHNI</div>
-                <div class="fighter-stats">Record: 12-5-1</div>
-                <div class="fighter-odds">1.85x Odds</div>
-            </div>
-        </div>
-
-        <!-- Prediction Section -->
-        <div class="prediction-section">
-            <div class="section-title">Your Stake</div>
-            <input type="number" id="stakeInput" class="stake-input" placeholder="Min: 500 ETB" min="500" value="5000">
-            <div class="quick-amounts">
-                <button class="quick-btn" data-amount="500">500</button>
-                <button class="quick-btn" data-amount="1000">1K</button>
-                <button class="quick-btn" data-amount="5000">5K</button>
-                <button class="quick-btn" data-amount="10000">10K</button>
-            </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="prediction-summary" id="summary">
-            <div class="summary-row"><span>Fighter:</span><span id="summaryFighter">-</span></div>
-            <div class="summary-row"><span>Stake:</span><span id="summaryStake">0 ETB</span></div>
-            <div class="summary-row"><span>Potential Win:</span><span id="summaryWin">0 ETB</span></div>
-        </div>
-
-        <!-- Payment Methods -->
-        <div class="prediction-section">
-            <div class="section-title">Payment Method</div>
-            <div class="payment-methods">
-                <button class="payment-btn active" data-method="mpesa">📱 M-Pesa</button>
-                <button class="payment-btn" data-method="bank">🏦 Bank</button>
-            </div>
-        </div>
-
-        <!-- M-Pesa Section -->
-        <div class="mpesa-section" id="mpesaSection">
-            <div class="mpesa-number">
-                <div class="mpesa-blur blurred" id="mpesaBlur">●●●●●●●●●●</div>
-                <div>
-                    <button class="reveal-btn" id="revealBtn">Reveal</button>
-                    <button class="copy-btn" id="copyBtn">Copy</button>
+        <!-- Stake & Returns Card -->
+        <div class="card-3d">
+            <div class="input-group">
+                <div class="label-text">
+                    <span>2. Enter Stake</span>
+                    <span>Min: 500 ETB</span>
+                </div>
+                <div class="stake-input-wrapper">
+                    <i data-lucide="coins" size="18"></i>
+                    <input type="number" id="stakeInput" class="stake-input" value="5000" min="500" oninput="calculateReturn()">
+                </div>
+                <div class="quick-chips">
+                    <div class="chip" onclick="setStake(500)">500</div>
+                    <div class="chip" onclick="setStake(1000)">1K</div>
+                    <div class="chip" onclick="setStake(5000)">5K</div>
+                    <div class="chip" onclick="setStake(10000)">10K</div>
                 </div>
             </div>
 
-            <!-- Screenshot Attachment -->
-            <div class="screenshot-section" id="screenshotSection">
-                <div style="font-size:24px;">📸</div>
-                <div style="color:#ffc107; font-size:12px; font-weight:600;">Attach Payment Proof</div>
-                <div style="color:#999; font-size:10px;">Click to select M-Pesa screenshot</div>
-            </div>
-            <input type="file" id="screenshotInput" accept="image/*" />
-
-            <!-- Screenshot Preview -->
-            <div class="screenshot-preview" id="screenshotPreview">
-                <img id="previewImage" class="preview-image" src="" alt="Payment proof">
-                <button class="remove-screenshot-btn" id="removeScreenshotBtn">Remove Screenshot</button>
+            <div class="payout-box" style="margin-top: 14px;">
+                <div>
+                    <div style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">Potential Win</div>
+                    <div style="font-size: 11px; color: #fff;" id="selectedFighterText">No Fighter Selected</div>
+                </div>
+                <div class="payout-amount" id="potentialWinDisplay">0 ETB</div>
             </div>
         </div>
 
-        <!-- Error & Success Messages -->
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage">
-            ✅ Prediction Submitted Successfully!
+        <!-- Payment & Receipt Attachment Card -->
+        <div class="card-3d">
+            <div class="label-text" style="margin-bottom: 10px;">3. Payment Method</div>
+            
+            <div class="mpesa-banner">
+                <img src="https://woodev.co.ke/wp-content/uploads/2024/12/m-pesa-1024x343.png" alt="M-Pesa">
+            </div>
+
+            <div class="number-box">
+                <div>
+                    <div style="font-size: 9px; color: var(--text-dim);">PAY TO MPESA</div>
+                    <div class="num-text" id="numDisplay">●●●●●●●●●●</div>
+                </div>
+                <div class="action-btns">
+                    <button class="btn-sm" onclick="toggleReveal()"><i data-lucide="eye" size="12"></i> Reveal</button>
+                    <button class="btn-sm" onclick="copyNumber()"><i data-lucide="copy" size="12"></i> Copy</button>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <i data-lucide="image-plus" size="24" style="color: var(--primary);"></i>
+                <div style="font-size: 12px; font-weight: 700; margin-top: 4px;">Attach Payment Screenshot</div>
+                <div style="font-size: 10px; color: var(--text-dim);">Click to upload M-Pesa receipt</div>
+                <img id="previewImg" class="preview-img" alt="Receipt Preview">
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFile(this)">
         </div>
 
-        <!-- Submit Button -->
-        <button class="submit-btn" id="submitBtn" disabled>PLACE PREDICTION</button>
+        <!-- CTA Submit Button -->
+        <button class="btn-cta" id="submitBtn" onclick="processPrediction()" disabled>
+            <i data-lucide="ticket" size="20"></i> Lock Prediction
+        </button>
+    </div>
+
+    <!-- TICKET GENERATOR MODAL (FOR SCREENSHOT/RECEIPT) -->
+    <div class="ticket-modal" id="ticketModal">
+        <div class="ticket" id="ticketContent">
+            <div class="ticket-header">
+                <div class="receipt-badge">OFFICIAL MATCH TICKET</div>
+                <div style="font-size: 20px; font-weight: 900; color: #fff;">SWAP MONEY ARENA</div>
+                <div style="font-size: 10px; color: var(--primary); margin-top: 2px;">CONFIRMED PREDICTION RECEIPT</div>
+            </div>
+
+            <div class="ticket-row">
+                <span class="ticket-label">Ticket ID:</span>
+                <span class="ticket-val" id="tTicketId">#SMP-88392</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Predictor:</span>
+                <span class="ticket-val" id="tUser">@User</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Chosen Fighter:</span>
+                <span class="ticket-val" id="tFighter" style="color: var(--primary);">SEDO</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Odds:</span>
+                <span class="ticket-val" id="tOdds">2.15x</span>
+            </div>
+            <div class="ticket-row">
+                <span class="ticket-label">Stake Amount:</span>
+                <span class="ticket-val" id="tStake">5,000 ETB</span>
+            </div>
+            <div class="ticket-row" style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px;">
+                <span class="ticket-label">Est. Payout:</span>
+                <span class="ticket-val" id="tWin" style="color: var(--primary); font-size: 16px;">10,750 ETB</span>
+            </div>
+
+            <div style="margin-top: 16px; text-align: center;">
+                <div style="font-size: 10px; color: var(--text-dim); margin-bottom: 12px;">📸 Take a screenshot of this receipt for verification</div>
+                <button class="btn-cta" onclick="closeTicket()">Done / Close</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Init Telegram WebApp
+        // Init Telegram SDK
         const tg = window.Telegram?.WebApp;
         if (tg) {
             tg.ready();
             tg.expand();
             if (tg.initDataUnsafe?.user) {
-                document.getElementById('userInfo').textContent = `@${tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name}`;
+                document.getElementById('usernameDisplay').textContent = `@${tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name}`;
             }
         }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
         const TELEGRAM_BOT_TOKEN = '8666783314:AAEzdZ0VOUJ7MFH8-UeT900z-fm80ds7NVk';
         const TELEGRAM_CHAT_ID = '-1002232449821';
         const MPESA_NUMBER = '0704969106';
 
-        let selectedFighter = null;
-        let selectedMethod = 'mpesa';
-        let stakeAmount = 5000;
-        let numberRevealed = false;
-        let screenshotBase64 = null;
+        let selectedFighterData = null;
+        let isRevealed = false;
+        let uploadedBase64 = null;
 
-        const odds = { sedo: 2.15, johni: 1.85 };
-
-        // Navigation Back Button action
+        // Back Button
         document.getElementById('backBtn').addEventListener('click', () => {
             if (tg && tg.BackButton.isVisible) {
                 tg.close();
-            } else if (window.history.length > 1) {
-                window.history.back();
             } else {
-                alert("Returning to main menu...");
+                window.history.back();
             }
         });
 
-        // Countdown Timer
-        const fightDate = new Date('2026-08-27T16:00:00').getTime();
-        setInterval(() => {
-            const distance = fightDate - new Date().getTime();
-            if (distance < 0) return;
-            document.getElementById('days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById('hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-        }, 1000);
+        // Select Fighter Card
+        function selectFighter(element) {
+            tg?.HapticFeedback?.selectionChanged();
+            document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
 
-        // Fighter Selection
-        document.querySelectorAll('.fighter-card').forEach(card => {
-            card.addEventListener('click', function() {
-                tg?.HapticFeedback?.selectionChanged();
-                document.querySelectorAll('.fighter-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedFighter = this.dataset.fighter;
-                updateSummary();
-            });
-        });
-
-        // Payment Toggle
-        document.querySelectorAll('.payment-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                selectedMethod = this.dataset.method;
-                document.getElementById('mpesaSection').style.display = selectedMethod === 'mpesa' ? 'block' : 'none';
-            });
-        });
-
-        // Reveal/Copy
-        document.getElementById('revealBtn').addEventListener('click', function() {
-            const blur = document.getElementById('mpesaBlur');
-            numberRevealed = !numberRevealed;
-            blur.textContent = numberRevealed ? MPESA_NUMBER : '●●●●●●●●●●';
-            blur.classList.toggle('blurred', !numberRevealed);
-            this.textContent = numberRevealed ? 'Hide' : 'Reveal';
-        });
-
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            navigator.clipboard.writeText(MPESA_NUMBER);
-            this.textContent = 'Copied!';
-            setTimeout(() => this.textContent = 'Copy', 2000);
-        });
-
-        // Screenshot Upload Handlers
-        document.getElementById('screenshotSection').addEventListener('click', () => {
-            document.getElementById('screenshotInput').click();
-        });
-
-        document.getElementById('screenshotInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                screenshotBase64 = event.target.result;
-                document.getElementById('previewImage').src = screenshotBase64;
-                document.getElementById('screenshotPreview').classList.add('show');
-                document.getElementById('screenshotSection').style.display = 'none';
+            selectedFighterData = {
+                name: element.dataset.fighter,
+                odds: parseFloat(element.dataset.odds)
             };
-            reader.readAsDataURL(file);
-        });
 
-        document.getElementById('removeScreenshotBtn').addEventListener('click', () => {
-            screenshotBase64 = null;
-            document.getElementById('screenshotInput').value = '';
-            document.getElementById('screenshotPreview').classList.remove('show');
-            document.getElementById('screenshotSection').style.display = 'block';
-        });
+            document.getElementById('selectedFighterText').textContent = `Fighter: ${selectedFighterData.name.toUpperCase()} (${selectedFighterData.odds}x)`;
+            calculateReturn();
+            checkValidation();
+        }
 
-        // Inputs & Quick Buttons
-        const stakeInput = document.getElementById('stakeInput');
-        stakeInput.addEventListener('input', function() {
-            stakeAmount = parseInt(this.value) || 0;
-            updateSummary();
-        });
+        // Stake Adjustments
+        function setStake(amount) {
+            tg?.HapticFeedback?.impactOccurred('light');
+            document.getElementById('stakeInput').value = amount;
+            calculateReturn();
+        }
 
-        document.querySelectorAll('.quick-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                stakeAmount = parseInt(this.dataset.amount);
-                stakeInput.value = stakeAmount;
-                updateSummary();
-            });
-        });
+        function calculateReturn() {
+            const stake = parseFloat(document.getElementById('stakeInput').value) || 0;
+            if (selectedFighterData && stake > 0) {
+                const estWin = Math.round(stake * selectedFighterData.odds);
+                document.getElementById('potentialWinDisplay').textContent = `${estWin.toLocaleString()} ETB`;
+            } else {
+                document.getElementById('potentialWinDisplay').textContent = `0 ETB`;
+            }
+            checkValidation();
+        }
 
-        function updateSummary() {
-            if (selectedFighter) {
-                document.getElementById('summary').classList.add('show');
-                document.getElementById('summaryFighter').textContent = selectedFighter.toUpperCase();
-                document.getElementById('summaryStake').textContent = `${stakeAmount.toLocaleString()} ETB`;
-                document.getElementById('summaryWin').textContent = `${Math.round(stakeAmount * odds[selectedFighter]).toLocaleString()} ETB`;
-                document.getElementById('submitBtn').disabled = false;
+        // M-Pesa Number Actions
+        function toggleReveal() {
+            isRevealed = !isRevealed;
+            document.getElementById('numDisplay').textContent = isRevealed ? MPESA_NUMBER : '●●●●●●●●●●';
+        }
+
+        function copyNumber() {
+            navigator.clipboard.writeText(MPESA_NUMBER);
+            tg?.HapticFeedback?.notificationOccurred('success');
+            alert('M-Pesa Number Copied!');
+        }
+
+        // Image Attachment Handler
+        function handleFile(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedBase64 = e.target.result;
+                    const img = document.getElementById('previewImg');
+                    img.src = uploadedBase64;
+                    img.style.display = 'block';
+                    checkValidation();
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        // Send Submission to Telegram
-        document.getElementById('submitBtn').addEventListener('click', async function() {
-            if (!selectedFighter) return showError('Please select a fighter!');
-            if (selectedMethod === 'mpesa' && !screenshotBase64) return showError('Please attach a screenshot of your payment.');
+        // Enable Submit Button validation
+        function checkValidation() {
+            const stake = parseFloat(document.getElementById('stakeInput').value) || 0;
+            const btn = document.getElementById('submitBtn');
+            if (selectedFighterData && stake >= 500 && uploadedBase64) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
 
-            this.disabled = true;
-            this.textContent = 'SUBMITTING...';
+        // Submit Ticket & Send to Telegram Chat
+        async function processPrediction() {
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Processing Ticket...';
 
-            const payload = {
-                fighter: selectedFighter,
-                stake: stakeAmount,
-                potentialWin: Math.round(stakeAmount * odds[selectedFighter]),
-                user: tg?.initDataUnsafe?.user?.username || 'Guest'
-            };
+            const stake = parseFloat(document.getElementById('stakeInput').value);
+            const win = Math.round(stake * selectedFighterData.odds);
+            const user = tg?.initDataUnsafe?.user?.username ? `@${tg.initDataUnsafe.user.username}` : 'Guest';
+            const ticketId = '#SMP-' + Math.floor(10000 + Math.random() * 90000);
 
-            const text = `🥊 <b>NEW PREDICTION</b>\n👤 User: @${payload.user}\n⚔️ Fighter: ${payload.fighter.toUpperCase()}\n💰 Stake: ${payload.stake} ETB\n🏆 Win: ${payload.potentialWin} ETB`;
+            // Populate Modal Ticket
+            document.getElementById('tTicketId').textContent = ticketId;
+            document.getElementById('tUser').textContent = user;
+            document.getElementById('tFighter').textContent = selectedFighterData.name.toUpperCase();
+            document.getElementById('tOdds').textContent = `${selectedFighterData.odds}x`;
+            document.getElementById('tStake').textContent = `${stake.toLocaleString()} ETB`;
+            document.getElementById('tWin').textContent = `${win.toLocaleString()} ETB`;
+
+            // Telegram Broadcast Payload
+            const caption = `🥊 <b>NEW PREDICTION RECEIPT</b>\n\n<b>Ticket:</b> ${ticketId}\n<b>User:</b> ${user}\n<b>Fighter:</b> ${selectedFighterData.name.toUpperCase()}\n<b>Odds:</b> ${selectedFighterData.odds}x\n<b>Stake:</b> ${stake.toLocaleString()} ETB\n<b>Potential Payout:</b> ${win.toLocaleString()} ETB`;
 
             try {
-                if (screenshotBase64) {
-                    const base64Data = screenshotBase64.split(',')[1];
-                    const binary = atob(base64Data);
-                    const array = [];
-                    for (let i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
-                    const blob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+                // Send Screenshot to Telegram Chat
+                const base64Data = uploadedBase64.split(',')[1];
+                const binary = atob(base64Data);
+                const array = [];
+                for (let i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+                const blob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
 
-                    const formData = new FormData();
-                    formData.append('chat_id', TELEGRAM_CHAT_ID);
-                    formData.append('photo', blob, 'screenshot.jpg');
-                    formData.append('caption', text);
-                    formData.append('parse_mode', 'HTML');
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', blob, 'receipt.jpg');
+                formData.append('caption', caption);
+                formData.append('parse_mode', 'HTML');
 
-                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
-                } else {
-                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: 'HTML' })
-                    });
-                }
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
 
-                document.getElementById('successMessage').classList.add('show');
                 tg?.HapticFeedback?.notificationOccurred('success');
-            } catch (err) {
-                showError('Failed to submit prediction. Try again.');
+                document.getElementById('ticketModal').classList.add('active');
+            } catch (e) {
+                alert('Submission Error. Please check connectivity.');
             } finally {
-                this.textContent = 'PLACE PREDICTION';
-                this.disabled = false;
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="ticket" size="20"></i> Lock Prediction`;
+                lucide.createIcons();
             }
-        });
-
-        function showError(msg) {
-            const errEl = document.getElementById('errorMessage');
-            errEl.textContent = msg;
-            errEl.classList.add('show');
-            setTimeout(() => errEl.classList.remove('show'), 3000);
         }
 
-        document.getElementById('mpesaSection').style.display = 'block';
+        function closeTicket() {
+            document.getElementById('ticketModal').classList.remove('active');
+        }
     </script>
 </body>
 </html>
