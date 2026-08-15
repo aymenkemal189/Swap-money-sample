@@ -45,7 +45,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             padding-bottom: 24px;
         }
 
@@ -88,7 +88,7 @@
             gap: 6px;
         }
 
-        /* Hero Header */
+        /* Header */
         .header {
             text-align: center;
             position: relative;
@@ -125,6 +125,60 @@
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
             50% { box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
+        }
+
+        /* LIVE TICKETS STREAMING BAR */
+        .live-tickets-container {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .live-badge {
+            background: #ff3b30;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            animation: blink 1s infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .ticker-wrapper {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dim);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .ticker-text span {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         /* 3D Glass Card Container */
@@ -375,7 +429,7 @@
             gap: 4px;
         }
 
-        /* Screenshot Upload Drag Box */
+        /* Upload Box */
         .upload-area {
             border: 2px dashed rgba(0, 255, 136, 0.4);
             border-radius: 14px;
@@ -431,7 +485,7 @@
             box-shadow: none;
         }
 
-        /* TICKET / RECEIPT MODAL (Optimized for Screenshots) */
+        /* TICKET / RECEIPT MODAL */
         .ticket-modal {
             position: fixed;
             inset: 0;
@@ -517,6 +571,16 @@
             </div>
         </div>
 
+        <!-- LIVE TICKET PURCHASES TICKER -->
+        <div class="live-tickets-container">
+            <div class="live-badge">LIVE</div>
+            <div class="ticker-wrapper">
+                <div class="ticker-text" id="liveTickerText">
+                    Loading live tickets...
+                </div>
+            </div>
+        </div>
+
         <!-- Fighter Selection Card -->
         <div class="card-3d">
             <div class="label-text" style="margin-bottom: 12px;">
@@ -552,17 +616,17 @@
             <div class="input-group">
                 <div class="label-text">
                     <span>2. Enter Stake</span>
-                    <span>Min: 500 ETB</span>
+                    <span>Min: 50 ETB</span>
                 </div>
                 <div class="stake-input-wrapper">
                     <i data-lucide="coins" size="18"></i>
-                    <input type="number" id="stakeInput" class="stake-input" value="5000" min="500" oninput="calculateReturn()">
+                    <input type="number" id="stakeInput" class="stake-input" value="500" min="50" oninput="calculateReturn()">
                 </div>
                 <div class="quick-chips">
+                    <div class="chip" onclick="setStake(50)">50</div>
+                    <div class="chip" onclick="setStake(100)">100</div>
                     <div class="chip" onclick="setStake(500)">500</div>
                     <div class="chip" onclick="setStake(1000)">1K</div>
-                    <div class="chip" onclick="setStake(5000)">5K</div>
-                    <div class="chip" onclick="setStake(10000)">10K</div>
                 </div>
             </div>
 
@@ -610,7 +674,7 @@
         </button>
     </div>
 
-    <!-- TICKET GENERATOR MODAL (FOR SCREENSHOT/RECEIPT) -->
+    <!-- TICKET GENERATOR MODAL -->
     <div class="ticket-modal" id="ticketModal">
         <div class="ticket" id="ticketContent">
             <div class="ticket-header">
@@ -637,11 +701,11 @@
             </div>
             <div class="ticket-row">
                 <span class="ticket-label">Stake Amount:</span>
-                <span class="ticket-val" id="tStake">5,000 ETB</span>
+                <span class="ticket-val" id="tStake">500 ETB</span>
             </div>
             <div class="ticket-row" style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px;">
                 <span class="ticket-label">Est. Payout:</span>
-                <span class="ticket-val" id="tWin" style="color: var(--primary); font-size: 16px;">10,750 ETB</span>
+                <span class="ticket-val" id="tWin" style="color: var(--primary); font-size: 16px;">1,075 ETB</span>
             </div>
 
             <div style="margin-top: 16px; text-align: center;">
@@ -652,7 +716,7 @@
     </div>
 
     <script>
-        // Init Telegram SDK
+        // Telegram SDK Init
         const tg = window.Telegram?.WebApp;
         if (tg) {
             tg.ready();
@@ -662,7 +726,6 @@
             }
         }
 
-        // Initialize Lucide Icons
         lucide.createIcons();
 
         const TELEGRAM_BOT_TOKEN = '8666783314:AAEzdZ0VOUJ7MFH8-UeT900z-fm80ds7NVk';
@@ -673,7 +736,37 @@
         let isRevealed = false;
         let uploadedBase64 = null;
 
-        // Back Button
+        // --- MASKED DEMO LIVE TICKETS STREAM ---
+        const namesPool = ["Se**r", "Yo**s", "Ab**l", "Na**d", "Me**k", "Fi**r", "Da**t", "He**n", "Ro**l", "Ka**b"];
+        const phonePrefixes = ["0746", "0712", "0722", "0798", "0701", "0755"];
+        const fightersPool = ["SEDO", "JOHNI"];
+
+        function getRandomPhone() {
+            const prefix = phonePrefixes[Math.floor(Math.random() * phonePrefixes.length)];
+            const suffix = Math.floor(1000 + Math.random() * 9000);
+            return `${prefix}***${suffix}`;
+        }
+
+        function updateLiveTicker() {
+            const tickerEl = document.getElementById('liveTickerText');
+            const name = namesPool[Math.floor(Math.random() * namesPool.length)];
+            const phone = getRandomPhone();
+            const fighter = fightersPool[Math.floor(Math.random() * fightersPool.length)];
+            const amount = [50, 100, 200, 500, 1000, 1500][Math.floor(Math.random() * 6)];
+
+            // Restart CSS animation
+            tickerEl.style.animation = 'none';
+            tickerEl.offsetHeight; // trigger reflow
+            tickerEl.style.animation = 'slideIn 0.4s ease-out';
+
+            tickerEl.innerHTML = `${name} (<span>${phone}</span>) just placed <span>${amount} ETB</span> ticket on <span>${fighter}</span>`;
+        }
+
+        // Start live ticket stream every 4 seconds
+        updateLiveTicker();
+        setInterval(updateLiveTicker, 4000);
+
+        // Back Button Action
         document.getElementById('backBtn').addEventListener('click', () => {
             if (tg && tg.BackButton.isVisible) {
                 tg.close();
@@ -716,7 +809,7 @@
             checkValidation();
         }
 
-        // M-Pesa Number Actions
+        // M-Pesa Toggle
         function toggleReveal() {
             isRevealed = !isRevealed;
             document.getElementById('numDisplay').textContent = isRevealed ? MPESA_NUMBER : '●●●●●●●●●●';
@@ -728,7 +821,7 @@
             alert('M-Pesa Number Copied!');
         }
 
-        // Image Attachment Handler
+        // File Attachment
         function handleFile(input) {
             const file = input.files[0];
             if (file) {
@@ -744,18 +837,18 @@
             }
         }
 
-        // Enable Submit Button validation
+        // Enable Submit Button (Min stake set to 50 ETB)
         function checkValidation() {
             const stake = parseFloat(document.getElementById('stakeInput').value) || 0;
             const btn = document.getElementById('submitBtn');
-            if (selectedFighterData && stake >= 500 && uploadedBase64) {
+            if (selectedFighterData && stake >= 50 && uploadedBase64) {
                 btn.disabled = false;
             } else {
                 btn.disabled = true;
             }
         }
 
-        // Submit Ticket & Send to Telegram Chat
+        // Process Prediction
         async function processPrediction() {
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
@@ -766,7 +859,7 @@
             const user = tg?.initDataUnsafe?.user?.username ? `@${tg.initDataUnsafe.user.username}` : 'Guest';
             const ticketId = '#SMP-' + Math.floor(10000 + Math.random() * 90000);
 
-            // Populate Modal Ticket
+            // Populate Receipt
             document.getElementById('tTicketId').textContent = ticketId;
             document.getElementById('tUser').textContent = user;
             document.getElementById('tFighter').textContent = selectedFighterData.name.toUpperCase();
@@ -774,11 +867,9 @@
             document.getElementById('tStake').textContent = `${stake.toLocaleString()} ETB`;
             document.getElementById('tWin').textContent = `${win.toLocaleString()} ETB`;
 
-            // Telegram Broadcast Payload
             const caption = `🥊 <b>NEW PREDICTION RECEIPT</b>\n\n<b>Ticket:</b> ${ticketId}\n<b>User:</b> ${user}\n<b>Fighter:</b> ${selectedFighterData.name.toUpperCase()}\n<b>Odds:</b> ${selectedFighterData.odds}x\n<b>Stake:</b> ${stake.toLocaleString()} ETB\n<b>Potential Payout:</b> ${win.toLocaleString()} ETB`;
 
             try {
-                // Send Screenshot to Telegram Chat
                 const base64Data = uploadedBase64.split(',')[1];
                 const binary = atob(base64Data);
                 const array = [];
