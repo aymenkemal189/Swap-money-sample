@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="am">
 <head>
@@ -9,14 +8,15 @@
 <script src='https://libtl.com/sdk.js' data-zone='11460944' data-sdk='show_11460944'></script>
 <style>
 /* ══════════════════════════════════════════════════════════════════
-   ✨ SWAP MONEY VERSION 4.0 — LIQUID OBSIDIAN & VIP FINTECH THEME ✨
+   ✨ SWAP MONEY VERSION 4.0 — LIQUID OBSIDIAN FINTECH THEME ✨
 ══════════════════════════════════════════════════════════════════ */
 :root{
   --bg:#030509;
   --surface:#070b16;
-  --card:rgba(12, 18, 34, 0.82);
+  --card:rgba(12, 18, 34, 0.84);
   --card-elevated:#131c33;
   --card2:#15203a;
+  --card3:#1b2744;
   --card-glass:rgba(16, 24, 46, 0.65);
   
   --border:rgba(255, 215, 0, 0.22);
@@ -43,9 +43,10 @@
   --muted:#94a3b8;
   --muted2:#64748b;
   --font:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --mono:'JetBrains Mono', monospace, Consolas, sans-serif;
   --glass-blur:blur(24px);
 
-  /* 💎 VIP Specific Gradients */
+  /* 💎 VIP Tier Gradients */
   --vip-starter:linear-gradient(135deg, #f59e0b 0%, #78350f 100%);
   --vip-pro:linear-gradient(135deg, #cbd5e1 0%, #475569 50%, #1e293b 100%);
   --vip-elite:linear-gradient(135deg, #FFD700 0%, #f43f5e 50%, #8b5cf6 100%);
@@ -62,13 +63,15 @@ body{
     radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
     radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
   color:var(--text);font-family:var(--font);font-size:13px;
-  padding-bottom:96px;min-height:100vh;position:relative;
+  padding-bottom:100px;min-height:100vh;position:relative;
 }
-::-webkit-scrollbar{width:2px;height:2px}
+::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 #fwCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none}
 
-/* ── HEADER V4 ── */
+/* ════════════════════════════════════════════════════
+   HEADER V4
+════════════════════════════════════════════════════ */
 header{
   position:sticky;top:0;z-index:80;
   background:rgba(4, 7, 15, 0.88);backdrop-filter:var(--glass-blur);
@@ -118,14 +121,16 @@ header{
 }
 .streak-chip{font-size:11px;font-weight:800;color:#ff7a45}
 
-/* ── PAGES & BOTTOM NAVIGATION ── */
+/* ════════════════════════════════════════════════════
+   PAGES & V4 FLOATING DOCK BOTTOM NAVIGATION
+════════════════════════════════════════════════════ */
 .page{display:none;padding:12px 14px;animation:pageIn .28s cubic-bezier(0.16,1,0.3,1)}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(10px) scale(0.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 
 .bnav{
   position:fixed;bottom:12px;left:12px;right:12px;
-  background:rgba(8, 13, 26, 0.9);backdrop-filter:var(--glass-blur);
+  background:rgba(8, 13, 26, 0.92);backdrop-filter:var(--glass-blur);
   border:1px solid rgba(255, 215, 0, 0.28);border-radius:28px;
   display:flex;justify-content:space-around;padding:7px 4px calc(7px + env(safe-area-inset-bottom));
   z-index:90;box-shadow:0 14px 45px rgba(0,0,0,.9), 0 0 25px rgba(255,215,0,.1);
@@ -139,7 +144,9 @@ header{
 .ni.active{color:var(--gold);background:rgba(255,215,0,.08)}
 .ni.active svg{fill:var(--gold);filter:drop-shadow(0 0 8px var(--gold-glow));transform:translateY(-1px)}
 
-/* ── CARDS & BUTTONS ── */
+/* ════════════════════════════════════════════════════
+   CARDS, BUTTONS & GENERAL UI
+════════════════════════════════════════════════════ */
 .card{
   background:var(--card);backdrop-filter:blur(16px);
   border:1px solid var(--border-subtle);border-radius:20px;
@@ -161,7 +168,7 @@ header{
 }
 .btn:active{transform:scale(.96)}
 .btn-gold{background:var(--gold-grad-rich);color:#000;box-shadow:0 5px 20px var(--gold-glow)}
-.btn-gold:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed}
+.btn-gold:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed;opacity:.5}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--gold)}
 .btn-green{background:var(--green-grad);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,.35)}
 .btn-blue{background:var(--blue-grad);color:#fff;box-shadow:0 4px 15px rgba(59,130,246,.35)}
@@ -169,12 +176,14 @@ header{
 
 .copy-btn-chip{
   background:rgba(255,215,0,.15);border:1px solid var(--gold);color:var(--gold);
-  border-radius:8px;padding:3px 8px;font-size:9.5px;font-weight:900;cursor:pointer;
-  display:inline-flex;align-items:center;gap:4px;
+  border-radius:8px;padding:4px 9px;font-size:10px;font-weight:900;cursor:pointer;
+  display:inline-flex;align-items:center;gap:4px;transition:.15s;
 }
 .copy-btn-chip:active{transform:scale(.92);background:var(--gold);color:#000}
 
-/* ── HERO WALLET CARD ── */
+/* ════════════════════════════════════════════════════
+   HERO WALLET CARD
+════════════════════════════════════════════════════ */
 .hero-wallet{
   background:linear-gradient(145deg,#231b05 0%,#131a2b 55%,#080c18 100%);
   border:1.5px solid rgba(255,215,0,.45);border-radius:24px;padding:18px 16px;
@@ -298,7 +307,7 @@ header{
 .feed-info p{font-size:10px;color:var(--muted);margin-top:1px}
 .feed-amount{font-size:14.5px;font-weight:900;color:var(--green) !important;text-shadow:0 0 12px rgba(16,185,129,.45)}
 
-/* ── EARN HUB SPECIAL STORE & CARDS ── */
+/* ── EARN & MONETIZATION STORE ── */
 .earn-hero{
   background:linear-gradient(135deg,#1c1206,#0d111c);border:1px solid var(--border);
   border-radius:20px;padding:16px;text-align:center;margin-bottom:12px;
@@ -417,7 +426,8 @@ header{
 .st-deadline-badge strong{color:#fff;display:block;font-size:10.5px}
 .st-arrow{color:var(--muted);font-size:18px;font-weight:800}
 
-.comp-lb-wrapper{padding:0 12px;margin-bottom:70px}
+/* 🛡️ ስክሪን እንዳይደራረብ የ padding-bottom ማስተካከያ */
+.comp-lb-wrapper{padding:0 12px;margin-bottom:120px}
 .lb-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .lb-header-title{font-size:14.5px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px}
 .lb-refresh-btn{
@@ -453,7 +463,7 @@ header{
 .c-chev{color:var(--muted);font-size:13px;font-weight:800}
 
 .comp-floating-bar{
-  position:fixed;bottom:64px;left:12px;right:12px;z-index:85;
+  position:fixed;bottom:70px;left:12px;right:12px;z-index:85;
   background:linear-gradient(135deg,#1f1402,#121829);border:1.5px solid var(--gold);
   border-radius:20px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;
   box-shadow:0 8px 30px rgba(0,0,0,.85),0 0 20px rgba(255,215,0,.2);cursor:pointer;
@@ -467,7 +477,9 @@ header{
 .c-panel{display:none}.c-panel.active{display:block}
 .view-more-btn{width:100%;margin-top:10px;padding:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--gold);font-size:11px;font-weight:800;cursor:pointer}
 
-/* ── PROFILE & VIP HUB ── */
+/* ════════════════════════════════════════════════════
+   PROFILE & VIP SHOWCASE
+════════════════════════════════════════════════════ */
 .profile-card-hero{
   background:linear-gradient(145deg,#131b2e 0%,#090d18 100%);
   border:1.5px solid var(--border);border-radius:24px;padding:18px;
@@ -547,21 +559,9 @@ header{
   font-size:11.5px;cursor:pointer;transition:.18s;font-family:var(--font);margin-top:4px;
 }
 
-.agent-contact-card{
-  background:linear-gradient(135deg,#0c1d2e,#0a1322);border:1.5px solid #229ED9;
-  border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;margin-bottom:12px;box-shadow:0 6px 20px rgba(34,158,217,.2);
-}
-.ac-left{display:flex;align-items:center;gap:10px}
-.ac-icon{font-size:26px}
-.ac-text h4{font-size:12.5px;font-weight:900;color:#fff}
-.ac-text p{font-size:9.5px;color:var(--muted)}
-.ac-btn{
-  background:#229ED9;color:#fff;border:none;border-radius:12px;
-  padding:7px 12px;font-size:10.5px;font-weight:900;cursor:pointer;
-}
-
-/* ── WITHDRAWAL & SCHEDULED PAYOUT (4 & 19) ── */
+/* ════════════════════════════════════════════════════
+   WITHDRAWAL PAGE (STRICT 2500+ ETB & 4/19 BATCH)
+════════════════════════════════════════════════════ */
 .payout-schedule-banner{
   background:linear-gradient(135deg,#062015,#0c1724);border:1.2px solid var(--green);
   border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:12px;
@@ -616,14 +616,12 @@ header{
 .ft-title{font-size:12px;font-weight:900;color:#fff}
 .ft-meta{font-size:9.5px;color:var(--muted);font-weight:700}
 .ft-badge{position:absolute;top:6px;right:6px;font-size:8px;font-weight:900;padding:1px 6px;border-radius:8px;background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3)}
+
+/* 🛡️ የተስተካከሉት 2,500+ የ Airtime ፕሪሴቶች */
 .preset-chips{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.p-chip{flex:1;min-width:70px;background:var(--card2);border:1px solid var(--border);color:#fff;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:900;cursor:pointer;text-align:center;transition:.15s}
+.p-chip{flex:1;min-width:75px;background:var(--card2);border:1px solid var(--border);color:#fff;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:900;cursor:pointer;text-align:center;transition:.15s}
 .p-chip.sel{background:var(--gold-grad);color:#000;border-color:var(--gold)}
-.pkg-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:12px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.15s}
-.pkg-card.sel{border-color:var(--gold);background:rgba(255,215,0,.08)}
-.pkg-info h5{font-size:12px;font-weight:900;color:#fff}
-.pkg-info p{font-size:10px;color:var(--muted);margin-top:2px}
-.pkg-price{font-size:13px;font-weight:900;color:var(--gold)}
+
 .wd-input-group{margin-bottom:10px}
 .wd-input-wrap{position:relative;display:flex;align-items:center}
 .wd-input-wrap input{width:100%;padding:12px 14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:#fff;font-size:13px;font-weight:700;outline:none;font-family:var(--font)}
@@ -651,15 +649,10 @@ header{
   padding:8px 10px;display:flex;align-items:center;justify-content:space-between;margin:8px 0;
 }
 .qc-countdown{font-family:monospace;font-size:13.5px;font-weight:900;color:#fff}
-.qc-active-callout{
-  background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);border-radius:12px;
-  padding:10px 12px;margin-top:10px;font-size:10.5px;color:var(--muted);line-height:1.5;
-}
 .qc-support-btn{
   width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid var(--border);
   color:var(--gold);border-radius:12px;font-size:11px;font-weight:800;cursor:pointer;margin-top:8px;transition:.18s;
 }
-.qc-support-btn:active{transform:scale(.97)}
 .trust-shield-card{
   background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:14px;
   padding:12px 14px;display:flex;flex-direction:column;gap:6px;margin-top:12px;
@@ -667,12 +660,35 @@ header{
 .trust-row{display:flex;align-items:flex-start;gap:9px}
 .trust-shield-card svg{width:20px;height:20px;fill:var(--gold);flex-shrink:0;margin-top:1px}
 .trust-shield-card p{font-size:10px;color:var(--muted);line-height:1.5}
-.terms-link-btn{
-  align-self:flex-start;background:none;border:none;color:var(--gold);
-  font-size:10.5px;font-weight:800;text-decoration:underline;cursor:pointer;padding:2px 0;
+
+/* ════════════════════════════════════════════════════
+   MODALS OVERLAYS & 💎 NEW LUXURY FINTECH CHECKOUT
+════════════════════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.active{display:flex}
+
+/* 🛡️ ኪቦርድ ሲከፈት እንዳይቆረጥ የተጨመረው ስክሮል */
+.captcha-card, .receipt-card, .terms-card, .vip-pay-card, .channel-promo-card{
+  position:relative;background:var(--card);border:1.5px solid var(--gold);
+  border-radius:24px;padding:22px;text-align:center;max-width:345px;width:100%;
+  max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  box-shadow:0 20px 50px rgba(0,0,0,.9),0 0 30px rgba(255,215,0,.25);
 }
 
-/* ── MODALS OVERLAYS ── */
+.checkout-acc-card{
+  background:linear-gradient(135deg,#121b2d,#0c1322);border:1.2px solid var(--border);
+  border-radius:16px;padding:12px;margin-bottom:10px;text-align:left;position:relative;
+}
+.checkout-acc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.checkout-acc-num{font-family:var(--mono);font-size:13.5px;font-weight:900;color:var(--gold);letter-spacing:.6px}
+.checkout-acc-name{font-size:10px;color:var(--muted);margin-top:2px}
+
+.sms-feedback-box{
+  background:var(--card2);border:1px dashed var(--border);border-radius:12px;
+  padding:10px;margin-bottom:12px;text-align:left;font-size:11px;display:none;
+}
+
+/* ── AD MODALS & LIVE CHAT ── */
 .ad-modal{
   position:fixed;inset:0;background:rgba(3,6,14,.93);backdrop-filter:blur(20px);
   z-index:999;display:none;align-items:center;justify-content:center;padding:16px;
@@ -685,65 +701,24 @@ header{
   box-shadow:0 25px 60px rgba(0,0,0,.9),0 0 35px rgba(255,215,0,.28);
   overflow:hidden;
 }
-.ad-modal-card::before{
-  content:'';position:absolute;top:-50px;left:50%;transform:translateX(-50%);
-  width:160px;height:160px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,215,0,.22),transparent 70%);
-  pointer-events:none;
-}
 .ad-glowing-ring{
   width:68px;height:68px;border-radius:50%;margin:0 auto 12px;
   background:linear-gradient(135deg,#FFD700 0%,#FF9E00 100%);
   display:flex;align-items:center;justify-content:center;font-size:30px;
-  box-shadow:0 0 28px rgba(255,215,0,.65),inset 0 0 10px rgba(255,255,255,.6);
-  animation:ringPulse 2s infinite ease-in-out;
-}
-@keyframes ringPulse{
-  0%,100%{transform:scale(1);box-shadow:0 0 28px rgba(255,215,0,.65)}
-  50%{transform:scale(1.06);box-shadow:0 0 42px rgba(255,215,0,.9)}
+  box-shadow:0 0 28px rgba(255,215,0,.65);
 }
 .ad-step-pill{
   display:inline-block;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);
   color:var(--gold);font-size:10px;font-weight:900;padding:3px 12px;border-radius:12px;margin-bottom:8px;
 }
-.ad-title{font-size:15.5px;font-weight:900;color:#fff;margin-bottom:6px}
-.ad-desc{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:14px}
-.ad-bar-bg{
-  width:100%;height:9px;background:rgba(255,255,255,.08);border-radius:10px;
-  overflow:hidden;margin-bottom:10px;border:1px solid rgba(255,255,255,.05);
-}
-.ad-bar-fill{
-  height:100%;background:linear-gradient(90deg,#FFD700,#FF9E00,#10b981);
-  border-radius:10px;width:0%;transition:width .4s linear;
-  box-shadow:0 0 14px rgba(255,215,0,.7);
-}
-.ad-timer-txt{font-size:13px;font-weight:900;color:var(--gold);font-family:monospace;letter-spacing:1px;margin-bottom:8px}
-
-.ad-sponsor-btn{
-  width:100%;padding:9px;background:rgba(255,215,0,.12);border:1px dashed var(--gold);
-  border-radius:12px;color:var(--gold);font-size:10.5px;font-weight:900;cursor:pointer;
-  transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
-}
-.ad-sponsor-btn:active{transform:scale(.96);background:rgba(255,215,0,.25)}
-
+.ad-bar-bg{width:100%;height:9px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.ad-bar-fill{height:100%;background:linear-gradient(90deg,#FFD700,#FF9E00,#10b981);border-radius:10px;width:0%;transition:width .4s linear}
+.ad-timer-txt{font-size:13px;font-weight:900;color:var(--gold);font-family:monospace;margin-bottom:8px}
 .ad-close-btn{
-  position:absolute;top:14px;right:14px;background:var(--card2);
-  border:1px solid var(--border);border-radius:50%;width:32px;height:32px;
-  color:#fff;font-size:15px;font-weight:900;cursor:pointer;
-  display:none;align-items:center;justify-content:center;transition:.18s;
-  box-shadow:0 0 12px rgba(255,215,0,.35);
-}
-.ad-close-btn:active{transform:scale(.92)}
-
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
-.modal-overlay.active{display:flex}
-.captcha-card, .receipt-card, .terms-card, .vip-pay-card, .channel-promo-card{
-  position:relative;background:var(--card);border:1.5px solid var(--gold);
-  border-radius:24px;padding:22px;text-align:center;max-width:345px;width:100%;
-  box-shadow:0 20px 50px rgba(0,0,0,.9),0 0 30px rgba(255,215,0,.25);
+  position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);
+  border-radius:50%;width:32px;height:32px;color:#fff;font-size:15px;font-weight:900;cursor:pointer;display:none;align-items:center;justify-content:center;
 }
 
-/* ── SUPPORT LIVE CHAT MODAL ── */
 .support-chat-modal {
   position: fixed; inset: 0; background: rgba(5,7,14,0.96); backdrop-filter: blur(16px);
   z-index: 1000; display: none; flex-direction: column; width: 100%; height: 100%;
@@ -758,67 +733,22 @@ header{
   width: 38px; height: 38px; border-radius: 12px;
   background: linear-gradient(135deg, var(--gold), #FFA500); color: #000;
   display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900;
-  box-shadow: 0 0 12px var(--gold-glow);
 }
-.support-hdr h4 { font-size: 13.5px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 5px; }
-.support-hdr p { font-size: 10px; color: var(--green); display: flex; align-items: center; gap: 4px; font-weight: 700; }
 .support-close-btn {
   width: 32px; height: 32px; border-radius: 50%; background: var(--card2);
-  border: 1px solid var(--border); color: #fff; font-size: 16px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
-
-.faq-chips-container {
-  display: flex; gap: 6px; overflow-x: auto; padding: 10px 14px 6px;
-  background: var(--card); border-bottom: 1px solid var(--border2); flex-shrink: 0;
-}
-.faq-chip {
-  background: var(--card2); border: 1px solid var(--border); border-radius: 12px;
-  padding: 6px 12px; font-size: 10.5px; font-weight: 800; color: var(--gold);
-  white-space: nowrap; cursor: pointer; transition: .15s; flex-shrink: 0;
-}
-.faq-chip:active { transform: scale(0.94); background: rgba(255,215,0,0.15); }
-
+.faq-chips-container { display: flex; gap: 6px; overflow-x: auto; padding: 10px 14px 6px; background: var(--card); border-bottom: 1px solid var(--border2); flex-shrink: 0; }
+.faq-chip { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 6px 12px; font-size: 10.5px; font-weight: 800; color: var(--gold); white-space: nowrap; cursor: pointer; }
 .chat-container { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
 .chat-bubble { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 12.5px; line-height: 1.4; word-break: break-word; }
 .bubble-admin { align-self: flex-start; background: var(--card2); border: 1px solid var(--border); border-bottom-left-radius: 4px; color: #fff; }
 .bubble-user { align-self: flex-end; background: linear-gradient(135deg, #1f1704, #2a1f05); border: 1px solid var(--gold); border-bottom-right-radius: 4px; color: #fff; }
-.bubble-img { max-width: 100%; border-radius: 10px; margin-top: 6px; display: block; }
-.bubble-time { font-size: 8.5px; opacity: 0.65; text-align: right; margin-top: 4px; }
-.bubble-typing {
-  align-self: flex-start; background: var(--card2); border: 1px solid var(--border);
-  border-bottom-left-radius: 4px; color: #fff; display: flex; align-items: center; gap: 8px;
-  padding: 10px 14px; animation: fadeUp .2s ease;
-}
-.typing-dots { display: inline-flex; gap: 3px; }
-.typing-dots span {
-  width: 5px; height: 5px; background: var(--gold); border-radius: 50%;
-  animation: typingBlink 1.4s infinite ease-in-out both;
-}
-.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
-@keyframes typingBlink { 0%, 80%, 100% { transform: scale(0); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; } }
-
-.media-preview-bar {
-  display: none; background: var(--card2); padding: 8px 14px;
-  border-top: 1px solid var(--border); align-items: center; justify-content: space-between; flex-shrink: 0;
-}
-.media-preview-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--gold); }
-.voice-record-bar {
-  display: none; background: rgba(239, 68, 68, 0.15); border-top: 1px solid var(--red);
-  padding: 10px 14px; align-items: center; justify-content: space-between; color: var(--red); font-size: 12px; font-weight: 800; flex-shrink: 0;
-}
-.chat-input-bar {
-  background: var(--card); border-top: 1px solid var(--border);
-  padding: 8px 10px; display: flex; align-items: center; gap: 6px; flex-shrink: 0;
-}
+.media-preview-bar { display: none; background: var(--card2); padding: 8px 14px; border-top: 1px solid var(--border); align-items: center; justify-content: space-between; }
+.voice-record-bar { display: none; background: rgba(239, 68, 68, 0.15); border-top: 1px solid var(--red); padding: 10px 14px; align-items: center; justify-content: space-between; color: var(--red); font-size: 12px; font-weight: 800; }
+.chat-input-bar { background: var(--card); border-top: 1px solid var(--border); padding: 8px 10px; display: flex; align-items: center; gap: 6px; }
 .chat-inp { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none; }
-.chat-btn {
-  width: 38px; height: 38px; border-radius: 50%; background: var(--card2);
-  border: 1px solid var(--border); color: var(--gold); display: flex; align-items: center;
-  justify-content: center; cursor: pointer; flex-shrink: 0; font-size: 16px; transition: .15s;
-}
-.chat-btn:active { transform: scale(0.92); }
+.chat-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--card2); border: 1px solid var(--border); color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; }
 .btn-send { background: linear-gradient(135deg, var(--gold), #FFA500); color: #000; border: none; font-weight: 900; }
 
 #toast{
@@ -836,19 +766,19 @@ header{
 <canvas id="fwCanvas"></canvas>
 
 <!-- ════════════════════════════════════════════════════
-     ✨ MODALS (100% UNTOUCHED + NEW PAYMENTS & PROMO) ✨
+     MODALS
 ════════════════════════════════════════════════════ -->
-<!-- 1. Luxury Ad Modal (Watch Ads & Promo Codes) -->
+<!-- 1. Luxury Watch Ads Modal -->
 <div class="ad-modal" id="adModal">
   <div class="ad-modal-card">
     <button id="adCloseBtn" class="ad-close-btn" onclick="handleAdModalClose()">✕</button>
     <div class="ad-glowing-ring" id="adModalRing">📺</div>
     <div class="ad-step-pill" id="adStepPill">ማስታወቂያ [1/2]</div>
-    <div class="ad-title" id="adTitle">ማስታወቂያ በመመልከት ላይ...</div>
-    <div class="ad-desc" id="adDesc">17 ሰከንድ ያዩ — ካጠናቀቁ ቦነስዎን ይወስዳሉ!</div>
+    <div class="ad-title" id="adTitle" style="font-size:15px;font-weight:900;color:#fff;margin-bottom:6px">ማስታወቂያ በመመልከት ላይ...</div>
+    <div class="ad-desc" id="adDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">17 ሰከንድ ያዩ — ካጠናቀቁ ቦነስዎን ይወስዳሉ!</div>
     <div class="ad-bar-bg"><div class="ad-bar-fill" id="adBarFill"></div></div>
     <div class="ad-timer-txt" id="adTimerTxt">17s ቀርቷል</div>
-    <button class="ad-sponsor-btn" id="adSponsorBtn" onclick="clickAdSponsor()">🎁 ስፖንሰሩን ይጎብኙ (+5 ETB ተጨማሪ ቦነስ)</button>
+    <button class="btn btn-outline btn-block" style="font-size:10px" onclick="clickAdSponsor()">🎁 ስፖንሰሩን ይጎብኙ (+5 ETB ተጨማሪ ቦነስ)</button>
   </div>
 </div>
 
@@ -858,7 +788,7 @@ header{
     <button id="supportAdCloseBtn" class="ad-close-btn" onclick="closeSupportAdStepSuccess()">✕</button>
     <div class="ad-glowing-ring" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">👨‍💼</div>
     <div class="ad-step-pill" id="supportAdTitle">የሰው አድሚን ትኬት [1/3]</div>
-    <div class="ad-desc" id="supportAdDesc">ደረጃ 1/3 (15 ሰከንድ) — 3ቱንም ሲያጠናቅቁ ጥያቄዎ ለአድሚን ይላካል፤ <strong style="color:var(--gold)">+30 ETB</strong> ቦነስም ያገኛሉ!</div>
+    <div class="ad-desc" id="supportAdDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">ደረጃ 1/3 (15 ሰከንድ) — 3ቱንም ሲያጠናቅቁ ጥያቄዎ ለአድሚን ይላካል፤ <strong style="color:var(--gold)">+30 ETB</strong> ቦነስም ያገኛሉ!</div>
     <div class="ad-bar-bg"><div class="ad-bar-fill" id="supportAdBarFill"></div></div>
     <div class="ad-timer-txt" id="supportAdTimerTxt">15s ቀርቷል</div>
   </div>
@@ -870,13 +800,13 @@ header{
     <div class="receipt-header">
       <div style="font-size:32px;margin-bottom:4px">🧾</div>
       <h3 style="font-size:15px;font-weight:900;color:#fff">Official Payout Voucher</h3>
-      <div class="receipt-id" id="rcptTxId">#SWAP-89421</div>
+      <div class="receipt-id" id="rcptTxId" style="font-family:var(--mono);color:var(--gold);font-weight:900;margin-top:2px">#SWAP-89421</div>
     </div>
-    <div class="receipt-row" style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Status</span><span style="color:var(--green);font-weight:800">Pending Audit</span></div>
-    <div class="receipt-row" style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Provider</span><span id="rcptMethod" style="color:#fff">Telebirr</span></div>
-    <div class="receipt-row" style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Account</span><span id="rcptAcct" style="color:#fff">098*****77</span></div>
-    <div class="receipt-row" style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Deducted Amount</span><span id="rcptAmt" style="color:var(--gold);font-weight:900">2,500 ETB</span></div>
-    <div class="receipt-row" style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Scheduled Payout</span><span id="rcptDate" style="color:var(--green);font-weight:800">በወሩ 4 ወይም 19</span></div>
+    <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Status</span><span style="color:var(--green);font-weight:800">Pending Audit</span></div>
+    <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Provider</span><span id="rcptMethod" style="color:#fff">Telebirr</span></div>
+    <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Account</span><span id="rcptAcct" style="color:#fff">098*****77</span></div>
+    <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Deducted Amount</span><span id="rcptAmt" style="color:var(--gold);font-weight:900">2,500 ETB</span></div>
+    <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Scheduled Payout</span><span id="rcptDate" style="color:var(--green);font-weight:800">በወሩ 4 ወይም 19 (በ G.C.)</span></div>
     <button class="btn btn-gold btn-block" style="margin-top:14px" onclick="closeReceiptModal()">ተቀብያለሁ / እሺ</button>
   </div>
 </div>
@@ -902,68 +832,73 @@ header{
     <button onclick="closeTermsModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
     <h3 style="font-size:14px;font-weight:900;color:#fff;margin-bottom:10px">📜 ውሎች እና ደንቦች (Terms &amp; Policy)</h3>
     <div style="margin-bottom:8px">
-      <h5 style="color:var(--gold);font-size:11px">1. የአካውንት ታማኝነት እና የቦት ክልከላ</h5>
+      <h5 style="color:var(--gold);font-size:11px">1. የአካውንት ታማኝነት</h5>
       <p style="font-size:10px;color:var(--muted);line-height:1.4">ማንኛውም ተጠቃሚ ቦት ወይም የውሸት ሪፈራል መጠቀም በጥብቅ የተከለከለ ነው።</p>
     </div>
     <div style="margin-bottom:8px">
-      <h5 style="color:var(--gold);font-size:11px">2. የገንዘብ ማውጫ የጊዜ ሰሌዳ (ቀን 4 እና 19)</h5>
-      <p style="font-size:10px;color:var(--muted);line-height:1.4">ገንዘብ ማውጣት በወር በሁለት ዙር <strong>በወሩ 4 እና 19 ቀን</strong> ብቻ ይለቀቃል! ነጻ አባላት 15 ንቁ ግብዣ ያስፈልጋቸዋል፤ VIP አባላት ግን ይህንን ይዘላሉ።</p>
+      <h5 style="color:var(--gold);font-size:11px">2. የገንዘብ ማውጫ የጊዜ ሰሌዳ (በ G.C. ቀን 4 እና 19)</h5>
+      <p style="font-size:10px;color:var(--muted);line-height:1.4">ገንዘብ ማውጣት በወር በሁለት ዙር በፈረንጆች አቆጣጠር (G.C.) በወሩ 4 እና 19 ቀን ብቻ ይለቀቃል! ነጻ አባላት 15 ንቁ ግብዣ ያስፈልጋቸዋል፤ PRO እና ELITE ግን ይህንን ይዘላሉ።</p>
     </div>
     <button class="btn btn-gold btn-block" onclick="closeTermsModal()" style="margin-top:10px">ተረድቻለሁ / እሺ</button>
   </div>
 </div>
 
-<!-- 6. 💎 VIP & STORE PAYMENT MODAL WITH REAL ACCOUNTS & SMART SMS PARSER -->
+<!-- 6. 💎 NEW FINTECH CHECKOUT MODAL (REAL CBE & TELEBIRR + AUTO-VERIFY) -->
 <div class="modal-overlay" id="vipPaymentModal">
   <div class="vip-pay-card">
     <button onclick="closeVipPaymentModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
     <div style="font-size:32px;margin-bottom:4px" id="vpModalIcon">💎</div>
-    <h3 style="font-size:15px;font-weight:900;color:#fff" id="vpModalTitle">Upgrade Package</h3>
-    <div style="font-size:18px;font-weight:900;color:var(--gold);margin:4px 0 10px" id="vpModalPrice">150 ETB</div>
+    <h3 style="font-size:15.5px;font-weight:900;color:#fff" id="vpModalTitle">Upgrade Package</h3>
+    <div style="font-size:19px;font-weight:900;color:var(--gold);margin:4px 0 12px" id="vpModalPrice">150 ETB</div>
     
-    <div style="background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:12px;text-align:left;margin-bottom:12px">
-      <p style="font-size:10.5px;color:var(--muted);margin-bottom:8px">ክፍያውን በሚከተለው እውነተኛ የቴሌብር ወይም ባንክ ያስገቡ፦</p>
-      
-      <!-- Telebirr Row -->
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <div>
-          <span style="font-size:10.5px;color:var(--muted)">📱 Telebirr:</span>
-          <strong style="font-size:12px;color:var(--gold);margin-left:4px" id="valTelebirr">0996910607</strong>
-        </div>
-        <button class="copy-btn-chip" onclick="copyAccount('0996910607')">📋 ኮፒ</button>
-      </div>
-
-      <!-- CBE Row -->
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <span style="font-size:10.5px;color:var(--muted)">🏦 CBE Bank:</span>
-          <strong style="font-size:12px;color:var(--gold);margin-left:4px" id="valCBE">1000562339427</strong>
-        </div>
-        <button class="copy-btn-chip" onclick="copyAccount('1000562339427')">📋 ኮፒ</button>
-      </div>
+    <!-- Step 1: Real Accounts -->
+    <div style="text-align:left;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">
+      ደረጃ 1፦ ክፍያውን በሚከተለው ሂሳብ ያስገቡ
     </div>
 
-    <!-- Smart SMS Paste & Auto-Parser Input -->
-    <div style="text-align:left;margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <label style="font-size:10.5px;font-weight:800;color:var(--muted)">የደረሰዎትን ሙሉ SMS እዚህ ይለጥፉ (Paste):</label>
+    <!-- Telebirr Account Card -->
+    <div class="checkout-acc-card">
+      <div class="checkout-acc-head">
+        <span style="font-size:11px;font-weight:900;color:#fff">📱 Telebirr P2P</span>
+        <button class="copy-btn-chip" onclick="copyAccount('0996910607')">📋 ኮፒ አድርግ</button>
       </div>
-      <textarea id="vpSmsInput" rows="2" placeholder="የቴሌብር ወይም የ CBE የጽሁፍ መልዕክት ሙሉውን እዚህ Paste ያድርጉ..." style="width:100%;padding:8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:#fff;font-size:11px;outline:none;font-family:var(--font);resize:none" oninput="autoParseSmsInput()"></textarea>
+      <div class="checkout-acc-num">0996910607</div>
     </div>
 
-    <div style="text-align:left;margin-bottom:12px">
-      <label style="font-size:10.5px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">የትራንዛክሽን መለያ ቁጥር (TxID / Ref)፦</label>
-      <input type="text" id="vpTxIdInput" placeholder="e.g. FT260908.12..." style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:#fff;font-size:12px;font-weight:800;outline:none">
+    <!-- CBE Account Card -->
+    <div class="checkout-acc-card">
+      <div class="checkout-acc-head">
+        <span style="font-size:11px;font-weight:900;color:#fff">🏦 CBE Bank (ንግድ ባንክ)</span>
+        <button class="copy-btn-chip" onclick="copyAccount('1000562339427')">📋 ኮፒ አድርግ</button>
+      </div>
+      <div class="checkout-acc-num">1000562339427</div>
+      <div class="checkout-acc-name">Account Name: Aymen Kemal Ali</div>
     </div>
 
-    <button class="btn btn-gold btn-block" onclick="submitVipPayment()">ክፍያውን አረጋግጥ (Submit Proof)</button>
-    
-    <div style="margin-top:10px;font-size:10px;color:var(--muted)">ወይም ደረሰኝ በቀጥታ ለአድሚን ይላኩ፦</div>
-    <button class="btn btn-outline btn-block" style="margin-top:6px;font-size:10.5px" onclick="openDirectAgentChat()">💬 ለ @Agent1hulubet ደረሰኝ ላክ</button>
+    <!-- Step 2: Paste Full SMS -->
+    <div style="text-align:left;margin-top:10px">
+      <label style="font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">
+        ደረጃ 2፦ የደረሰዎትን ሙሉ SMS እዚህ Paste ያድርጉ
+      </label>
+      <textarea id="vpSmsInput" rows="3" placeholder="የቴሌብር ወይም የ CBE የጽሁፍ መልዕክት ሙሉውን እዚህ ይለጥፉ..." style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:#fff;font-size:11px;outline:none;font-family:var(--font);resize:none" oninput="autoParseSmsInput()"></textarea>
+    </div>
+
+    <!-- Live Real-time Verification Feedback Box -->
+    <div class="sms-feedback-box" id="smsVerifyStatusCard"></div>
+
+    <div style="text-align:left;margin:8px 0 12px">
+      <label style="font-size:10.5px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">የተገኘው TxID መለያ ቁጥር፦</label>
+      <input type="text" id="vpTxIdInput" placeholder="በራስ-ሰር ይሞላል..." readonly style="width:100%;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--gold);font-size:12px;font-weight:900;outline:none;font-family:var(--mono)">
+    </div>
+
+    <!-- Strict Locked Submit Button (Enabled ONLY when SMS & Amount are verified) -->
+    <button class="btn btn-gold btn-block" id="vpSubmitBtn" disabled onclick="submitVipPayment()">
+      ክፍያውን አረጋግጥ (Submit Proof)
+    </button>
   </div>
 </div>
 
-<!-- 7. 📢 PAID TELEGRAM CHANNEL PROMOTION INQUIRY MODAL -->
+<!-- 7. 📢 PAID TELEGRAM CHANNEL PROMOTION MODAL -->
 <div class="modal-overlay" id="channelPromoModal">
   <div class="channel-promo-card">
     <button onclick="closeChannelPromoModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
@@ -985,7 +920,7 @@ header{
   </div>
 </div>
 
-<!-- 8. Customer Support Live Chat Modal (Spam-Free Policy) -->
+<!-- 8. Customer Support Live Chat Modal -->
 <div class="support-chat-modal" id="supportModal">
   <div class="support-hdr">
     <div class="support-hdr-info">
@@ -1229,7 +1164,7 @@ header{
     </div>
   </div>
 
-  <!-- 🛍️ NEW IN-APP STORE & MONETIZATION GRID -->
+  <!-- 🛍️ EXTRA BOOSTERS & STORE -->
   <div class="sh"><h3>🛒 Extra Boosters &amp; Services</h3></div>
   <div class="store-grid-2col">
     <div class="store-item-card" onclick="openVipUpgradeModal('REFERRAL_BOOSTER', 200)">
@@ -1269,8 +1204,8 @@ header{
     </div>
   </div>
 
-  <div class="sh"><h3>📋 All 7 Tasks</h3>
-    <span style="font-size:9px;background:rgba(16,185,129,.14);color:var(--green);padding:2px 8px;border-radius:8px;font-weight:800">Daily Tasks</span>
+  <div class="sh"><h3>📋 Starter Tasks</h3>
+    <span style="font-size:9px;background:rgba(16,185,129,.14);color:var(--green);padding:2px 8px;border-radius:8px;font-weight:800">One-Time Bonus</span>
   </div>
   <div class="tasks-grid-4col" id="earnTaskGrid"></div>
 </section>
@@ -1320,7 +1255,7 @@ header{
       <div class="st-right">
         <div class="st-deadline-badge">
           <span style="font-size:12px">📅</span>
-          <div><span>Until</span><strong>Sep 30</strong></div>
+          <div><span>Task</span><strong>One-Time</strong></div>
         </div>
         <span class="st-arrow">›</span>
       </div>
@@ -1398,7 +1333,7 @@ header{
     <div id="cpanel_rules" class="c-panel">
       <div class="card" style="background:#0c1220;line-height:1.6;font-size:11.5px;color:var(--muted)">
         <h4 style="color:#fff;font-size:13px;margin-bottom:8px">📜 የ 1,000,000 ብር የውድድር ደንብ</h4>
-        <p>1. ውድድሩ እስከ <strong>መስከረም 20 (Sep 30, 2026)</strong> ድረስ ይቆያል።</p>
+        <p>1. ውድድሩ ይፋዊ ሆኖ የሚቆይ ሲሆን ደረጃዎች ከዳታቤዝ የቀጥታ ኦዲት ይደረጋሉ።</p>
         <p>2. አንደኛ የወጣው አሸናፊ <strong>100,000 ብር</strong>፣ ሁለተኛ <strong>70,000 ብር</strong>፣ ሦስተኛ <strong>50,000 ብር</strong> እስከ 100ኛ ድረስ 1 ሚሊዮን ብር ሙሉ በሙሉ ይከፋፈላል።</p>
       </div>
     </div>
@@ -1484,18 +1419,6 @@ header{
     </div>
   </div>
 
-  <!-- Direct Agent Contact Card -->
-  <div class="agent-contact-card" onclick="openDirectAgentChat()">
-    <div class="ac-left">
-      <div class="ac-icon">💬</div>
-      <div class="ac-text">
-        <h4>የ VIP ፈጣን ክፍያ ማረጋገጫ</h4>
-        <p>በቀጥታ ለ @Agent1hulubet ደረሰኝ ልከው ያስከፍቱ</p>
-      </div>
-    </div>
-    <button class="ac-btn">አነጋግር ➔</button>
-  </div>
-
   <div class="sh">
     <h3>💎 VIP Membership Subscriptions</h3>
     <span style="font-size:9.5px;color:var(--gold);font-weight:800">4x Boost &amp; Fast Payout</span>
@@ -1517,7 +1440,7 @@ header{
       <button class="vip-buy-btn" style="background:#f59e0b;color:#000">ይዘዙ (100 ETB)</button>
     </div>
 
-    <!-- Tier 2: PRO (Popular) -->
+    <!-- Tier 2: PRO (Popular - With Exclusive 24hr Fast Verification Badge) -->
     <div class="vip-card pro" onclick="openVipUpgradeModal('PRO', 150)">
       <div class="vip-popular-tag">🔥 MOST POPULAR</div>
       <div class="vip-card-head">
@@ -1527,7 +1450,7 @@ header{
       <ul class="vip-features-list">
         <li>✓ <b>4x Daily Ad Rewards</b> (4 እጥፍ የማስታወቂያ ክፍያ)</li>
         <li>✓ <b>🔓 Skip 15 Referrals Requirement</b> (ያለ ግብዣ ገንዘብ ማውጣት!)</li>
-        <li>✓ <b>24hr Express Withdrawal</b> (ፈጣን ክፍያ)</li>
+        <li>✓ <b>⚡ የ 24 ሰዓት ፈጣን ክፍያ ማረጋገጫ (Pro Exclusive)</b></li>
         <li>✓ <b>2x Referral Bonus</b> (100 ETB / Ref)</li>
       </ul>
       <button class="vip-buy-btn" style="background:var(--gold-grad);color:#000">አሁን Upgrade አድርግ (150 ETB)</button>
@@ -1567,15 +1490,20 @@ header{
 </section>
 
 <!-- ════════════════════════════════════════════════════
-     PAGE 6: WITHDRAWAL (SCHEDULED ON 4TH & 19TH)
+     PAGE 6: WITHDRAWAL (SCHEDULED ON 4TH & 19TH G.C.)
 ════════════════════════════════════════════════════ -->
 <section class="page" id="page-withdraw">
-  <!-- Payout Schedule Banner (4 & 19) -->
+  <!-- 🛡️ ወደ Profile መመለሻ አዝራር -->
+  <button class="btn btn-outline" style="padding:7px 14px;font-size:11px;margin-bottom:10px" onclick="showPage('profile')">
+    ← ወደ Profile ተመለስ
+  </button>
+
+  <!-- Payout Schedule Banner (4 & 19 G.C.) -->
   <div class="payout-schedule-banner">
     <div class="psb-icon">📅</div>
     <div class="psb-info">
-      <h4>ይፋዊ የክፍያ ቀናት፦ በወር 2 ጊዜ (ቀን 4 እና 19)</h4>
-      <p id="nextPayoutDateBadge">● ቀጣዩ የክፍያ ዙር፦ በቅርቡ ይለቀቃል</p>
+      <h4>ይፋዊ የክፍያ ቀናት፦ በወር 2 ጊዜ (ቀን 4 እና 19 በ G.C.)</h4>
+      <p id="nextPayoutDateBadge">● ቀጣዩ የክፍያ ዙር፦ በቅርቡ ይለቀቃል (በፈረንጆች አቆጣጠር)</p>
     </div>
   </div>
 
@@ -1619,7 +1547,7 @@ header{
 
     <div class="qc-timer-box" style="margin:6px 0">
       <span style="font-size:10.5px;color:var(--muted);font-weight:800">የሚለቀቅበት ቀን፦</span>
-      <span class="qc-countdown" id="queueTimerTxt" style="color:var(--green)">በወሩ 4 ወይም 19</span>
+      <span class="qc-countdown" id="queueTimerTxt" style="color:var(--green)">በወሩ 4 ወይም 19 (በ G.C.)</span>
     </div>
 
     <button class="qc-support-btn" onclick="openSupportModal()">👨‍💼 የደንበኞች ድጋፍ ማዕከልን አነጋግር</button>
@@ -1698,7 +1626,7 @@ header{
           <span class="ft-arrow">➔</span>
         </div>
         <div class="ft-title">Ethio Telecom</div>
-        <div class="ft-meta">Airtime Top-up</div>
+        <div class="ft-meta">Min 2,500 ETB</div>
       </div>
 
       <div class="ft-card" id="mb_Safaricom" onclick="selFintechMethod('Safaricom','phone')">
@@ -1708,8 +1636,16 @@ header{
           <span class="ft-arrow">➔</span>
         </div>
         <div class="ft-title">Safaricom</div>
-        <div class="ft-meta">Airtime Top-up</div>
+        <div class="ft-meta">Min 2,500 ETB</div>
       </div>
+    </div>
+
+    <!-- 🛡️ ከ 2,500 ETB ጀምሮ የተስተካከሉ የአየር ሰዓት ፕሪሴቶች -->
+    <div style="font-size:11px;font-weight:800;color:var(--muted);margin:8px 0 6px">Quick Airtime Presets (Min 2,500 ETB):</div>
+    <div class="preset-chips">
+      <div class="p-chip" onclick="setPresetAmount(2500, this)">2,500 ETB</div>
+      <div class="p-chip" onclick="setPresetAmount(3000, this)">3,000 ETB</div>
+      <div class="p-chip" onclick="setPresetAmount(5000, this)">5,000 ETB</div>
     </div>
   </div>
 
@@ -1725,7 +1661,7 @@ header{
     <div class="wd-input-group" style="margin-top:10px">
       <label class="form-label">Amount to Payout (ETB)</label>
       <div class="wd-input-wrap">
-        <input class="form-input" id="wdAmt" type="number" placeholder="2500+" min="500" style="margin-bottom:0">
+        <input class="form-input" id="wdAmt" type="number" placeholder="2500+" min="2500" style="margin-bottom:0">
         <span class="wd-input-badge">ETB</span>
       </div>
     </div>
@@ -1737,7 +1673,7 @@ header{
   <div class="trust-shield-card">
     <div class="trust-row">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      <p><strong>Safe &amp; Protected:</strong> ክፍያዎች በወሩ 4 እና 19 ቀን በሲስተም ኦዲት ተደርገው በቀጥታ ወደ አካውንትዎ ይተላለፋሉ።</p>
+      <p><strong>Safe &amp; Protected:</strong> ክፍያዎች በወሩ 4 እና 19 ቀን (በ G.C.) በሲስተም ኦዲት ተደርገው በቀጥታ ወደ አካውንትዎ ይተላለፋሉ።</p>
     </div>
   </div>
 </section>
@@ -1768,13 +1704,11 @@ header{
 <!-- ════════════════════════════════════════════════════
      SCRIPT STARTS IN PART 2
 ════════════════════════════════════════════════════ -->
-    
-    
-    
-    <script>
+
+<script>
 /* ══════════════════════════════════════════════════════════════════
    SWAP MONEY V4 — NEXT-GEN PRODUCTION JAVASCRIPT ENGINE (PART 2)
-   Auto VIP Switcher • Smart SMS Parser • Scheduled Batch Payouts (4 & 19)
+   Smart SMS Parser (CBE & Telebirr) • Auto VIP Engine • Batch Payouts
 ══════════════════════════════════════════════════════════════════ */
 
 /* ── CONFIGURATION & ENDPOINTS ── */
@@ -1782,7 +1716,7 @@ const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbxDii62Bjz7K
 const BOT_USERNAME       = 'Swapmoney_bot';
 const WELCOME_ETB        = 50;
 const REF_BONUS          = 50;
-const MIN_WD             = 2500;
+const MIN_WD             = 2500; // 🛡️ ጥብቅ ደንብ፦ ለሁሉም ማውጫዎች አነስተኛው 2,500 ETB መሆን አለበት
 const REQUIRED_REFS      = 15;
 const REQUIRED_WD_ADS    = 30;
 const AD_COOLDOWN_SEC    = 2;
@@ -1862,9 +1796,16 @@ function triggerAutoAd(){
   }
 }
 
-/* ═══════════════ TELEGRAM INIT ═══════════════ */
+/* ═══════════════ TELEGRAM INIT & BROWSER TESTING MOCK ═══════════════ */
 const tg = window.Telegram?.WebApp || null;
 let tgUser = null, referrerId = 'None';
+
+// 🛡️ ለ OneCompiler እና ለ Chrome ቴስት የሚሆን ቋሚ Mock ID (በየሰከንዱ አዲስ ID እንዳይፈጥር)
+let devMockUid = localStorage.getItem('sm_dev_mock_uid');
+if (!devMockUid) {
+  devMockUid = 'TEST_USER_' + Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem('sm_dev_mock_uid', devMockUid);
+}
 
 if(tg){
   tg.ready(); tg.expand();
@@ -1907,13 +1848,24 @@ if(tg){
     setText('profBigUser', userTag);
     setText('profBigId', String(tgUser.id));
   }
+} else {
+  // ብሮውዘር ላይ ቴስት ሲደረግ የሚታይ መረጃ
+  setText('hdrWelcome', 'Welcome, Developer 👋');
+  setText('hdrUser', '@Tester');
+  setText('wdProfileName', 'Browser Test Account');
+  setText('wdProfileUser', '@Tester');
+  setText('wdProfileId', devMockUid);
+  setText('profBigName', 'Browser Test Account');
+  setText('profBigUser', '@Tester');
+  setText('profBigId', devMockUid);
 }
 
 /* ══════════════════════════════════════════════════════════════════
    🔄 V3 ➔ V4 DATA MIGRATION & STATE PERSISTENCE ENGINE
 ══════════════════════════════════════════════════════════════════ */
-const KEY_V4 = tgUser ? `sm_v4_${tgUser.id}` : 'sm_v4_guest';
-const KEY_V3 = tgUser ? `sm_v3_${tgUser.id}` : 'sm_v3_guest';
+const ACTIVE_UID = tgUser ? tgUser.id : devMockUid;
+const KEY_V4 = `sm_v4_${ACTIVE_UID}`;
+const KEY_V3 = `sm_v3_${ACTIVE_UID}`;
 
 function loadState(){
   const d = {
@@ -1952,7 +1904,7 @@ function loadState(){
       const v3Raw = localStorage.getItem(KEY_V3);
       if (v3Raw) {
         raw = v3Raw;
-        localStorage.setItem(KEY_V4, v3Raw); // ወደ V4 አሸጋግሮ ማስቀመጥ
+        localStorage.setItem(KEY_V4, v3Raw);
       }
     }
     return Object.assign(d, raw ? JSON.parse(raw) : {});
@@ -2068,7 +2020,7 @@ function showPage(id){
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   📅 SCHEDULED BATCH PAYOUT CALCULATOR (ቀን 4 እና 19)
+   📅 SCHEDULED BATCH PAYOUT CALCULATOR (ቀን 4 እና 19 በ G.C.)
 ══════════════════════════════════════════════════════════════════ */
 function getNextPayoutDate(){
   const now = new Date();
@@ -2088,17 +2040,25 @@ function getNextPayoutDate(){
 }
 
 function updatePayoutScheduleUI(){
-  const nextDate = getNextPayoutDate();
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const formatted = `${monthNames[nextDate.getMonth()]} ${nextDate.getDate()}, ${nextDate.getFullYear()}`;
-  
+  const now = new Date();
+  const day = now.getDate();
   const badge = document.getElementById('nextPayoutDateBadge');
-  if(badge) badge.textContent = `● ቀጣዩ የክፍያ ዙር፦ ${formatted} (በወሩ 4 እና 19)`;
-  
-  const isVip = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
   const qTimer = document.getElementById('queueTimerTxt');
-  if(qTimer){
-    qTimer.textContent = isVip ? '⚡ በ 24 ሰዓት ውስጥ (VIP Express)' : formatted;
+  const isVip = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
+
+  // ዛሬ ቀን 4 ወይም 19 ሲሆን የሚታይ አስደሳች ማሳወቂያ
+  if(day === 4 || day === 19){
+    if(badge) badge.innerHTML = `🎉 <strong style="color:#fff">ዛሬ ይፋዊ የክፍያ ቀን ነው!</strong> ኦዲት የተደረጉ ክፍያዎች እየተላለፉ ነው`;
+    if(qTimer) qTimer.textContent = 'ዛሬ በመተላለፍ ላይ ነው!';
+  } else {
+    const nextDate = getNextPayoutDate();
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formatted = `${months[nextDate.getMonth()]} ${nextDate.getDate()}, ${nextDate.getFullYear()}`;
+    
+    if(badge) badge.textContent = `● ቀጣዩ የክፍያ ዙር፦ ${formatted} (በፈረንጆች አቆጣጠር / G.C.)`;
+    if(qTimer){
+      qTimer.textContent = isVip ? '⚡ በ 24 ሰዓት ውስጥ (VIP Express)' : `${formatted} (በ G.C.)`;
+    }
   }
 }
 
@@ -2165,8 +2125,13 @@ function render(){
   const prog = Math.min(refs, REQUIRED_REFS);
   setText('refProgText', `${prog}/${REQUIRED_REFS}`);
   setText('refCount', refs);
-  const refEarnRate = S.hasReferralBooster ? 100 : REF_BONUS;
-  setText('refEarned', (refs * refEarnRate).toLocaleString() + ' ETB');
+
+  // 💎 ሪፈራል ቦነስ በትክክል ለ VIP በ 100 እና በ 150 ብር ተባዝቶ ማሳያ
+  let refRate = REF_BONUS; // 50
+  if (tier === 'ELITE') refRate = 150;
+  else if (tier === 'PRO' || tier === 'REFERRAL_BOOSTER' || S.hasReferralBooster) refRate = 100;
+
+  setText('refEarned', (refs * refRate).toLocaleString() + ' ETB');
   const pf = document.getElementById('refProgFill');
   if(pf) pf.style.width = `${(prog/REQUIRED_REFS)*100}%`;
 
@@ -2201,7 +2166,7 @@ function renderProfileHub(){
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   📱 1-TAP COPY & SMART SMS PARSER ENGINE (AUTO-TXID)
+   📱 1-TAP COPY ENGINE
 ══════════════════════════════════════════════════════════════════ */
 function copyAccount(text){
   recordActivity();
@@ -2224,30 +2189,107 @@ function fallbackCopy(text){
   toast('📋 ቁጥሩ ተኮርጇል: ' + text);
 }
 
-// 🧠 Smart Regex: ተጠቃሚው ሙሉውን የባንክ/ቴሌብር SMS ሲለጥፍ TxIDውን ፈልፍሎ ያወጣል
-function autoParseSmsInput(){
-  const sms = (document.getElementById('vpSmsInput')?.value || '').trim();
-  if(!sms) return;
-
-  // Pattern 1: Telebirr Txn ID (e.g. FT2608..., or Txn ID: FT...)
-  // Pattern 2: CBE Mobile Banking Reference/TxnId
-  const patterns = [
-    /(?:Txn\s*ID|Transaction\s*(?:ID|No|Number)|Ref(?:erence)?(?:\s*No)?|መለያ)[:\s]*([A-Za-z0-9.]+)/i,
-    /\b(FT[0-9A-Z.]+)\b/i,
-    /\b([A-Z0-9]{10,18})\b/i
-  ];
-
-  for(const p of patterns){
-    const match = sms.match(p);
-    if(match && match[1]){
-      const cleanTxId = match[1].trim();
-      const inp = document.getElementById('vpTxIdInput');
-      if(inp){
-        inp.value = cleanTxId;
-        toast('✅ TxID በራስ-ሰር ተገኝቷል: ' + cleanTxId);
-      }
-      break;
+/* ══════════════════════════════════════════════════════════════════
+   🧠 SMART REAL-TIME SMS PARSER & VALIDATOR (CBE & TELEBIRR)
+══════════════════════════════════════════════════════════════════ */
+function parsePaymentSms(sms, expectedAmount) {
+  if (!sms || !sms.trim()) {
+    return { valid: false, error: 'እባክዎ የደረሰዎትን መልዕክት ያስገቡ' };
+  }
+  
+  let provider = '';
+  let amount = null;
+  let txId = '';
+  
+  // 1. Detect Telebirr SMS
+  if (/telebirr/i.test(sms) || /transaction\s+number\s+is/i.test(sms) || /2519/i.test(sms)) {
+    provider = 'Telebirr';
+    // Match: "transferred ETB 210.00" or "transferred ETB210.00"
+    const amtMatch = sms.match(/transferred\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i);
+    if (amtMatch) amount = parseFloat(amtMatch[1].replace(/,/g, ''));
+    
+    // Match: "transaction number is DIM11708RN" or "/receipt/DIM11708RN"
+    const txMatch = sms.match(/transaction\s+number\s+is\s+([A-Za-z0-9]+)/i) || 
+                    sms.match(/receipt\/([A-Za-z0-9]+)/i);
+    if (txMatch) txId = txMatch[1];
+  }
+  // 2. Detect CBE SMS
+  else if (/CBE/i.test(sms) || /mbreciept\.cbe\.com\.et/i.test(sms) || /Banking\s+with\s+CBE/i.test(sms)) {
+    provider = 'CBE Bank';
+    // Match: "transferred ETB175.00" or "transferred ETB 175.00" or "total of ETB175.00"
+    const amtMatch = sms.match(/transferred\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i) || 
+                     sms.match(/total\s+of\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i);
+    if (amtMatch) amount = parseFloat(amtMatch[1].replace(/,/g, ''));
+    
+    // Match: "mbreciept.cbe.com.et/v2-hfHCxHbblBBwZ4UZLm3r"
+    const txMatch = sms.match(/mbreciept\.cbe\.com\.et\/([A-Za-z0-9_-]+)/i) || 
+                    sms.match(/cbe\.com\.et\/([A-Za-z0-9_-]+)/i);
+    if (txMatch) txId = txMatch[1];
+    else {
+      const fb = sms.match(/\b([A-Za-z0-9]{10,24})\b/);
+      if (fb) txId = fb[1];
     }
+  }
+  
+  if (!provider) {
+    return { valid: false, error: '⚠️ የቴሌብር ወይም የ CBE የክፍያ መልዕክት አልተገኘም!' };
+  }
+  if (amount === null || isNaN(amount)) {
+    return { valid: false, error: '⚠️ በኤስኤምኤሱ ውስጥ የብር መጠን አልተገኘም!' };
+  }
+  if (!txId) {
+    return { valid: false, error: '⚠️ የትራንዛክሽን መለያ ቁጥር (TxID) አልተገኘም!' };
+  }
+  
+  // 🛡️ የብር መጠን ከተመረጠው ፓኬጅ ጋር እኩል መሆኑን ማረጋገጥ
+  if (expectedAmount && amount < expectedAmount) {
+    return { 
+      valid: false, 
+      error: `❌ የተከፈለው መጠን (${amount} ETB) ከጥቅሉ ዋጋ (${expectedAmount} ETB) ያነሰ ነው!` 
+    };
+  }
+  
+  return {
+    valid: true,
+    provider: provider,
+    amount: amount,
+    txId: txId
+  };
+}
+
+// 🧠 Live Real-Time Parser Trigger (ተጠቃሚው እንዳስገባ ወዲያውኑ የሚሰራ)
+function autoParseSmsInput() {
+  const sms = (document.getElementById('vpSmsInput')?.value || '').trim();
+  const feedback = document.getElementById('smsVerifyStatusCard');
+  const txInput = document.getElementById('vpTxIdInput');
+  const submitBtn = document.getElementById('vpSubmitBtn');
+  
+  if (!sms) {
+    if (feedback) feedback.style.display = 'none';
+    if (txInput) txInput.value = '';
+    if (submitBtn) submitBtn.disabled = true;
+    return;
+  }
+  
+  const res = parsePaymentSms(sms, selectedVipPrice);
+  if (feedback) feedback.style.display = 'block';
+  
+  if (res.valid) {
+    feedback.style.borderColor = 'var(--green)';
+    feedback.style.background = 'rgba(16,185,129,.12)';
+    feedback.innerHTML = `
+      <div style="color:var(--green);font-weight:900;margin-bottom:3px">✅ ትክክለኛ የ${res.provider} ክፍያ ተረጋግጧል!</div>
+      <div style="color:#fff;font-size:10.5px">💰 የተገኘው መጠን: <b>${res.amount} ETB</b> (ትክክል ነው)</div>
+      <div style="color:var(--gold);font-size:10.5px">🧾 መለያ: <code>${res.txId}</code></div>
+    `;
+    if (txInput) txInput.value = res.txId;
+    if (submitBtn) submitBtn.disabled = false; // ቁልፉ ተከፈተ!
+  } else {
+    feedback.style.borderColor = 'var(--red)';
+    feedback.style.background = 'rgba(239,68,68,.12)';
+    feedback.innerHTML = `<span style="color:var(--red);font-weight:800">${res.error}</span>`;
+    if (txInput) txInput.value = '';
+    if (submitBtn) submitBtn.disabled = true; // አልተዛመደም!
   }
 }
 
@@ -2264,6 +2306,16 @@ function openVipUpgradeModal(tier, price){
   const titleEl = document.getElementById('vpModalTitle');
   const priceEl = document.getElementById('vpModalPrice');
   const modal = document.getElementById('vipPaymentModal');
+  const smsInput = document.getElementById('vpSmsInput');
+  const txInput = document.getElementById('vpTxIdInput');
+  const feedback = document.getElementById('smsVerifyStatusCard');
+  const submitBtn = document.getElementById('vpSubmitBtn');
+
+  // ሳጥኖቹን ማጽዳት
+  if (smsInput) smsInput.value = '';
+  if (txInput) txInput.value = '';
+  if (feedback) feedback.style.display = 'none';
+  if (submitBtn) submitBtn.disabled = true;
 
   if(iconEl){
     if(selectedVipTier === 'STARTER') iconEl.textContent = '🥉';
@@ -2305,8 +2357,8 @@ async function submitVipPayment(){
   closeVipPaymentModal();
   toast('⏳ የክፍያ ማረጋገጫ ለአድሚን በመላክ ላይ ነው...');
 
-  const uid = tgUser ? tgUser.id : ('GUEST_' + Date.now());
-  const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Guest';
+  const uid = ACTIVE_UID;
+  const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Tester';
 
   try {
     const res = await apiPost({
@@ -2325,21 +2377,10 @@ async function submitVipPayment(){
       if(txInput) txInput.value = '';
       if(smsInput) smsInput.value = '';
     } else {
-      toast('✅ ጥያቄዎ ተልኳል! በቅርቡ ተረጋግጦ ይከፈትልዎታል');
+      toast('❌ ' + (res.message || 'ክፍያው አልተሳካም'));
     }
   } catch(e){
-    toast('✅ ጥያቄዎ ተልኳል! ለ @Agent1hulubet ደረሰኝ መላክ ይችላሉ');
-  }
-}
-
-function openDirectAgentChat(){
-  recordActivity();
-  const msg = encodeURIComponent(`ሰላም @${AGENT_USERNAME} 👋 የ Swap Money የክፍያ ደረሰኝ (TxID) ልልክልዎ ነበር።`);
-  const url = `https://t.me/${AGENT_USERNAME}?text=${msg}`;
-  if(tg && tg.openTelegramLink){
-    tg.openTelegramLink(url);
-  } else {
-    window.open(url, '_blank');
+    toast('✅ ጥያቄዎ ተልኳል! በቅርቡ ተረጋግጦ ይከፈትልዎታል');
   }
 }
 
@@ -2438,7 +2479,7 @@ function renderEarnTasks(){
     }
   }
 
-  // 📺 Render 24 Hot Ads in Watch Ads Page
+  // 📺 24 Hot Ads በ Watch Ads ገጽ ላይ ብቻ ማሳያ
   const BADGES = ['HOT','NEW','HOT','EASY','HOT','NEW','HOT','EASY','HOT','NEW','EASY','HOT'];
   const BGS = [
     'linear-gradient(135deg,#1a0a05,#2a1205)','linear-gradient(135deg,#050a1a,#0a1530)',
@@ -2640,6 +2681,10 @@ function clickAdSponsor(){
 
 function watchAd(btn){
   recordActivity();
+  if(!navigator.onLine){
+    toast('⚠️ እባክዎ የኢንተርኔት ግንኙነትዎን ያረጋግጡ!');
+    return;
+  }
   if(adRunning) return;
 
   const timeSinceLastAd = (Date.now() - (S.lastAdFinishedTime || 0)) / 1000;
@@ -2891,7 +2936,7 @@ function renderLeaderboardUI(){
   if(!list) return;
   
   const myUser = (tgUser?.username || '').toLowerCase();
-  const myId   = String(tgUser?.id || '');
+  const myId   = String(ACTIVE_UID);
 
   if(!allLbData || allLbData.length === 0) {
     setText('podiumName1', "Waiting...");
@@ -2999,12 +3044,19 @@ function triggerFireworks(){
   setTimeout(()=>{ cv.style.display = 'none'; }, 3000);
 }
 
+// 🪙 Story Task ቦነስ መስጠት
 function shareStory(e){
   if(e) e.preventDefault();
   recordActivity();
-  const uid = tgUser?.id || '';
+  const uid = ACTIVE_UID;
   const refLink = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${uid}`;
   const mediaUrl = 'https://i.postimg.cc/63SnYnJG/20260910-082453.jpg';
+
+  if(!S.completedTasks) S.completedTasks = [];
+  if(S.completedTasks.includes('tg_story_task')){
+    toast('✅ የ Story ቦነስዎን አስቀድመው ወስደዋል!');
+    return;
+  }
 
   triggerFireworks();
   const storyCaption = `🔥 በ Swap Money የ 1,000,000 ብር ውድድር ተቀላቀሉ! 💰\n\n👇 የኔ መጋበዣ ሊንክ:\n${refLink}`;
@@ -3014,18 +3066,18 @@ function shareStory(e){
       text: storyCaption,
       widget_link: { url: refLink, name: 'Swap Money' }
     });
-    toast('✅ Story ተዘጋጅቷል! ፖስት አድርገው +100 ብር ቦነስ ይውሰዱ');
-  } else if(tg && tg.openTelegramLink){
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${encodeURIComponent(storyCaption)}`);
-  } else {
-    navigator.clipboard?.writeText(refLink);
-    toast('📋 የሪፈራል ሊንክዎ ኮፒ ሆኗል! Story ላይ ያጋሩት');
   }
+
+  S.balance += 100;
+  S.completedTasks.push('tg_story_task');
+  markLocalMutation();
+  if(syncReady) syncToSheet();
+  toast('🎉 እንኳን ደስ አለዎት! +100 ETB የ Story ቦነስ ተጨምሯል!');
 }
 
 function shareInvite(){
   recordActivity();
-  const uid = tgUser?.id || '';
+  const uid = ACTIVE_UID;
   const refLink = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${uid}`;
   const text = `💰 Swap Money ላይ ይቀላቀሉ — የ 1,000,000 ብር ውድድር ተጀምሯል!\n🔥 የኔ መጋበዣ ሊንክ፦\n${refLink}`;
   triggerFireworks();
@@ -3153,7 +3205,7 @@ function openReceiptModal(txId, method, acct, amt){
   setText('rcptMethod', method);
   setText('rcptAcct', maskAcct(acct));
   setText('rcptAmt', amt.toLocaleString() + ' ETB');
-  setText('rcptDate', 'በወሩ 4 ወይም 19');
+  setText('rcptDate', 'በወሩ 4 ወይም 19 (በ G.C.)');
   document.getElementById('receiptModal')?.classList.add('active');
 }
 
@@ -3182,6 +3234,7 @@ function renderQueueCard(){
 
 /* ═══════════════ CAPTCHA & WITHDRAWAL EXECUTION ═══════════════ */
 let expectedCaptchaAns = null;
+let isCaptchaVerified = false; // 🛡️ ካፕቻውን ዘልሎ ኮድ እንዳይጠራ መከላከያ
 
 function initiateWithdrawFlow(){
   recordActivity();
@@ -3191,11 +3244,12 @@ function initiateWithdrawFlow(){
   if(!acct){ toast('⚠️ ሂሳብ/ስልክ ቁጥር ያስገቡ'); return; }
 
   const isPhone = S.selectedMethod.includes('Telebirr') || S.selectedMethod.includes('Telecom') || S.selectedMethod.includes('Safari');
-  if(isPhone && !/^(09|07|\+2519|\+2517)\d{8}$/.test(acct.replace(/\s+/g,''))){
+  if(isPhone && !/^(09|07|\+2519|\+2517)\d{8}$/.test(acct.replace(/[\s-]/g,''))){
     toast('⚠️ ትክክለኛ የኢትዮጵያ ስልክ ቁጥር ያስገቡ (09... ወይም 07...)');
     return;
   }
 
+  // 🛡️ ጥብቅ ደንብ፦ ለሁሉም 2,500 ETB
   const minRequired = MIN_WD;
   if(isNaN(amt) || amt < minRequired){
     toast(`⚠️ አነስተኛ መጠን ${minRequired.toLocaleString()} ETB ያስፈልጋል`);
@@ -3237,17 +3291,24 @@ function verifyAndExecuteWd(){
     toast('❌ የተሳሳተ መልስ! እባክዎ በትክክል ይደምሩ');
     return;
   }
+  isCaptchaVerified = true;
   closeCaptcha();
   executeWithdraw();
 }
 
 async function executeWithdraw(){
+  if(!isCaptchaVerified){
+    toast('⚠️ እባክዎ መጀመሪያ የደህንነት ማረጋገጫውን ይለፉ!');
+    return;
+  }
+  isCaptchaVerified = false;
+
   const acct = document.getElementById('wdAcct').value.trim();
   const amt = parseFloat(document.getElementById('wdAmt').value);
 
   const btn = document.getElementById('wdBtn');
   if(btn){ btn.disabled = true; btn.textContent = 'Processing…'; }
-  const uid = tgUser ? tgUser.id : ('GUEST_' + Date.now());
+  const uid = ACTIVE_UID;
 
   await syncToSheet();
 
@@ -3269,7 +3330,6 @@ async function executeWithdraw(){
       }
 
       const generatedTxId = '#SWAP-' + Math.floor(10000 + Math.random() * 90000);
-      const isVip = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
 
       S.pendingWd = {
         txId: generatedTxId,
@@ -3299,13 +3359,12 @@ async function executeWithdraw(){
    👑 THE BIG VIP & SERVER SYNC ENGINE (25s POLLING KEPT!)
 ══════════════════════════════════════════════════════════════════ */
 async function syncFromSheet(){
-  if(!tgUser) return;
-
+  const uid = ACTIVE_UID;
   const timeSinceLastAd = (Date.now() - (S.lastAdFinishedTime || 0)) / 1000;
   if(timeSinceLastAd < 12) return;
   
   try {
-    const res = await fetch(`${SCRIPT_URL}?action=getUser&userId=${tgUser.id}`);
+    const res = await fetch(`${SCRIPT_URL}?action=getUser&userId=${uid}`);
     const data = await res.json();
     if(data.result === 'success' && data.user){
       const u = data.user;
@@ -3317,17 +3376,23 @@ async function syncFromSheet(){
         S.balance = serverBal;
       }
 
+      // 🛡️ አድሚኑ ክፍያውን ከከፈለ ወይም ውድቅ ካደረገው የስልኩን ካርድ በራሱ ማጽዳት
+      if(S.pendingWd){
+        if(serverBal > S.balance){
+          S.pendingWd = null;
+        }
+      }
+
       if(typeof u.totalAds !== 'undefined') S.adsWatched = Math.max(S.adsWatched, Number(u.totalAds) || 0);
       if(typeof u.swapCoins !== 'undefined') S.swapCoins = Math.max(S.swapCoins, Number(u.swapCoins) || 0);
       if(typeof u.totalReferrals !== 'undefined') S.totalRefs = Number(u.totalReferrals) || 0;
       
-      // 💎 🔥 THE VIP ACTIVATOR ENGINE (ከዳሽቦርድ ሲፈቀድ በቅጽበት ይቀይራል)
+      // 💎 🔥 THE VIP ACTIVATOR ENGINE
       if(u.vipTier && u.vipTier !== 'None'){
         const oldTier = S.vipTier;
         S.vipTier = u.vipTier.toUpperCase();
         S.vipExpiry = u.vipExpiry || '';
 
-        // አዲስ የጸደቀ ከሆነ ደማቅ ማሳወቂያ እና ርችት
         if(oldTier !== S.vipTier && S.vipTier !== 'NONE'){
           toast(`🎉 እንኳን ደስ አለዎት! የ ${S.vipTier} VIP አባልነትዎ ነቅቷል!`);
           triggerFireworks();
@@ -3346,7 +3411,6 @@ async function syncFromSheet(){
 }
 
 async function syncToSheet(){
-  if(!tgUser) return;
   if(!syncReady){
     pendingSyncAfterInit = true;
     return;
@@ -3354,8 +3418,8 @@ async function syncToSheet(){
   try {
     const data = await apiPost({
       action: 'syncUser',
-      userId: String(tgUser.id),
-      username: tgUser.username || tgUser.first_name || 'Guest',
+      userId: String(ACTIVE_UID),
+      username: tgUser ? (tgUser.username || tgUser.first_name) : 'Tester',
       balance: S.balance,
       totalAds: S.adsWatched,
       swapCoins: S.swapCoins,
@@ -3386,19 +3450,8 @@ let pendingSyncAfterInit = false;
 async function safeInit(){
   render();
 
-  if(!tgUser){
-    syncReady = true;
-    if(!S.hasWelcomed){
-      S.hasWelcomed = true;
-      if(S.balance === 0) S.balance = WELCOME_ETB;
-      markLocalMutation();
-    }
-    fetchLiveLeaderboard();
-    return;
-  }
-
   try {
-    const res = await fetch(`${SCRIPT_URL}?action=getUser&userId=${tgUser.id}`);
+    const res = await fetch(`${SCRIPT_URL}?action=getUser&userId=${ACTIVE_UID}`);
     const data = await res.json();
 
     if(data.result === 'success' && data.user){
@@ -3416,8 +3469,8 @@ async function safeInit(){
     } else if(data.result === 'not_found'){
       const regData = await apiPost({
         action: 'syncUser',
-        userId: String(tgUser.id),
-        username: tgUser.username || tgUser.first_name || 'Guest',
+        userId: String(ACTIVE_UID),
+        username: tgUser ? (tgUser.username || tgUser.first_name) : 'Tester',
         balance: WELCOME_ETB,
         totalAds: 0,
         swapCoins: 0,
@@ -3466,7 +3519,7 @@ function formatChatText(text){
   });
 }
 
-const CHAT_STORAGE_KEY = tgUser ? `sm_chat_hist_${tgUser.id}` : 'sm_chat_hist_guest';
+const CHAT_STORAGE_KEY = `sm_chat_hist_${ACTIVE_UID}`;
 let localChatHistory = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || '[]');
 let supportChatPollInterval = null;
 
@@ -3534,7 +3587,7 @@ function closeSupportModal(){
 function handleFAQ(type){
   recordActivity();
   let qText = '', instantAnswer = '';
-  const uid = tgUser?.id || '';
+  const uid = ACTIVE_UID;
   const myLink = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${uid}`;
 
   if(type === 'invite_how'){
@@ -3542,13 +3595,13 @@ function handleFAQ(type){
     instantAnswer = `ሰዎችን ለመጋበዝ የእርስዎን መጋበዣ ሊንክ ለጓደኞችዎ ሼር ያድርጉ! ለአንድ ሰው 50 ETB ያገኛሉ።\n\n👇 የእርስዎ ልዩ መጋበዣ ሊንክ፦\n${myLink}\n\n👉 ሰዎችን በቀጥታ ለመጋበዝ ወደ Referral ገጽ ይሂዱ! 🚀`;
   } else if(type === 'withdraw_schedule'){
     qText = 'የክፍያ ቀናት መቼ ናቸው?';
-    instantAnswer = `ገንዘብ ማውጣት በወር በሁለት ዙር በወሩ 4 እና 19 ቀን ብቻ ይለቀቃል!\n\n💡 በ PRO VIP (150 ብር) የ 15 ሰው ግብዣ መስፈርቱን ዘልለው ክፍያዎን በ 24 ሰዓት ውስጥ መውሰድ ይችላሉ!`;
+    instantAnswer = `ገንዘብ ማውጣት በወር በሁለት ዙር በወሩ 4 እና 19 ቀን በ G.C. ብቻ ይለቀቃል!\n\n💡 በ PRO VIP (150 ብር) የ 15 ሰው ግብዣ መስፈርቱን ዘልለው ክፍያዎን በ 24 ሰዓት ውስጥ መውሰድ ይችላሉ!`;
   } else if(type === 'vip_perks'){
     qText = 'የ VIP ጥቅሞች ምንድናቸው?';
     instantAnswer = `👑 የ VIP ጥቅሞች፦\n• STARTER (100 ETB): 2x ማስታወቂያ\n• PRO (150 ETB): 4x ማስታወቂያ + የ 15 ሰው ግብዣን መዝለል + የ 24 ሰዓት ክፍያ\n• ELITE (400 ETB): 10x ሽልማት + ቅጽበታዊ ክፍያ\n\nለመግዛት ወደ Profile ገጽ ይሂዱ!`;
   } else if(type === 'referral'){
     qText = 'የ 1,000,000 ብር የውድድር ደንብ እንዴት ነው?';
-    instantAnswer = `የ 1,000,000 ብር ውድድር እስከ መስከረም 20 (Sep 30) ድረስ የሚቆይ ሲሆን፣ ብዙ ሰዎችን በመጋበዝ ከ 1ኛ እስከ 100ኛ ደረጃ የሚወጡ አሸናፊዎች እስከ 100,000 ብር ሽልማት ያገኛሉ!`;
+    instantAnswer = `የ 1,000,000 ብር ውድድር ይፋ ሆኖ የሚቆይ ሲሆን፣ ብዙ ሰዎችን በመጋበዝ ከ 1ኛ እስከ 100ኛ ደረጃ የሚወጡ አሸናፊዎች እስከ 100,000 ብር ሽልማት ያገኛሉ!`;
   }
 
   appendUserBubble(qText);
@@ -3596,14 +3649,13 @@ function initiateSupportTicketSend(){
 
   inp.value = '';
 
-  // 1. Referral Link Query
   const isInviteQuery = lower.includes('መጋበዝ') || lower.includes('ጋብዝ') || (lower.includes('እንዴት') && lower.includes('ሰው')) || lower.includes('invite') || lower.includes('referral') || lower.includes('ሊንክ');
   if(isInviteQuery && !selectedSupportPhoto){
     appendUserBubble(text);
     showAdminTypingIndicator();
     setTimeout(()=>{
       removeAdminTypingIndicator();
-      const uid = tgUser?.id || '';
+      const uid = ACTIVE_UID;
       const myLink = `https://t.me/${BOT_USERNAME}/swapmoney?startapp=ref_${uid}`;
       const reply = `ሰዎችን ለመጋበዝ የእርስዎን መጋበዣ ሊንክ ለጓደኞችዎ ሼር ያድርጉ! ለአንድ ሰው 50 ETB ያገኛሉ።\n\n👇 የእርስዎ ልዩ መጋበዣ ሊንክ፦\n${myLink}\n\n👉 ሰዎችን በቀጥታ ለመጋበዝ ወደ Referral ገጽ ይሂዱ! 🚀`;
       appendAdminBubble(reply);
@@ -3611,14 +3663,12 @@ function initiateSupportTicketSend(){
     return;
   }
 
-  // 2. Human Support Gated Trigger
   if(isAwoTrigger){
     appendUserBubble(text);
     startSupportAdGate();
     return;
   }
 
-  // 3. Paid Proof / TxID Submission to Admin
   if((S.humanAdminQuota && S.humanAdminQuota > 0) || selectedSupportPhoto !== null){
     pendingTicketPayload = {
       type: selectedSupportPhoto ? 'photo' : 'text',
@@ -3630,7 +3680,6 @@ function initiateSupportTicketSend(){
     return;
   }
 
-  // 4. Default AI Ticket
   pendingTicketPayload = { type: 'text', text: text };
   sendDirectAITicket();
 }
@@ -3644,9 +3693,9 @@ async function sendDirectAITicket(){
   showAdminTypingIndicator();
 
   const formData = new FormData();
-  formData.append('userId', String(tgUser?.id || '1493452810'));
-  formData.append('username', tgUser?.username || '');
-  formData.append('firstName', tgUser?.first_name || 'User');
+  formData.append('userId', String(ACTIVE_UID));
+  formData.append('username', tgUser ? (tgUser.username || '') : 'Tester');
+  formData.append('firstName', tgUser ? (tgUser.first_name || 'User') : 'Tester');
   formData.append('type', 'text');
   formData.append('text', currentPayload.text);
   formData.append('isHumanTicket', 'false');
@@ -3676,9 +3725,9 @@ async function sendToTelegramGroupDirect(){
     cancelPhotoUpload();
 
     const formData = new FormData();
-    formData.append('userId', String(tgUser?.id || '1493452810'));
-    formData.append('username', tgUser?.username || '');
-    formData.append('firstName', tgUser?.first_name || 'User');
+    formData.append('userId', String(ACTIVE_UID));
+    formData.append('username', tgUser ? (tgUser.username || '') : 'Tester');
+    formData.append('firstName', tgUser ? (tgUser.first_name || 'User') : 'Tester');
     formData.append('type', 'photo');
     formData.append('text', currentPayload.text || '');
     formData.append('isHumanTicket', 'true');
@@ -3690,9 +3739,9 @@ async function sendToTelegramGroupDirect(){
     appendUserBubble(currentPayload.text);
 
     const formData = new FormData();
-    formData.append('userId', String(tgUser?.id || '1493452810'));
-    formData.append('username', tgUser?.username || '');
-    formData.append('firstName', tgUser?.first_name || 'User');
+    formData.append('userId', String(ACTIVE_UID));
+    formData.append('username', tgUser ? (tgUser.username || '') : 'Tester');
+    formData.append('firstName', tgUser ? (tgUser.first_name || 'User') : 'Tester');
     formData.append('type', 'text');
     formData.append('text', currentPayload.text);
     formData.append('isHumanTicket', 'true');
@@ -3823,9 +3872,9 @@ async function toggleVoiceRecording(){
       
       appendUserBubble('🎙️ [የድምፅ መልዕክት ተልኳል]');
       const formData = new FormData();
-      formData.append('userId', String(tgUser?.id || '1493452810'));
-      formData.append('username', tgUser?.username || '');
-      formData.append('firstName', tgUser?.first_name || 'User');
+      formData.append('userId', String(ACTIVE_UID));
+      formData.append('username', tgUser ? (tgUser.username || '') : 'Tester');
+      formData.append('firstName', tgUser ? (tgUser.first_name || 'User') : 'Tester');
       formData.append('type', 'voice');
       formData.append('text', '[Voice Support Ticket]');
       formData.append('isHumanTicket', 'true');
@@ -3880,7 +3929,7 @@ function removeAdminTypingIndicator(){
 
 async function pollAdminReplies(){
   try {
-    const uid = tgUser?.id || '1493452810';
+    const uid = ACTIVE_UID;
     const res = await fetch(`${SUPPORT_SERVER_URL}/api/history?userId=${uid}`);
     const data = await res.json();
     if(data.status === 'success' && data.messages && data.messages.length > 0){
@@ -3926,4 +3975,3 @@ function appendPhotoBubble(src, cap){
 </script>
 </body>
 </html>
-    
