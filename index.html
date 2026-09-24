@@ -2150,15 +2150,31 @@ function renderProfileHub(){
 
   if(!chip) return;
 
-  if(tier !== 'NONE'){
+  if(tier !== 'NONE' && tier !== 'FREE'){
     chip.className = 'prof-status-chip is-vip';
     chip.innerHTML = `<span>👑</span> ${tier} VIP MEMBER`;
+    S.pendingVip = null;
+    saveState();
     if(notice && S.vipExpiry){
       notice.style.display = 'block';
-      const expDate = new Date(S.vipExpiry);
-      setText('vipExpiryDisplay', isNaN(expDate) ? S.vipExpiry : expDate.toLocaleDateString());
+      notice.style.borderColor = 'rgba(255,215,0,.32)';
+      notice.style.background = 'rgba(255,215,0,.08)';
+      notice.innerHTML = `🎉 <strong>Active VIP Member:</strong> የሚያበቃበት ቀን: <span style="color:var(--gold);font-weight:900">${S.vipExpiry}</span>`;
     }
-  } else {
+  } 
+  else if(S.pendingVip){
+    chip.className = 'prof-status-chip';
+    chip.style.borderColor = 'var(--orange)';
+    chip.style.color = 'var(--orange)';
+    chip.innerHTML = `<span>⏳</span> ${String(S.pendingVip.tier || 'VIP').toUpperCase()} VIP (PENDING)`;
+    if(notice){
+      notice.style.display = 'block';
+      notice.style.borderColor = 'var(--orange)';
+      notice.style.background = 'rgba(245,158,11,.1)';
+      notice.innerHTML = `⏳ <strong>ክፍያዎ በጥበቃ ላይ ነው!</strong><br><small style="color:var(--muted)">TxID: ${S.pendingVip.txId || 'N/A'} • በአድሚን እየተረጋገጠ ነው...</small>`;
+    }
+  } 
+  else {
     chip.className = 'prof-status-chip';
     chip.innerHTML = `<span>⚪</span> Free Member`;
     if(notice) notice.style.display = 'none';
@@ -2342,6 +2358,9 @@ function closeVipPaymentModal(){
   document.getElementById('vipPaymentModal')?.classList.remove('active');
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   💎 REAL VIP SUBMISSION ENGINE
+══════════════════════════════════════════════════════════════════ */
 async function submitVipPayment(){
   recordActivity();
   const txInput = document.getElementById('vpTxIdInput');
@@ -2355,7 +2374,7 @@ async function submitVipPayment(){
   }
 
   closeVipPaymentModal();
-  toast('⏳ የክፍያ ማረጋገጫ ለአድሚን በመላክ ላይ ነው...');
+  toast('⏳ የክፍያ ማረጋገጫ ወደ ሰርቨር በመላክ ላይ ነው...');
 
   const uid = ACTIVE_UID;
   const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Tester';
@@ -2373,14 +2392,25 @@ async function submitVipPayment(){
     });
 
     if(res && res.result === 'success'){
-      toast('🎉 ' + res.message);
+      S.pendingVip = {
+        tier: selectedVipTier,
+        amount: selectedVipPrice,
+        txId: txId,
+        date: new Date().toLocaleDateString()
+      };
+      markLocalMutation();
+      saveState();
+      render();
+
+      toast('🎉 ' + (res.message || 'የክፍያ ጥያቄዎ ተቀባይነት አግኝቷል'));
       if(txInput) txInput.value = '';
       if(smsInput) smsInput.value = '';
     } else {
-      toast('❌ ' + (res.message || 'ክፍያው አልተሳካም'));
+      toast('❌ ' + (res.message || 'ክፍያው በሰርቨር አልተመዘገበም'));
     }
   } catch(e){
-    toast('✅ ጥያቄዎ ተልኳል! በቅርቡ ተረጋግጦ ይከፈትልዎታል');
+    console.error('VIP Submit Error:', e);
+    toast('❌ የግንኙነት ስህተት: ' + (e && e.message ? e.message : 'Unknown error'));
   }
 }
 
