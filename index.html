@@ -2354,70 +2354,79 @@ function openVipUpgradeModal(tier, price){
   modal?.classList.add('active');
 }
 
-function closeVipPaymentModal(){
+  closeVipPaymentModal();
+  function closeVipPaymentModal(){
   document.getElementById('vipPaymentModal')?.classList.remove('active');
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   💎 REAL VIP SUBMISSION ENGINE
-══════════════════════════════════════════════════════════════════ */
-async function submitVipPayment(){
-// አዲሱ ፈጣን የ VIP ሰርቨር አድራሻዎ
-const VIP_SERVER_URL = "https://swap-vip-server.onrender.com"; // Render የሚሰጥዎትን URL እዚህ ይለጥፉ
+const VIP_SERVER_URL = "https://swap-vip-server.onrender.com";
 
 async function submitVipPayment(){
   recordActivity();
+
   const txInput = document.getElementById('vpTxIdInput');
   const smsInput = document.getElementById('vpSmsInput');
   const txId = (txInput?.value || '').trim();
   const fullSms = (smsInput?.value || '').trim();
 
   if(!txId){
-    toast('⚠️ እባክዎ የትራንዛክሽን ቁጥሩን (TxID) ያስገቡ ወይም SMS ይለጥፉ');
+    toast('⚠️ እባክዎ TxID ያስገቡ');
     return;
   }
 
   closeVipPaymentModal();
-  toast('⏳ የክፍያ ማረጋገጫ በመላክ ላይ ነው...');
+  toast('⏳ ክፍያው በመላክ ላይ ነው...');
 
   const uid = ACTIVE_UID;
-  const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Tester';
+  const uname = tgUser
+    ? (tgUser.username || tgUser.first_name)
+    : 'Tester';
 
   try {
-    // ⚡ ቀጥታ ወደ አዲሱ Node.js ሰርቨር መላክ (ፈጣን እና አስተማማኝ)
-    const res = await fetch(`${VIP_SERVER_URL}/api/submit-payment`, {
+    const response = await fetch(`${VIP_SERVER_URL}/api/submit-payment`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         userId: String(uid),
         username: uname,
         vipTier: selectedVipTier,
         amount: selectedVipPrice,
-        txId: txId,
-        fullSms: fullSms,
+        txId,
+        fullSms,
         method: 'Telebirr/CBE'
       })
     });
 
-    const data = await res.json();
+    if(!response.ok){
+      throw new Error(`Server returned ${response.status}`);
+    }
+
+    const data = await response.json();
 
     if(data.status === 'success'){
       S.pendingVip = {
         tier: selectedVipTier,
         amount: selectedVipPrice,
-        txId: txId
+        txId
       };
+
       markLocalMutation();
+      saveState();
       render();
 
-      toast('🎉 ' + data.message);
+      toast('🎉 ' + (data.message || 'Payment submitted successfully'));
+
       if(txInput) txInput.value = '';
       if(smsInput) smsInput.value = '';
     } else {
-      toast('❌ ' + (data.message || 'ክፍያው አልተመዘገበም'));
+      toast('❌ ' + (data.message || 'Payment was not accepted'));
     }
-  } catch(e){
-    toast('❌ የግንኙነት ስህተት አጋጥሟል');
+
+  } catch(error) {
+    console.error('VIP payment error:', error);
+    toast('❌ Server connection error: ' + error.message);
   }
 }
 
