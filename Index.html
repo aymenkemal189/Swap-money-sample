@@ -8,21 +8,22 @@
 <script src='https://libtl.com/sdk.js' data-zone='11460944' data-sdk='show_11460944'></script>
 <style>
 /* ══════════════════════════════════════════════════════════════════
-   ✨ SWAP MONEY VERSION 4.0 — LIQUID OBSIDIAN FINTECH THEME ✨
+   ✨ SWAP MONEY VERSION 4.0 — LIQUID OBSIDIAN MASTER THEME ✨
 ══════════════════════════════════════════════════════════════════ */
 :root{
   --bg:#030509;
   --surface:#070b16;
-  --card:rgba(12, 18, 34, 0.84);
+  --card:rgba(12, 18, 34, 0.88);
   --card-elevated:#131c33;
   --card2:#15203a;
   --card3:#1b2744;
-  --card-glass:rgba(16, 24, 46, 0.65);
+  --card-glass:rgba(16, 24, 46, 0.72);
   
   --border:rgba(255, 215, 0, 0.22);
   --border-subtle:rgba(255, 255, 255, 0.08);
   --border2:rgba(255, 255, 255, 0.07);
   --border-glow:rgba(255, 215, 0, 0.4);
+  --border-purple:rgba(139, 92, 246, 0.45);
   
   --gold:#FFD700;
   --gold-neon:#ffae00;
@@ -38,6 +39,7 @@
   --blue:#3b82f6;
   --blue-grad:linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   --purple:#8b5cf6;
+  --purple-glow:rgba(139, 92, 246, 0.45);
   
   --text:#ffffff;
   --muted:#94a3b8;
@@ -46,12 +48,10 @@
   --mono:'JetBrains Mono', monospace, Consolas, sans-serif;
   --glass-blur:blur(24px);
 
-  /* 💎 VIP Tier Gradients */
-  --vip-starter:linear-gradient(135deg, #f59e0b 0%, #78350f 100%);
-  --vip-pro:linear-gradient(135deg, #cbd5e1 0%, #475569 50%, #1e293b 100%);
-  --vip-elite:linear-gradient(135deg, #FFD700 0%, #f43f5e 50%, #8b5cf6 100%);
-  --vip-pro-glow:rgba(203, 213, 225, 0.3);
-  --vip-elite-glow:rgba(236, 72, 153, 0.4);
+  --tier-free:#94a3b8;
+  --tier-pro:linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --tier-vip:linear-gradient(135deg, #FFD700 0%, #ff9e00 50%, #b8860b 100%);
+  --tier-premium:linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -60,24 +60,22 @@ body{
   background:var(--bg);
   background-image:
     radial-gradient(at 0% 0%, rgba(255, 215, 0, 0.08) 0px, transparent 45%),
-    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
     radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
   color:var(--text);font-family:var(--font);font-size:13px;
   padding-bottom:100px;min-height:100vh;position:relative;
 }
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-#fwCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none}
+#fwCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;display:none}
 
-/* ════════════════════════════════════════════════════
-   HEADER V4
-════════════════════════════════════════════════════ */
+/* HEADER */
 header{
   position:sticky;top:0;z-index:80;
-  background:rgba(4, 7, 15, 0.88);backdrop-filter:var(--glass-blur);
+  background:rgba(4, 7, 15, 0.92);backdrop-filter:var(--glass-blur);
   border-bottom:1px solid var(--border-subtle);
   padding:10px 14px;display:flex;align-items:center;gap:10px;
-  box-shadow:0 4px 25px rgba(0,0,0,.65);
+  box-shadow:0 4px 25px rgba(0,0,0,.7);
 }
 .hdr-av{
   width:40px;height:40px;border-radius:14px;background:var(--gold-grad);
@@ -86,10 +84,10 @@ header{
   overflow:hidden;border:1.5px solid rgba(255,255,255,.35);transition:.25s;
 }
 .hdr-av img{width:100%;height:100%;object-fit:cover}
-.hdr-av.vip-starter-border{border-color:#f59e0b;box-shadow:0 0 16px rgba(245,158,11,.6)}
-.hdr-av.vip-pro-border{border-color:#cbd5e1;box-shadow:0 0 18px var(--vip-pro-glow)}
-.hdr-av.vip-elite-border{border-color:#FFD700;box-shadow:0 0 22px var(--vip-elite-glow);animation:shimmerElite 2s infinite alternate}
-@keyframes shimmerElite{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(40deg)}}
+.hdr-av.tier-pro-border{border-color:#3b82f6;box-shadow:0 0 16px rgba(59,130,246,.6)}
+.hdr-av.tier-vip-border{border-color:#FFD700;box-shadow:0 0 20px var(--gold-glow)}
+.hdr-av.tier-premium-border{border-color:#8b5cf6;box-shadow:0 0 25px var(--purple-glow);animation:shimmerPremium 2s infinite alternate}
+@keyframes shimmerPremium{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(50deg)}}
 
 .hdr-info{flex:1;min-width:0}
 .hdr-info h4{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.2px}
@@ -107,7 +105,7 @@ header{
 .hdr-btn{
   width:34px;height:34px;border-radius:12px;background:rgba(255,255,255,.04);
   border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:.18s;position:relative;
+  cursor:pointer;transition:.18s;position:relative;color:#fff;
 }
 .hdr-btn:active{transform:scale(.92);background:rgba(255,215,0,.1)}
 .hdr-btn svg{width:16px;height:16px;fill:var(--muted)}
@@ -117,20 +115,18 @@ header{
 }
 .vip-hdr-badge{
   display:none;background:var(--gold-grad);color:#000;
-  border-radius:10px;padding:1px 6px;font-size:8.5px;font-weight:900;letter-spacing:.3px;
+  border-radius:10px;padding:1px 7px;font-size:8.5px;font-weight:900;letter-spacing:.3px;
 }
 .streak-chip{font-size:11px;font-weight:800;color:#ff7a45}
 
-/* ════════════════════════════════════════════════════
-   PAGES & V4 FLOATING DOCK BOTTOM NAVIGATION
-════════════════════════════════════════════════════ */
-.page{display:none;padding:12px 14px;animation:pageIn .28s cubic-bezier(0.16,1,0.3,1)}
+/* NAVIGATION */
+.page{display:none;padding:12px 14px;animation:pageIn .24s ease-out}
 .page.active{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(10px) scale(0.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 .bnav{
   position:fixed;bottom:12px;left:12px;right:12px;
-  background:rgba(8, 13, 26, 0.92);backdrop-filter:var(--glass-blur);
+  background:rgba(8, 13, 26, 0.94);backdrop-filter:var(--glass-blur);
   border:1px solid rgba(255, 215, 0, 0.28);border-radius:28px;
   display:flex;justify-content:space-around;padding:7px 4px calc(7px + env(safe-area-inset-bottom));
   z-index:90;box-shadow:0 14px 45px rgba(0,0,0,.9), 0 0 25px rgba(255,215,0,.1);
@@ -144,9 +140,7 @@ header{
 .ni.active{color:var(--gold);background:rgba(255,215,0,.08)}
 .ni.active svg{fill:var(--gold);filter:drop-shadow(0 0 8px var(--gold-glow));transform:translateY(-1px)}
 
-/* ════════════════════════════════════════════════════
-   CARDS, BUTTONS & GENERAL UI
-════════════════════════════════════════════════════ */
+/* CARDS & GENERAL UI */
 .card{
   background:var(--card);backdrop-filter:blur(16px);
   border:1px solid var(--border-subtle);border-radius:20px;
@@ -171,19 +165,11 @@ header{
 .btn-gold:disabled{background:var(--card2);color:var(--muted);box-shadow:none;cursor:not-allowed;opacity:.5}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--gold)}
 .btn-green{background:var(--green-grad);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,.35)}
-.btn-blue{background:var(--blue-grad);color:#fff;box-shadow:0 4px 15px rgba(59,130,246,.35)}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff}
+.btn-purple{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.35)}
 .btn-block{width:100%}
 
-.copy-btn-chip{
-  background:rgba(255,215,0,.15);border:1px solid var(--gold);color:var(--gold);
-  border-radius:8px;padding:4px 9px;font-size:10px;font-weight:900;cursor:pointer;
-  display:inline-flex;align-items:center;gap:4px;transition:.15s;
-}
-.copy-btn-chip:active{transform:scale(.92);background:var(--gold);color:#000}
-
-/* ════════════════════════════════════════════════════
-   HERO WALLET CARD
-════════════════════════════════════════════════════ */
+/* HERO WALLET */
 .hero-wallet{
   background:linear-gradient(145deg,#231b05 0%,#131a2b 55%,#080c18 100%);
   border:1.5px solid rgba(255,215,0,.45);border-radius:24px;padding:18px 16px;
@@ -211,7 +197,7 @@ header{
 .hw-sub{font-size:10px;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:6px}
 .hw-sub .up{color:var(--green);font-weight:800}
 
-/* ── 2-COLUMN MINI GRID ── */
+/* MINI GRID */
 .home-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
 .mini-quest-card{
   background:linear-gradient(135deg,#241503,#181005,#0e1322);
@@ -219,7 +205,7 @@ header{
   display:flex;flex-direction:column;justify-content:space-between;
 }
 .mq-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.mq-title{font-size:11px;font-weight:900;color:#fff;display:flex;align-items:center;gap:4px}
+.mq-title{font-size:11px;font-weight:900;color:#fff}
 .mq-pill{background:var(--gold-grad);color:#000;font-size:8.5px;font-weight:900;padding:2px 7px;border-radius:7px}
 .mq-bar-bg{width:100%;height:7px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:6px 0}
 .mq-bar-fill{height:100%;background:var(--gold-grad);border-radius:10px;width:0%;transition:width .35s}
@@ -230,7 +216,7 @@ header{
   display:flex;flex-direction:column;justify-content:space-between;
 }
 .mp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.mp-title{font-size:11px;font-weight:900;color:#fff;display:flex;align-items:center;gap:4px}
+.mp-title{font-size:11px;font-weight:900;color:#fff}
 .mp-inputs{display:flex;gap:4px}
 .mp-inp{
   flex:1;min-width:0;background:var(--bg);border:1px solid var(--border);
@@ -238,7 +224,7 @@ header{
 }
 .mp-btn{background:var(--gold-grad);color:#000;border:none;border-radius:9px;padding:7px 11px;font-size:9.5px;font-weight:900;cursor:pointer}
 
-/* ── QA ROW & BANNER ── */
+/* 🛡️ QUICK ACTIONS (FIXED SVG SIZES - NO GIANT LIGHTNING BOLT!) */
 .qa-row{display:flex;justify-content:space-around;margin:12px 0 14px}
 .qa-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
 .qa-circle{
@@ -247,7 +233,7 @@ header{
   box-shadow:0 4px 16px rgba(0,0,0,.5);transition:.18s;
 }
 .qa-circle:active{transform:scale(.92);border-color:var(--gold)}
-.qa-circle svg{width:22px;height:22px;fill:var(--gold)}
+.qa-circle svg{width:22px !important;height:22px !important;max-width:22px !important;max-height:22px !important;fill:var(--gold);display:block}
 .qa-label{font-size:9.5px;font-weight:800;color:var(--muted)}
 
 .banner-wrap{
@@ -264,7 +250,7 @@ header{
 .b-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);transition:.3s}
 .b-dot.active{background:var(--gold);width:14px;border-radius:6px}
 
-/* ── TASKS GRID & FEED ── */
+/* TASKS GRID & FEED */
 .tasks-grid-4col{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}
 .task-mini-card{
   background:var(--card);border:1px solid var(--border2);border-radius:15px;
@@ -305,9 +291,9 @@ header{
 .feed-av{width:36px;height:36px;border-radius:50%;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#000;flex-shrink:0}
 .feed-info h5{font-size:12px;font-weight:800}
 .feed-info p{font-size:10px;color:var(--muted);margin-top:1px}
-.feed-amount{font-size:14.5px;font-weight:900;color:var(--green) !important;text-shadow:0 0 12px rgba(16,185,129,.45)}
+.feed-amount{font-size:14.5px;font-weight:900;color:var(--green) !important}
 
-/* ── EARN & MONETIZATION STORE ── */
+/* EARN HUB & SHOPPING CENTER */
 .earn-hero{
   background:linear-gradient(135deg,#1c1206,#0d111c);border:1px solid var(--border);
   border-radius:20px;padding:16px;text-align:center;margin-bottom:12px;
@@ -317,6 +303,30 @@ header{
 .earn-hero h2{font-size:18px;font-weight:900}
 .earn-hero p{font-size:11px;color:var(--muted);line-height:1.5}
 
+.smartlink-card{
+  background:linear-gradient(135deg,#1f1304,#111520);border:1px solid var(--gold);
+  border-radius:20px;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;
+  box-shadow:0 6px 22px rgba(255,215,0,.15);cursor:pointer;
+}
+.sl-left{display:flex;align-items:center;gap:10px}
+.sl-icon svg{width:24px;height:24px;display:block}
+.sl-info h4{font-size:13.5px;font-weight:900;color:#fff}
+.sl-info p{font-size:10px;color:var(--gold);font-weight:700;margin-top:2px}
+
+.sc-card{
+  background:linear-gradient(145deg,#0c111e,#070a13);border:1px solid rgba(255,215,0,.25);
+  border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;
+}
+.sc-img{width:44px;height:44px;flex-shrink:0;object-fit:contain}
+.sc-info{flex:1}
+.sc-amount{font-size:20px;font-weight:900;color:var(--gold);margin-top:3px}
+
+.lucky-card{
+  background:linear-gradient(135deg,#1c122a,#11182c);
+  border:1px solid rgba(168,85,247,.4);border-radius:18px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;
+}
+
 .store-grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
 .store-item-card{
   background:var(--card);border:1.2px solid var(--border);border-radius:18px;
@@ -324,7 +334,7 @@ header{
   cursor:pointer;transition:.18s;position:relative;
 }
 .store-item-card:active{transform:scale(.97);border-color:var(--gold)}
-.sic-icon{font-size:26px;margin-bottom:4px}
+.sic-icon svg{width:26px !important;height:26px !important;display:block;margin-bottom:6px}
 .sic-title{font-size:11.5px;font-weight:900;color:#fff}
 .sic-desc{font-size:9.5px;color:var(--muted);margin:2px 0 6px}
 .sic-price-btn{
@@ -332,41 +342,7 @@ header{
   padding:6px;font-size:10px;font-weight:900;text-align:center;
 }
 
-.sc-card{
-  background:linear-gradient(145deg,#0c111e,#070a13);border:1px solid rgba(255,215,0,.25);
-  border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;
-  position:relative;overflow:hidden;
-}
-.sc-img{width:44px;height:44px;flex-shrink:0;object-fit:contain}
-.sc-info{flex:1}
-.sc-title-row{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:900}
-.sc-new-badge{font-size:8px;background:var(--gold-grad);color:#000;padding:1px 6px;border-radius:10px;font-weight:900}
-.sc-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.sc-amount{font-size:20px;font-weight:900;color:var(--gold);margin-top:3px}
-
-.smartlink-card{
-  background:linear-gradient(135deg,#1f1304,#2b1a03,#111520);
-  border:1px solid var(--gold);border-radius:20px;padding:15px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;
-  box-shadow:0 6px 22px rgba(255,215,0,.15);cursor:pointer;position:relative;overflow:hidden;
-}
-.sl-left{display:flex;align-items:center;gap:10px}
-.sl-icon{font-size:32px;filter:drop-shadow(0 2px 8px rgba(255,215,0,.4))}
-.sl-info h4{font-size:13.5px;font-weight:900;color:#fff}
-.sl-info p{font-size:10px;color:var(--gold);font-weight:700;margin-top:2px}
-
-.lucky-card{
-  background:linear-gradient(135deg,#1c122a,#11182c);
-  border:1px solid rgba(168,85,247,.4);border-radius:18px;padding:12px 14px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;
-  box-shadow:0 4px 18px rgba(168,85,247,.15);
-}
-.lucky-left{display:flex;align-items:center;gap:10px}
-.lucky-icon{font-size:28px;filter:drop-shadow(0 2px 10px rgba(168,85,247,.5))}
-.lucky-text h4{font-size:12px;font-weight:900;color:#fff}
-.lucky-text p{font-size:9.5px;color:var(--muted);margin-top:2px}
-
-/* ── WATCH ADS STREAM ── */
+/* WATCH ADS */
 .watch-ads-banner-hero{
   background:linear-gradient(135deg,#241402,#101626);border:1.5px solid var(--gold);
   border-radius:20px;padding:16px;margin-bottom:12px;text-align:center;
@@ -381,8 +357,7 @@ header{
   padding:10px 7px;display:flex;flex-direction:column;align-items:center;
   gap:4px;text-align:center;position:relative;overflow:hidden;
 }
-.earn-grid-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.earn-grid-item.ad-type::before{background:linear-gradient(90deg,var(--gold),var(--gold-neon))}
+.earn-grid-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold-grad)}
 .egi-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
 .egi-title{font-size:9.5px;font-weight:800;line-height:1.25}
 .egi-reward{font-size:11.5px;font-weight:900;color:var(--gold)}
@@ -393,9 +368,8 @@ header{
   font-family:var(--font);transition:.15s;margin-top:2px;
 }
 .egi-btn:disabled{background:var(--card2);color:var(--muted);cursor:not-allowed}
-.egi-btn:active{transform:scale(.95)}
 
-/* ── REFERRAL & LEADERBOARD ── */
+/* 🛡️ REFERRAL & PODIUM (FIXED HORIZONTAL COLUMNS - NOT LINES!) */
 .comp-top-banner-wrap{width:100%;height:185px;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,215,0,.3);margin-bottom:12px}
 .comp-top-banner-img{width:100%;height:100%;object-fit:cover;display:block}
 .comp-top-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0) 45%,var(--bg) 100%)}
@@ -404,378 +378,213 @@ header{
   border:2px solid #fff;border-radius:18px;padding:14px 16px;
   display:flex;align-items:center;justify-content:center;gap:10px;
   font-size:14px;font-weight:900;color:#000;cursor:pointer;
-  box-shadow:0 8px 25px rgba(255,215,0,.45);margin-bottom:12px;
-  transition:.18s;width:100%;text-transform:uppercase;
+  box-shadow:0 8px 25px rgba(255,215,0,.45);margin-bottom:12px;width:100%;text-transform:uppercase;
 }
-.super-invite-btn:active{transform:scale(.97)}
 .story-comp-card{
-  background:linear-gradient(135deg,#0c1322,#10192e);
-  border:1px solid rgba(34,158,217,.4);border-radius:18px;
-  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;transition:.18s;box-shadow:0 6px 20px rgba(0,0,0,.5);
+  background:linear-gradient(135deg,#0c1322,#10192e);border:1px solid rgba(34,158,217,.4);
+  border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;margin-bottom:12px;
 }
-.story-comp-card:active{transform:scale(.97)}
 .st-left{display:flex;align-items:center;gap:12px}
-.st-tg-icon{width:42px;height:42px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 16px rgba(34,158,217,.5)}
+.st-tg-icon{width:42px;height:42px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .st-tg-icon svg{width:24px;height:24px;fill:#fff}
-.st-title{font-size:13px;font-weight:900;color:#fff}
-.st-sub{font-size:10px;color:var(--muted);margin:1px 0 3px}
-.st-reward{font-size:12px;font-weight:900;color:var(--gold);display:flex;align-items:center;gap:4px}
-.st-right{display:flex;align-items:center;gap:8px}
-.st-deadline-badge{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:5px 8px;display:flex;align-items:center;gap:6px;font-size:9.5px;color:var(--muted);text-align:right}
-.st-deadline-badge strong{color:#fff;display:block;font-size:10.5px}
-.st-arrow{color:var(--muted);font-size:18px;font-weight:800}
 
-/* 🛡️ ስክሪን እንዳይደራረብ የ padding-bottom ማስተካከያ */
 .comp-lb-wrapper{padding:0 12px;margin-bottom:120px}
 .lb-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .lb-header-title{font-size:14.5px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px}
-.lb-refresh-btn{
-  background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:10px;
-  padding:4px 8px;font-size:10px;font-weight:800;color:var(--gold);cursor:pointer;
-}
+.lb-refresh-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:800;color:var(--gold);cursor:pointer}
 .comp-tabs-nav{display:flex;background:#0e1424;border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:3px;margin-bottom:12px;gap:4px}
-.c-tab{flex:1;background:transparent;border:none;color:var(--muted);padding:8px 0;font-size:11.5px;font-weight:800;border-radius:20px;cursor:pointer;transition:.18s;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px}
-.c-tab.active{background:var(--gold-grad);color:#000;box-shadow:0 2px 10px rgba(255,215,0,.3)}
+.c-tab{flex:1;background:transparent;border:none;color:var(--muted);padding:8px 0;font-size:11.5px;font-weight:800;border-radius:20px;cursor:pointer}
+.c-tab.active{background:var(--gold-grad);color:#000}
+
+/* 🛡️ PODIUM (FIXED HORIZONTAL COLUMNS) */
 .podium-container{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:14px 0 16px;padding:0 2px}
-.podium-col{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:18px;padding:12px 6px 10px;position:relative;transition:.2s}
-.podium-col.rank-1-col{background:linear-gradient(180deg,rgba(255,215,0,.22) 0%,rgba(14,20,36,.96) 100%);border:1.5px solid var(--gold);box-shadow:0 0 28px rgba(255,215,0,.32);transform:translateY(-14px);z-index:2;order:2}
-.podium-col.rank-2-col{background:linear-gradient(180deg,rgba(203,213,225,.14) 0%,rgba(11,16,28,.95) 100%);border:1px solid #cbd5e1;order:1;transform:translateY(0)}
-.podium-col.rank-3-col{background:linear-gradient(180deg,rgba(217,119,6,.14) 0%,rgba(11,16,28,.95) 100%);border:1px solid #d97706;order:3;transform:translateY(0)}
-.podium-crown{font-size:22px;margin-bottom:-4px;filter:drop-shadow(0 2px 6px rgba(255,215,0,.6))}
-.podium-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;margin-bottom:6px;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.6)}
+.podium-col{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:18px;padding:12px 6px 10px;position:relative}
+.podium-col.rank-1-col{background:linear-gradient(180deg,rgba(255,215,0,.22) 0%,rgba(14,20,36,.96) 100%);border:1.5px solid var(--gold);order:2;transform:translateY(-14px)}
+.podium-col.rank-2-col{background:linear-gradient(180deg,rgba(203,213,225,.14) 0%,rgba(11,16,28,.95) 100%);border:1px solid #cbd5e1;order:1}
+.podium-col.rank-3-col{background:linear-gradient(180deg,rgba(217,119,6,.14) 0%,rgba(11,16,28,.95) 100%);border:1px solid #d97706;order:3}
+.podium-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;margin-bottom:6px;border:2px solid #fff}
 .podium-col.rank-1-col .podium-avatar{width:54px;height:54px;font-size:20px;border-color:var(--gold)}
-.podium-rank-tag{font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;margin-bottom:4px;display:inline-block}
-.podium-name{font-size:11.5px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92px;margin-bottom:2px}
+.podium-rank-tag{font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px;margin-bottom:4px}
+.podium-name{font-size:11.5px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:85px}
 .podium-refs{font-size:9.5px;color:var(--muted);font-weight:800;margin-bottom:6px}
 .podium-prize{background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.35);color:var(--gold);font-size:10px;font-weight:900;padding:3px 7px;border-radius:12px;white-space:nowrap}
-.podium-col.rank-1-col .podium-prize{background:var(--gold-grad);color:#000;box-shadow:0 2px 8px rgba(255,215,0,.3)}
+.podium-col.rank-1-col .podium-prize{background:var(--gold-grad);color:#000}
 
 .comp-lb-list{display:flex;flex-direction:column;gap:6px}
-.comp-lb-row{background:#0c1220;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px;position:relative;transition:.15s}
-.comp-lb-row.is-me{border-color:var(--blue);background:rgba(34,158,217,.12)}
-.c-rank-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;flex-shrink:0;background:#141d30;color:var(--muted);border:1px solid rgba(255,255,255,.1)}
-.c-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.comp-lb-row{background:#0c1220;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.c-rank-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;background:#141d30;color:var(--muted)}
+.c-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff}
 .c-info{flex:1;min-width:0}
-.c-name{font-size:12px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
-.c-refs{font-size:9.5px;color:var(--muted);margin-top:1px;font-variant-numeric:tabular-nums}
-.c-prize-pill{background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,165,0,.08));border:1px solid rgba(255,215,0,.35);border-radius:18px;padding:4px 10px;font-size:10.5px;font-weight:900;color:var(--gold);display:flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0}
-.c-chev{color:var(--muted);font-size:13px;font-weight:800}
+.c-name{font-size:12px;font-weight:900;color:#fff}
+.c-refs{font-size:9.5px;color:var(--muted)}
+.c-prize-pill{background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.35);border-radius:18px;padding:4px 10px;font-size:10.5px;font-weight:900;color:var(--gold)}
 
 .comp-floating-bar{
   position:fixed;bottom:70px;left:12px;right:12px;z-index:85;
   background:linear-gradient(135deg,#1f1402,#121829);border:1.5px solid var(--gold);
-  border-radius:20px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  box-shadow:0 8px 30px rgba(0,0,0,.85),0 0 20px rgba(255,215,0,.2);cursor:pointer;
+  border-radius:20px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;
 }
 .cfb-left{display:flex;align-items:center;gap:10px}
-.cfb-icon{font-size:28px;filter:drop-shadow(0 0 8px var(--gold-glow))}
-.cfb-text h4{font-size:12.5px;font-weight:900;color:#fff}
-.cfb-text p{font-size:9.5px;color:var(--muted)}
-.cfb-btn{background:var(--gold-grad);color:#000;border:none;border-radius:20px;padding:8px 14px;font-weight:900;font-size:11px;display:flex;align-items:center;gap:5px;cursor:pointer;box-shadow:0 2px 10px rgba(255,215,0,.3);flex-shrink:0}
-.cfb-btn svg{width:13px;height:13px;fill:#000}
+.cfb-btn{background:var(--gold-grad);color:#000;border:none;border-radius:20px;padding:8px 14px;font-weight:900;font-size:11px;cursor:pointer}
 .c-panel{display:none}.c-panel.active{display:block}
 .view-more-btn{width:100%;margin-top:10px;padding:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--gold);font-size:11px;font-weight:800;cursor:pointer}
 
-/* ════════════════════════════════════════════════════
-   PROFILE & VIP SHOWCASE
-════════════════════════════════════════════════════ */
-.profile-card-hero{
-  background:linear-gradient(145deg,#131b2e 0%,#090d18 100%);
-  border:1.5px solid var(--border);border-radius:24px;padding:18px;
-  margin-bottom:12px;position:relative;overflow:hidden;
-  box-shadow:0 12px 35px rgba(0,0,0,.7);
-}
+/* PROFILE & VIP */
+.profile-card-hero{background:linear-gradient(145deg,#131b2e 0%,#090d18 100%);border:1.5px solid var(--border);border-radius:24px;padding:18px;margin-bottom:12px}
 .prof-top-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.prof-av-large{
-  width:58px;height:58px;border-radius:20px;background:var(--gold-grad);
-  display:flex;align-items:center;justify-content:center;font-weight:900;
-  font-size:22px;color:#000;border:2px solid #fff;box-shadow:0 0 18px var(--gold-glow);
-  overflow:hidden;flex-shrink:0;
-}
-.prof-av-large img{width:100%;height:100%;object-fit:cover}
-.prof-meta h3{font-size:15px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px}
-.prof-meta p{font-size:11px;color:var(--muted);margin-top:2px}
-.prof-status-chip{
-  display:inline-flex;align-items:center;gap:5px;padding:3px 10px;
-  border-radius:12px;font-size:9.5px;font-weight:900;margin-top:4px;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--muted);
-}
-.prof-status-chip.is-vip{background:var(--gold-grad);color:#000;border-color:var(--gold);box-shadow:0 0 12px var(--gold-glow)}
-
-.prof-wallet-box{
-  background:var(--card2);border:1px solid var(--border2);border-radius:18px;
-  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:12px;
-}
-.prof-wb-amt{font-size:22px;font-weight:900;color:#fff;line-height:1}
-.prof-wb-amt span{font-size:13px;color:var(--gold)}
-.prof-wb-btn{
-  background:var(--gold-grad);color:#000;border:none;border-radius:12px;
-  padding:8px 14px;font-weight:900;font-size:11px;cursor:pointer;
-  display:flex;align-items:center;gap:6px;transition:.18s;
-}
-.prof-wb-btn:active{transform:scale(.95)}
-
-/* Free vs VIP Comparison Table */
-.comparison-card{
-  background:var(--card);border:1px solid var(--border-subtle);border-radius:18px;
-  padding:14px;margin-bottom:12px;
-}
-.comp-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px}
-.comp-row:last-child{border-bottom:none}
-.comp-label{color:var(--muted);font-weight:700}
-.comp-free{color:#ef4444;font-weight:800}
-.comp-vip{color:var(--gold);font-weight:900}
+.prof-av-large{width:58px;height:58px;border-radius:20px;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#000;border:2px solid #fff}
+.prof-meta h3{font-size:15px;font-weight:900;color:#fff}
+.prof-status-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:9.5px;font-weight:900;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--muted)}
+.prof-status-chip.is-vip{background:var(--gold-grad);color:#000;border-color:var(--gold)}
+.prof-wallet-box{background:var(--card2);border:1px solid var(--border2);border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.prof-wb-amt{font-size:22px;font-weight:900;color:#fff}
+.prof-wb-btn{background:var(--gold-grad);color:#000;border:none;border-radius:12px;padding:8px 14px;font-weight:900;font-size:11px;cursor:pointer}
 
 .vip-tier-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.vip-card{
-  border-radius:20px;padding:16px;position:relative;overflow:hidden;
-  transition:all .2s;cursor:pointer;border:1.5px solid rgba(255,255,255,.08);
-}
-.vip-card:active{transform:scale(.98)}
-.vip-card.starter{background:linear-gradient(135deg,#1f1304,#150e05,#0a0d18);border-color:rgba(245,158,11,.4)}
-.vip-card.pro{
-  background:linear-gradient(135deg,#172033,#101626,#070a14);
-  border-color:rgba(203,213,225,.5);box-shadow:0 8px 30px rgba(0,0,0,.6), 0 0 20px rgba(59,130,246,.15);
-}
-.vip-card.elite{
-  background:linear-gradient(135deg,#260e1d,#1f0c29,#0d1124);
-  border-color:rgba(236,72,153,.6);box-shadow:0 10px 35px rgba(236,72,153,.2);
-}
-.vip-popular-tag{
-  position:absolute;top:10px;right:12px;background:var(--gold-grad);color:#000;
-  padding:2px 8px;border-radius:10px;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.4px;
-}
+.vip-card{border-radius:20px;padding:16px;position:relative;cursor:pointer;border:1.5px solid rgba(255,255,255,.08)}
 .vip-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.vip-card-title{font-size:14.5px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px}
-.vip-card-price{font-size:18px;font-weight:900;color:var(--gold)}
-.vip-card-price small{font-size:11px;color:var(--muted);font-weight:700}
+.vip-card-title{font-size:14.5px;font-weight:900;display:flex;align-items:center;gap:6px}
+.vip-card-price{font-size:18px;font-weight:900}
 .vip-features-list{list-style:none;margin:10px 0;display:flex;flex-direction:column;gap:5px}
 .vip-features-list li{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
 .vip-features-list li b{color:#fff}
-.vip-buy-btn{
-  width:100%;padding:10px;border-radius:12px;border:none;font-weight:900;
-  font-size:11.5px;cursor:pointer;transition:.18s;font-family:var(--font);margin-top:4px;
-}
+.vip-buy-btn{width:100%;padding:10px;border-radius:12px;border:none;font-weight:900;font-size:11.5px;cursor:pointer;margin-top:4px}
 
-/* ════════════════════════════════════════════════════
-   WITHDRAWAL PAGE (STRICT 2500+ ETB & 4/19 BATCH)
-════════════════════════════════════════════════════ */
+/* WITHDRAWAL */
 .payout-schedule-banner{
   background:linear-gradient(135deg,#062015,#0c1724);border:1.2px solid var(--green);
   border-radius:18px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:12px;
-  box-shadow:0 6px 20px rgba(16,185,129,.15);
 }
-.psb-icon{font-size:28px}
-.psb-info h4{font-size:12.5px;font-weight:900;color:#fff}
-.psb-info p{font-size:10px;color:var(--green);font-weight:700;margin-top:2px}
-
 .tg-profile-card{
-  background:linear-gradient(135deg,#0c1527,#090d18);
-  border:1px solid rgba(59,130,246,.35);border-radius:18px;
-  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:12px;box-shadow:0 4px 18px rgba(0,0,0,.5);
+  background:linear-gradient(135deg,#0c1527,#090d18);border:1px solid rgba(59,130,246,.35);
+  border-radius:18px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;
 }
 .tg-prof-left{display:flex;align-items:center;gap:10px}
 .tg-prof-av{
   width:42px;height:42px;border-radius:14px;background:var(--gold-grad);
-  display:flex;align-items:center;justify-content:center;font-weight:900;
-  font-size:16px;color:#000;border:2px solid #3b82f6;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#000;border:2px solid #3b82f6;
 }
-.tg-prof-av img{width:100%;height:100%;object-fit:cover}
-.tg-prof-meta h4{font-size:13px;font-weight:900;color:#fff}
-.tg-prof-meta p{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px}
-.tg-verified-pill{
-  font-size:8.5px;font-weight:900;color:var(--green);
-  background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.35);
-  padding:3px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;
-}
+.tg-verified-pill{font-size:8.5px;font-weight:900;color:var(--green);background:rgba(16,185,129,.14);padding:3px 8px;border-radius:10px}
 .wd-fintech-hero{
   background:linear-gradient(135deg,#1f1503 0%,#111624 50%,#080b13 100%);
   border:1px solid rgba(255,215,0,.35);border-radius:22px;padding:16px;margin-bottom:12px;
-  position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
-.wd-amount-val{
-  font-size:38px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px;
-  text-shadow:0 0 35px rgba(255,215,0,.35);display:flex;align-items:baseline;gap:6px;margin-bottom:6px;
-}
+.wd-amount-val{font-size:38px;font-weight:900;color:#fff;line-height:1;margin-bottom:6px}
 .wd-amount-val span{font-size:18px;font-weight:800;color:var(--gold)}
 .wd-tab-nav{display:flex;background:var(--card2);border:1px solid var(--border2);border-radius:16px;padding:3px;margin-bottom:12px;gap:4px}
-.wd-tbtn{flex:1;background:transparent;border:none;color:var(--muted);padding:8px 0;font-size:11px;font-weight:900;border-radius:12px;cursor:pointer;transition:.18s;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:5px}
-.wd-tbtn.active{background:var(--gold-grad);color:#000;box-shadow:0 2px 10px rgba(255,215,0,.25)}
+.wd-tbtn{flex:1;background:transparent;border:none;color:var(--muted);padding:8px 0;font-size:11px;font-weight:900;border-radius:12px;cursor:pointer}
+.wd-tbtn.active{background:var(--gold-grad);color:#000}
 .fintech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
-.ft-card{
-  background:var(--card);border:1px solid var(--border2);border-radius:16px;
-  padding:12px 10px;display:flex;flex-direction:column;gap:6px;
-  cursor:pointer;transition:all .18s;position:relative;
-}
-.ft-card.sel{border-color:var(--gold);background:linear-gradient(145deg,#1c1809,#121724);box-shadow:0 0 15px rgba(255,215,0,.15)}
-.ft-top{display:flex;align-items:center;justify-content:space-between}
+.ft-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:12px 10px;cursor:pointer}
+.ft-card.sel{border-color:var(--gold);background:linear-gradient(145deg,#1c1809,#121724)}
 .ft-logo{width:34px;height:34px;border-radius:9px;object-fit:contain;background:#fff;padding:2px}
-.ft-title{font-size:12px;font-weight:900;color:#fff}
-.ft-meta{font-size:9.5px;color:var(--muted);font-weight:700}
-.ft-badge{position:absolute;top:6px;right:6px;font-size:8px;font-weight:900;padding:1px 6px;border-radius:8px;background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3)}
-
-/* 🛡️ የተስተካከሉት 2,500+ የ Airtime ፕሪሴቶች */
 .preset-chips{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.p-chip{flex:1;min-width:75px;background:var(--card2);border:1px solid var(--border);color:#fff;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:900;cursor:pointer;text-align:center;transition:.15s}
-.p-chip.sel{background:var(--gold-grad);color:#000;border-color:var(--gold)}
-
-.wd-input-group{margin-bottom:10px}
+.p-chip{flex:1;min-width:75px;background:var(--card2);border:1px solid var(--border);color:#fff;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:900;cursor:pointer;text-align:center}
+.p-chip.sel{background:var(--gold-grad);color:#000}
 .wd-input-wrap{position:relative;display:flex;align-items:center}
-.wd-input-wrap input{width:100%;padding:12px 14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:#fff;font-size:13px;font-weight:700;outline:none;font-family:var(--font)}
+.wd-input-wrap input{width:100%;padding:12px 14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:#fff;font-size:13px;font-weight:700;outline:none}
 .wd-input-badge{position:absolute;right:12px;font-size:10px;font-weight:800;color:var(--gold)}
 
-/* Verification Queue Banner */
 .queue-card{
-  background:linear-gradient(135deg,#1f1604 0%,#10192e 100%);
-  border:1.5px solid var(--gold);border-radius:20px;
-  padding:16px;margin-bottom:12px;display:none;position:relative;
-  box-shadow:0 8px 30px rgba(0,0,0,.7),0 0 20px rgba(255,215,0,.2);
+  background:linear-gradient(135deg,#1f1604 0%,#10192e 100%);border:1.5px solid var(--gold);
+  border-radius:20px;padding:16px;margin-bottom:12px;display:none;
 }
-.queue-card.active{display:block;animation:fadeUp .25s ease}
-.qc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.qc-processing-tag{
-  display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:900;color:var(--green);
-  background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.35);padding:4px 10px;border-radius:12px;
-}
-.qc-typing-text{font-size:11.5px;font-weight:800;color:#fff;display:flex;align-items:center;gap:6px;margin:8px 0 4px}
-.qc-dots span{width:4px;height:4px;background:var(--gold);border-radius:50%;display:inline-block;animation:typingBlink 1.4s infinite ease-in-out both}
-.qc-dots span:nth-child(1){animation-delay:-0.32s}
-.qc-dots span:nth-child(2){animation-delay:-0.16s}
-.qc-timer-box{
-  background:var(--card2);border:1px solid var(--border);border-radius:12px;
-  padding:8px 10px;display:flex;align-items:center;justify-content:space-between;margin:8px 0;
-}
-.qc-countdown{font-family:monospace;font-size:13.5px;font-weight:900;color:#fff}
-.qc-support-btn{
-  width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid var(--border);
-  color:var(--gold);border-radius:12px;font-size:11px;font-weight:800;cursor:pointer;margin-top:8px;transition:.18s;
-}
-.trust-shield-card{
-  background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:14px;
-  padding:12px 14px;display:flex;flex-direction:column;gap:6px;margin-top:12px;
-}
-.trust-row{display:flex;align-items:flex-start;gap:9px}
-.trust-shield-card svg{width:20px;height:20px;fill:var(--gold);flex-shrink:0;margin-top:1px}
-.trust-shield-card p{font-size:10px;color:var(--muted);line-height:1.5}
+.queue-card.active{display:block}
+.qc-processing-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:900;color:var(--green);background:rgba(16,185,129,.14);padding:4px 10px;border-radius:12px}
+.trust-shield-card{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:14px;padding:12px 14px;margin-top:12px}
 
-/* ════════════════════════════════════════════════════
-   MODALS OVERLAYS & 💎 NEW LUXURY FINTECH CHECKOUT
-════════════════════════════════════════════════════ */
+/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-overlay.active{display:flex}
-
-/* 🛡️ ኪቦርድ ሲከፈት እንዳይቆረጥ የተጨመረው ስክሮል */
-.captcha-card, .receipt-card, .terms-card, .vip-pay-card, .channel-promo-card{
-  position:relative;background:var(--card);border:1.5px solid var(--gold);
-  border-radius:24px;padding:22px;text-align:center;max-width:345px;width:100%;
-  max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  box-shadow:0 20px 50px rgba(0,0,0,.9),0 0 30px rgba(255,215,0,.25);
+.luxury-checkout-card, .captcha-card, .receipt-card, .terms-card, .redeem-card, .channel-promo-card{
+  position:relative;background:linear-gradient(165deg, #100b1e 0%, #080d1a 50%, #04060c 100%);
+  border:1.8px solid var(--purple);border-radius:26px;padding:22px 18px;max-width:360px;width:100%;
+  max-height:88vh;overflow-y:auto;color:#fff;box-shadow:0 25px 60px rgba(0,0,0,.95), 0 0 35px var(--purple-glow);
+}
+.lc-close-btn{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer}
+.lc-method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.lc-method-card{background:#0c1222;border:1.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:10px 8px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.lc-method-card.active.telebirr-card{border-color:#00adee;background:linear-gradient(135deg, rgba(0, 173, 238, 0.15), #091322)}
+.lc-method-card.active.cbe-card{border-color:#a855f7;background:linear-gradient(135deg, rgba(168, 85, 247, 0.18), #0d0a1c)}
+.lc-mc-logo{width:32px;height:32px;border-radius:8px;object-fit:contain;background:#fff;padding:2px}
+.lc-account-box{background:linear-gradient(135deg, #13122b, #090e1a);border:1.2px solid rgba(139, 92, 246, 0.4);border-radius:16px;padding:12px;margin-bottom:12px}
+.lc-copy-btn{background:rgba(139, 92, 246, 0.2);border:1px solid #8b5cf6;color:#c4b5fd;border-radius:8px;padding:4px 10px;font-size:10px;font-weight:900;cursor:pointer}
+.lc-acc-number{font-family:var(--mono);font-size:16px;font-weight:900;color:#ffd700;letter-spacing:1px;margin:2px 0}
+.lc-proof-tabs{display:flex;gap:6px;margin-bottom:8px;background:#070a14;padding:3px;border-radius:12px}
+.lc-ptab{flex:1;background:transparent;border:none;color:var(--muted);padding:6px 0;font-size:10px;font-weight:800;border-radius:9px;cursor:pointer}
+.lc-ptab.active{background:#8b5cf6;color:#fff}
+#vpSmsInput{width:100%;padding:10px;background:#080c16;border:1px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-size:11px;outline:none;resize:none}
+.lc-txid-pill{flex:1;padding:6px 10px;background:#0c1220;border:1px solid rgba(139, 92, 246, 0.4);border-radius:8px;color:#ffd700;font-family:var(--mono);font-size:11px;font-weight:900;outline:none}
+.sms-feedback-box{background:var(--card2);border:1px dashed var(--border);border-radius:12px;padding:10px;margin:8px 0;display:none}
+.lc-photo-dropzone{border:1.5px dashed rgba(139, 92, 246, 0.5);border-radius:14px;padding:16px;text-align:center;background:rgba(139, 92, 246, 0.05);cursor:pointer}
+#photoDropPreview img{width:100%;max-height:140px;object-fit:contain;border-radius:8px}
+.lc-submit-btn{
+  width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #d946ef 100%);
+  border:none;border-radius:16px;font-size:13px;font-weight:900;color:#fff;cursor:pointer;
+}
+.lc-submit-btn:disabled{background:var(--card2);color:var(--muted);opacity:.5}
+.lc-inbox-btn{
+  width:100%;margin-top:8px;padding:10px;background:rgba(34,158,217,.15);border:1px solid #229ED9;
+  border-radius:14px;color:#fff;font-size:11px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
 }
 
-.checkout-acc-card{
-  background:linear-gradient(135deg,#121b2d,#0c1322);border:1.2px solid var(--border);
-  border-radius:16px;padding:12px;margin-bottom:10px;text-align:left;position:relative;
-}
-.checkout-acc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.checkout-acc-num{font-family:var(--mono);font-size:13.5px;font-weight:900;color:var(--gold);letter-spacing:.6px}
-.checkout-acc-name{font-size:10px;color:var(--muted);margin-top:2px}
+/* 🛡️ RESPONSIVE SUPPORT CHAT (MAX 480PX) */
+.support-chat-modal{position:fixed;inset:0;background:rgba(5,7,14,0.96);backdrop-filter:blur(16px);z-index:1000;display:none;align-items:center;justify-content:center}
+.support-chat-modal.active{display:flex}
+.support-chat-wrapper{width:100%;max-width:480px;height:100%;display:flex;flex-direction:column;background:var(--bg);position:relative}
+.support-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.support-avatar{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg, var(--gold), #FFA500);color:#000;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900}
+.support-close-btn{width:32px;height:32px;border-radius:50%;background:var(--card2);border:1px solid var(--border);color:#fff;cursor:pointer}
+.faq-chips-container{display:flex;gap:6px;overflow-x:auto;padding:10px 14px 6px;background:var(--card);border-bottom:1px solid var(--border2)}
+.faq-chip{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:6px 12px;font-size:10.5px;font-weight:800;color:var(--gold);white-space:nowrap;cursor:pointer}
+.chat-container{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.chat-bubble{max-width:85%;padding:10px 14px;border-radius:16px;font-size:12.5px;line-height:1.4}
+.bubble-admin{align-self:flex-start;background:var(--card2);border:1px solid var(--border);border-bottom-left-radius:4px;color:#fff}
+.bubble-user{align-self:flex-end;background:linear-gradient(135deg, #1f1704, #2a1f05);border:1px solid var(--gold);border-bottom-right-radius:4px;color:#fff}
+.media-preview-bar{display:none;background:var(--card2);padding:8px 14px;border-top:1px solid var(--border);align-items:center;justify-content:space-between}
+.media-preview-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid var(--gold)}
+.voice-record-bar{display:none;background:rgba(239, 68, 68, 0.15);border-top:1px solid var(--red);padding:10px 14px;align-items:center;justify-content:space-between;color:var(--red);font-size:12px;font-weight:800}
+.chat-input-bar{background:var(--card);border-top:1px solid var(--border);padding:8px 10px;display:flex;align-items:center;gap:6px}
+.chat-inp{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:10px 14px;color:#fff;font-size:13px;outline:none}
+.chat-btn{width:38px;height:38px;border-radius:50%;background:var(--card2);border:1px solid var(--border);color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+.btn-send{background:linear-gradient(135deg, var(--gold), #FFA500);color:#000;border:none;font-weight:900}
 
-.sms-feedback-box{
-  background:var(--card2);border:1px dashed var(--border);border-radius:12px;
-  padding:10px;margin-bottom:12px;text-align:left;font-size:11px;display:none;
-}
-
-/* ── AD MODALS & LIVE CHAT ── */
-.ad-modal{
-  position:fixed;inset:0;background:rgba(3,6,14,.93);backdrop-filter:blur(20px);
-  z-index:999;display:none;align-items:center;justify-content:center;padding:16px;
-}
-.ad-modal.active{display:flex;animation:fadeUp .25s cubic-bezier(0.16,1,0.3,1)}
-.ad-modal-card{
-  position:relative;background:linear-gradient(145deg,#121929,#090d18);
-  border:1.5px solid var(--gold);border-radius:26px;padding:26px 20px;
-  text-align:center;max-width:335px;width:100%;
-  box-shadow:0 25px 60px rgba(0,0,0,.9),0 0 35px rgba(255,215,0,.28);
-  overflow:hidden;
-}
-.ad-glowing-ring{
-  width:68px;height:68px;border-radius:50%;margin:0 auto 12px;
-  background:linear-gradient(135deg,#FFD700 0%,#FF9E00 100%);
-  display:flex;align-items:center;justify-content:center;font-size:30px;
-  box-shadow:0 0 28px rgba(255,215,0,.65);
-}
-.ad-step-pill{
-  display:inline-block;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);
-  color:var(--gold);font-size:10px;font-weight:900;padding:3px 12px;border-radius:12px;margin-bottom:8px;
-}
+/* AD MODAL */
+.ad-modal{position:fixed;inset:0;background:rgba(3,6,14,.93);backdrop-filter:blur(20px);z-index:999;display:none;align-items:center;justify-content:center;padding:16px}
+.ad-modal.active{display:flex}
+.ad-modal-card{position:relative;background:linear-gradient(145deg,#121929,#090d18);border:1.5px solid var(--gold);border-radius:26px;padding:26px 20px;text-align:center;max-width:335px;width:100%}
+.ad-glowing-ring{width:68px;height:68px;border-radius:50%;margin:0 auto 12px;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-size:30px}
+.ad-step-pill{display:inline-block;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:var(--gold);font-size:10px;font-weight:900;padding:3px 12px;border-radius:12px;margin-bottom:8px}
 .ad-bar-bg{width:100%;height:9px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin-bottom:10px}
-.ad-bar-fill{height:100%;background:linear-gradient(90deg,#FFD700,#FF9E00,#10b981);border-radius:10px;width:0%;transition:width .4s linear}
+.ad-bar-fill{height:100%;background:linear-gradient(90deg,#FFD700,#FF9E00,#10b981);border-radius:10px;width:0%}
 .ad-timer-txt{font-size:13px;font-weight:900;color:var(--gold);font-family:monospace;margin-bottom:8px}
-.ad-close-btn{
-  position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);
-  border-radius:50%;width:32px;height:32px;color:#fff;font-size:15px;font-weight:900;cursor:pointer;display:none;align-items:center;justify-content:center;
-}
-
-.support-chat-modal {
-  position: fixed; inset: 0; background: rgba(5,7,14,0.96); backdrop-filter: blur(16px);
-  z-index: 1000; display: none; flex-direction: column; width: 100%; height: 100%;
-}
-.support-chat-modal.active { display: flex !important; animation: fadeUp .22s ease-out; }
-.support-hdr {
-  background: var(--card); border-bottom: 1px solid var(--border);
-  padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
-}
-.support-hdr-info { display: flex; align-items: center; gap: 10px; }
-.support-avatar {
-  width: 38px; height: 38px; border-radius: 12px;
-  background: linear-gradient(135deg, var(--gold), #FFA500); color: #000;
-  display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900;
-}
-.support-close-btn {
-  width: 32px; height: 32px; border-radius: 50%; background: var(--card2);
-  border: 1px solid var(--border); color: #fff; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-}
-.faq-chips-container { display: flex; gap: 6px; overflow-x: auto; padding: 10px 14px 6px; background: var(--card); border-bottom: 1px solid var(--border2); flex-shrink: 0; }
-.faq-chip { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 6px 12px; font-size: 10.5px; font-weight: 800; color: var(--gold); white-space: nowrap; cursor: pointer; }
-.chat-container { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
-.chat-bubble { max-width: 82%; padding: 10px 14px; border-radius: 16px; font-size: 12.5px; line-height: 1.4; word-break: break-word; }
-.bubble-admin { align-self: flex-start; background: var(--card2); border: 1px solid var(--border); border-bottom-left-radius: 4px; color: #fff; }
-.bubble-user { align-self: flex-end; background: linear-gradient(135deg, #1f1704, #2a1f05); border: 1px solid var(--gold); border-bottom-right-radius: 4px; color: #fff; }
-.media-preview-bar { display: none; background: var(--card2); padding: 8px 14px; border-top: 1px solid var(--border); align-items: center; justify-content: space-between; }
-.voice-record-bar { display: none; background: rgba(239, 68, 68, 0.15); border-top: 1px solid var(--red); padding: 10px 14px; align-items: center; justify-content: space-between; color: var(--red); font-size: 12px; font-weight: 800; }
-.chat-input-bar { background: var(--card); border-top: 1px solid var(--border); padding: 8px 10px; display: flex; align-items: center; gap: 6px; }
-.chat-inp { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none; }
-.chat-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--card2); border: 1px solid var(--border); color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; }
-.btn-send { background: linear-gradient(135deg, var(--gold), #FFA500); color: #000; border: none; font-weight: 900; }
+.ad-close-btn{position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;color:#fff;font-size:15px;font-weight:900;cursor:pointer;display:none;align-items:center;justify-content:center}
 
 #toast{
   position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);
   background:var(--card);border:1.5px solid var(--gold);color:#fff;padding:10px 16px;
-  border-radius:14px;font-size:12px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.85);
-  opacity:0;pointer-events:none;transition:.22s;z-index:950;width:86%;max-width:360px;text-align:center;
+  border-radius:14px;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.22s;z-index:950;width:86%;max-width:360px;text-align:center;
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- Fireworks Canvas -->
 <canvas id="fwCanvas"></canvas>
 
 <!-- ════════════════════════════════════════════════════
      MODALS
 ════════════════════════════════════════════════════ -->
+
 <!-- 1. Luxury Watch Ads Modal -->
 <div class="ad-modal" id="adModal">
   <div class="ad-modal-card">
     <button id="adCloseBtn" class="ad-close-btn" onclick="handleAdModalClose()">✕</button>
     <div class="ad-glowing-ring" id="adModalRing">📺</div>
     <div class="ad-step-pill" id="adStepPill">ማስታወቂያ [1/2]</div>
-    <div class="ad-title" id="adTitle" style="font-size:15px;font-weight:900;color:#fff;margin-bottom:6px">ማስታወቂያ በመመልከት ላይ...</div>
-    <div class="ad-desc" id="adDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">17 ሰከንድ ያዩ — ካጠናቀቁ ቦነስዎን ይወስዳሉ!</div>
+    <div id="adTitle" style="font-size:15px;font-weight:900;color:#fff;margin-bottom:6px">ማስታወቂያ በመመልከት ላይ...</div>
+    <div id="adDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">17 ሰከንድ ያዩ — ካጠናቀቁ ቦነስዎን ይወስዳሉ!</div>
     <div class="ad-bar-bg"><div class="ad-bar-fill" id="adBarFill"></div></div>
     <div class="ad-timer-txt" id="adTimerTxt">17s ቀርቷል</div>
     <button class="btn btn-outline btn-block" style="font-size:10px" onclick="clickAdSponsor()">🎁 ስፖንሰሩን ይጎብኙ (+5 ETB ተጨማሪ ቦነስ)</button>
@@ -788,7 +597,7 @@ header{
     <button id="supportAdCloseBtn" class="ad-close-btn" onclick="closeSupportAdStepSuccess()">✕</button>
     <div class="ad-glowing-ring" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">👨‍💼</div>
     <div class="ad-step-pill" id="supportAdTitle">የሰው አድሚን ትኬት [1/3]</div>
-    <div class="ad-desc" id="supportAdDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">ደረጃ 1/3 (15 ሰከንድ) — 3ቱንም ሲያጠናቅቁ ጥያቄዎ ለአድሚን ይላካል፤ <strong style="color:var(--gold)">+30 ETB</strong> ቦነስም ያገኛሉ!</div>
+    <div id="supportAdDesc" style="font-size:11px;color:var(--muted);margin-bottom:14px">ደረጃ 1/3 (15 ሰከንድ) — 3ቱንም ሲያጠናቅቁ ጥያቄዎ ለአድሚን ይላካል፤ <strong style="color:var(--gold)">+30 ETB</strong> ቦነስም ያገኛሉ!</div>
     <div class="ad-bar-bg"><div class="ad-bar-fill" id="supportAdBarFill"></div></div>
     <div class="ad-timer-txt" id="supportAdTimerTxt">15s ቀርቷል</div>
   </div>
@@ -797,11 +606,9 @@ header{
 <!-- 3. Digital Receipt Modal -->
 <div class="modal-overlay" id="receiptModal">
   <div class="receipt-card">
-    <div class="receipt-header">
-      <div style="font-size:32px;margin-bottom:4px">🧾</div>
-      <h3 style="font-size:15px;font-weight:900;color:#fff">Official Payout Voucher</h3>
-      <div class="receipt-id" id="rcptTxId" style="font-family:var(--mono);color:var(--gold);font-weight:900;margin-top:2px">#SWAP-89421</div>
-    </div>
+    <div style="font-size:32px;margin-bottom:4px">🧾</div>
+    <h3 style="font-size:15px;font-weight:900;color:#fff">Official Payout Voucher</h3>
+    <div class="receipt-id" id="rcptTxId" style="font-family:var(--mono);color:var(--gold);font-weight:900;margin-top:2px">#SWAP-89421</div>
     <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Status</span><span style="color:var(--green);font-weight:800">Pending Audit</span></div>
     <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Provider</span><span id="rcptMethod" style="color:#fff">Telebirr</span></div>
     <div style="display:flex;justify-content:space-between;margin:8px 0;font-size:11px;color:var(--muted)"><span>Account</span><span id="rcptAcct" style="color:#fff">098*****77</span></div>
@@ -817,8 +624,8 @@ header{
     <div style="font-size:26px">🛡️</div>
     <h4 style="font-size:14px;font-weight:900;margin-top:6px;color:#fff">የደህንነት ማረጋገጫ</h4>
     <p style="font-size:10.5px;color:var(--muted);margin-top:2px">ቦት አለመሆንዎን ለማረጋገጥ መልሱን ያስገቡ</p>
-    <div class="captcha-quest" id="captchaQuest" style="font-size:22px;font-weight:900;color:var(--gold);margin:14px 0">5 + 7 = ?</div>
-    <input type="number" class="captcha-inp" id="captchaAns" placeholder="መልስ እዚህ..." style="width:100%;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:#fff;text-align:center;font-size:14px;font-weight:800;margin-bottom:12px;outline:none">
+    <div id="captchaQuest" style="font-size:22px;font-weight:900;color:var(--gold);margin:14px 0">5 + 7 = ?</div>
+    <input type="number" id="captchaAns" placeholder="መልስ እዚህ..." style="width:100%;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:#fff;text-align:center;font-size:14px;font-weight:800;margin-bottom:12px;outline:none">
     <div style="display:flex;gap:8px">
       <button class="btn btn-outline" style="flex:1" onclick="closeCaptcha()">ተመለስ</button>
       <button class="btn btn-gold" style="flex:1" onclick="verifyAndExecuteWd()">አረጋግጥ</button>
@@ -836,69 +643,129 @@ header{
       <p style="font-size:10px;color:var(--muted);line-height:1.4">ማንኛውም ተጠቃሚ ቦት ወይም የውሸት ሪፈራል መጠቀም በጥብቅ የተከለከለ ነው።</p>
     </div>
     <div style="margin-bottom:8px">
-      <h5 style="color:var(--gold);font-size:11px">2. የገንዘብ ማውጫ የጊዜ ሰሌዳ (በ G.C. ቀን 4 እና 19)</h5>
-      <p style="font-size:10px;color:var(--muted);line-height:1.4">ገንዘብ ማውጣት በወር በሁለት ዙር በፈረንጆች አቆጣጠር (G.C.) በወሩ 4 እና 19 ቀን ብቻ ይለቀቃል! ነጻ አባላት 15 ንቁ ግብዣ ያስፈልጋቸዋል፤ PRO እና ELITE ግን ይህንን ይዘላሉ።</p>
+      <h5 style="color:var(--gold);font-size:11px">2. የገንዘብ ማውጫ የጊዜ ሰሌዳ</h5>
+      <p style="font-size:10px;color:var(--muted);line-height:1.4">ገንዘብ ማውጣት በወር በሁለት ዙር በፈረንጆች አቆጣጠር (G.C.) በወሩ 4 እና 19 ቀን ይለቀቃል! ነጻ አባላት 15 ንቁ ግብዣ ያስፈልጋቸዋል፤ VIP አባላት 2 ግብዣ ብቻ፤ PREMIUM አባላት ደግሞ ያለምንም ግብዣ በቅጽበት ይወስዳሉ!</p>
     </div>
     <button class="btn btn-gold btn-block" onclick="closeTermsModal()" style="margin-top:10px">ተረድቻለሁ / እሺ</button>
   </div>
 </div>
 
-<!-- 6. 💎 NEW FINTECH CHECKOUT MODAL (REAL CBE & TELEBIRR + AUTO-VERIFY) -->
+<!-- 6. 💎 NEW FINTECH CHECKOUT MODAL (NEON PURPLE + TELEBIRR & CBE) -->
 <div class="modal-overlay" id="vipPaymentModal">
-  <div class="vip-pay-card">
-    <button onclick="closeVipPaymentModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
-    <div style="font-size:32px;margin-bottom:4px" id="vpModalIcon">💎</div>
-    <h3 style="font-size:15.5px;font-weight:900;color:#fff" id="vpModalTitle">Upgrade Package</h3>
-    <div style="font-size:19px;font-weight:900;color:var(--gold);margin:4px 0 12px" id="vpModalPrice">150 ETB</div>
+  <div class="luxury-checkout-card">
+    <button class="lc-close-btn" onclick="closeVipPaymentModal()">✕</button>
     
-    <!-- Step 1: Real Accounts -->
-    <div style="text-align:left;font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">
-      ደረጃ 1፦ ክፍያውን በሚከተለው ሂሳብ ያስገቡ
+    <div class="lc-badge-top">
+      <span class="lc-pulse-dot"></span> SECURE FINTECH GATEWAY
     </div>
 
-    <!-- Telebirr Account Card -->
-    <div class="checkout-acc-card">
-      <div class="checkout-acc-head">
-        <span style="font-size:11px;font-weight:900;color:#fff">📱 Telebirr P2P</span>
-        <button class="copy-btn-chip" onclick="copyAccount('0996910607')">📋 ኮፒ አድርግ</button>
+    <div class="lc-header" style="text-align:center;margin:4px 0 14px">
+      <div class="lc-tier-pill" id="vpModalTierPill" style="font-size:11.5px;font-weight:900;color:#ffd700">VIP UPGRADE</div>
+      <h2 class="lc-price-display" id="vpModalPrice" style="font-size:38px;font-weight:900;color:#fff">150 <span style="font-size:16px;color:#ffd700">ETB</span></h2>
+      <p style="font-size:10px;color:var(--muted)">አስተማማኝ የክፍያ መንገድ ይምረጡና ክፍያዎን ያጠናቁ</p>
+    </div>
+
+    <!-- Step 1: Select Telebirr or CBE -->
+    <div style="font-size:11.5px;font-weight:900;color:#fff;margin:12px 0 8px">1. የክፍያ መንገድ ይምረጡ</div>
+    <div class="lc-method-grid">
+      <div class="lc-method-card active telebirr-card" id="cardTelebirr" onclick="selectCheckoutMethod('telebirr')">
+        <img src="https://i.postimg.cc/1zH5wqRj/20260805-174415.png" class="lc-mc-logo" alt="Telebirr">
+        <div>
+          <h4 style="font-size:11.5px;font-weight:900;color:#fff">Telebirr</h4>
+          <p style="font-size:9px;color:var(--muted)">ቀጥታ በቴሌብር</p>
+        </div>
       </div>
-      <div class="checkout-acc-num">0996910607</div>
-    </div>
 
-    <!-- CBE Account Card -->
-    <div class="checkout-acc-card">
-      <div class="checkout-acc-head">
-        <span style="font-size:11px;font-weight:900;color:#fff">🏦 CBE Bank (ንግድ ባንክ)</span>
-        <button class="copy-btn-chip" onclick="copyAccount('1000562339427')">📋 ኮፒ አድርግ</button>
+      <div class="lc-method-card cbe-card" id="cardCbe" onclick="selectCheckoutMethod('cbe')">
+        <img src="https://i.postimg.cc/Hk1pN2VS/20260805-174301.png" class="lc-mc-logo" alt="CBE Bank">
+        <div>
+          <h4 style="font-size:11.5px;font-weight:900;color:#fff">CBE Bank</h4>
+          <p style="font-size:9px;color:var(--muted)">ንግድ ባንክ</p>
+        </div>
       </div>
-      <div class="checkout-acc-num">1000562339427</div>
-      <div class="checkout-acc-name">Account Name: Aymen Kemal Ali</div>
     </div>
 
-    <!-- Step 2: Paste Full SMS -->
-    <div style="text-align:left;margin-top:10px">
-      <label style="font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">
-        ደረጃ 2፦ የደረሰዎትን ሙሉ SMS እዚህ Paste ያድርጉ
-      </label>
-      <textarea id="vpSmsInput" rows="3" placeholder="የቴሌብር ወይም የ CBE የጽሁፍ መልዕክት ሙሉውን እዚህ ይለጥፉ..." style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px;color:#fff;font-size:11px;outline:none;font-family:var(--font);resize:none" oninput="autoParseSmsInput()"></textarea>
+    <!-- Step 2: Account Details with Masked Visual & Clean 1-Click Copy -->
+    <div class="lc-account-box" id="checkoutAccDisplayBox">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span id="checkoutAccProviderLabel" style="font-size:10px;font-weight:900;color:var(--muted)">📱 የ Telebirr ቁጥር</span>
+        <button class="lc-copy-btn" onclick="copyActiveAccount()">
+          <span id="copyIconState">📋</span> ኮፒ አድርግ
+        </button>
+      </div>
+      <div class="lc-acc-number" id="checkoutAccNumber">09***47</div>
+      <div id="checkoutAccHolder" style="font-size:10px;color:#94a3b8">የአካውንት ስም: Nebyu Mohammed</div>
     </div>
 
-    <!-- Live Real-time Verification Feedback Box -->
-    <div class="sms-feedback-box" id="smsVerifyStatusCard"></div>
-
-    <div style="text-align:left;margin:8px 0 12px">
-      <label style="font-size:10.5px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">የተገኘው TxID መለያ ቁጥር፦</label>
-      <input type="text" id="vpTxIdInput" placeholder="በራስ-ሰር ይሞላል..." readonly style="width:100%;padding:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--gold);font-size:12px;font-weight:900;outline:none;font-family:var(--mono)">
+    <!-- Step 3: Proof Submission (SMS or Screenshot) -->
+    <div style="font-size:11.5px;font-weight:900;color:#fff;margin:12px 0 8px">2. የክፍያ ማረጋገጫ ያስገቡ</div>
+    
+    <div class="lc-proof-tabs">
+      <button class="lc-ptab active" id="ptabSms" onclick="switchProofTab('sms')">💬 በ SMS መልዕክት</button>
+      <button class="lc-ptab" id="ptabPhoto" onclick="switchProofTab('photo')">📸 በደረሰኝ Screenshot</button>
     </div>
 
-    <!-- Strict Locked Submit Button (Enabled ONLY when SMS & Amount are verified) -->
-    <button class="btn btn-gold btn-block" id="vpSubmitBtn" disabled onclick="submitVipPayment()">
-      ክፍያውን አረጋግጥ (Submit Proof)
+    <!-- SMS View -->
+    <div id="proofSmsSection">
+      <textarea id="vpSmsInput" rows="3" placeholder="ከቴሌብር ወይም ከባንክ የደረሰዎትን ሙሉ SMS እዚህ Paste ያድርጉ..." oninput="autoParseSmsInput()"></textarea>
+      <div class="sms-feedback-box" id="smsVerifyStatusCard"></div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:6px">
+        <span style="font-size:10px;color:var(--muted);font-weight:800">TxID:</span>
+        <input type="text" id="vpTxIdInput" placeholder="በራስ-ሰር ይሞላል..." readonly class="lc-txid-pill">
+      </div>
+    </div>
+
+    <!-- Photo View -->
+    <div id="proofPhotoSection" style="display:none">
+      <div class="lc-photo-dropzone" onclick="document.getElementById('vpReceiptFileInput').click()">
+        <input type="file" id="vpReceiptFileInput" accept="image/*" style="display:none" onchange="previewReceiptScreenshot(event)">
+        <div id="photoDropEmpty">
+          <div style="font-size:28px;margin-bottom:4px">🖼️</div>
+          <strong style="color:#fff;font-size:11px">የደረሰኙን Screenshot ይጫኑ</strong>
+          <p style="color:var(--muted);font-size:9.5px;margin-top:2px">ይጫኑ ወይም ፎቶውን እዚህ ያስገቡ</p>
+        </div>
+        <div id="photoDropPreview" style="display:none">
+          <img src="" id="receiptPreviewImg" alt="Receipt">
+          <span style="font-size:9.5px;color:#8b5cf6;font-weight:900">🔄 ፎቶ ቀይር</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit CTA Button -->
+    <button class="lc-submit-btn" id="vpSubmitBtn" disabled onclick="submitVipPayment()">
+      <span id="vpSubmitSpinner" style="display:none">⏳</span> ክፍያውን ለአድሚን ላክ (Submit Proof) ➔
+    </button>
+    
+    <!-- Direct Telegram Inbox Link -->
+    <button class="lc-inbox-btn" onclick="openDirectAdminInbox()">
+      💬 ከከፈሉ በኋላ አድሚንን በ Inbox ያነጋግሩ (@Swapmoney0)
+    </button>
+
+    <div style="font-size:9px;color:var(--muted);text-align:center;margin-top:8px">
+      ✓ ክፍያዎ በቀጥታ ወደ አድሚን ቴሌግራም ግሩፕ ይላካል • ፈጣን ማረጋገጫ
+    </div>
+  </div>
+</div>
+
+<!-- 7. 🎁 LUCKY BOX REDEEM MODAL -->
+<div class="modal-overlay" id="redeemModal">
+  <div class="redeem-card">
+    <button onclick="closeRedeemModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
+    <div style="font-size:32px;margin-bottom:4px">🔑</div>
+    <h3 style="font-size:15px;font-weight:900;color:#fff">Lucky Box Redeem Code</h3>
+    <p style="font-size:10.5px;color:var(--muted);margin:4px 0 10px">ከአድሚን የገዙትን ሚስጥር Redeem Code እዚህ ያስገቡ</p>
+    
+    <input type="text" id="redeemCodeInput" placeholder="e.g. LBOX-XXXX-2026" style="width:100%;padding:11px;background:var(--bg);border:1px solid var(--gold);border-radius:12px;color:var(--gold);font-family:var(--mono);text-align:center;font-size:13px;font-weight:900;outline:none;margin-bottom:12px">
+
+    <button class="btn btn-gold btn-block" onclick="submitRedeemCode()">ኮዱን አረጋግጥ (Redeem) ➔</button>
+    
+    <button class="lc-inbox-btn" style="margin-top:8px" onclick="openDirectAdminInbox('Lucky Box ኮድ ለመግዛት ፈልጌ ነበር')">
+      🛒 ኮድ ከአድሚን ለመግዛት Inbox አነጋግር (@Swapmoney0)
     </button>
   </div>
 </div>
 
-<!-- 7. 📢 PAID TELEGRAM CHANNEL PROMOTION MODAL -->
+<!-- 8. 📢 PAID TELEGRAM CHANNEL PROMOTION MODAL -->
 <div class="modal-overlay" id="channelPromoModal">
   <div class="channel-promo-card">
     <button onclick="closeChannelPromoModal()" style="position:absolute;top:14px;right:14px;background:var(--card2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;color:var(--muted);font-size:14px;cursor:pointer">✕</button>
@@ -916,67 +783,70 @@ header{
       <textarea id="cpMsgInput" rows="2" placeholder="ስለ ቻናልዎ ወይም የሚፈልጉትን የማስተዋወቂያ አይነት ይፃፉ..." style="width:100%;padding:8px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:#fff;font-size:11px;outline:none;resize:none"></textarea>
     </div>
 
-    <button class="btn btn-blue btn-block" onclick="submitChannelPromoInquiry()">ሃሳብዎን ለአድሚን ይላኩ (Send to Admin) ➔</button>
+    <button class="btn btn-blue btn-block" onclick="submitChannelPromoInquiry()">ሃሳብዎን ለአድሚን ይላኩ (Send to @Swapmoney0) ➔</button>
   </div>
 </div>
 
-<!-- 8. Customer Support Live Chat Modal -->
+<!-- 9. 👨‍💼 RESPONSIVE CUSTOMER SUPPORT MODAL -->
 <div class="support-chat-modal" id="supportModal">
-  <div class="support-hdr">
-    <div class="support-hdr-info">
-      <div class="support-avatar">👨‍💼</div>
-      <div>
-        <h4>👨‍💼 Swap Money AI &amp; Agent Support</h4>
-        <p id="supportStatusBadge">● Live Support (24/7)</p>
+  <div class="support-chat-wrapper">
+    <div class="support-hdr">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="support-avatar">👨‍💼</div>
+        <div>
+          <h4 style="font-size:13px;font-weight:900;color:#fff">Swap Money AI &amp; Agent Support</h4>
+          <p id="supportStatusBadge" style="font-size:10px;color:var(--green)">● Live Support (24/7)</p>
+        </div>
+      </div>
+      <button class="support-close-btn" onclick="closeSupportModal()">✕</button>
+    </div>
+
+    <div class="faq-chips-container">
+      <div class="faq-chip" onclick="handleFAQ('invite_how')">👥 ሰው መጋበዝ እንዴት ነው?</div>
+      <div class="faq-chip" onclick="handleFAQ('withdraw_schedule')">📅 የክፍያ ቀናት (4 እና 19)</div>
+      <div class="faq-chip" onclick="handleFAQ('vip_perks')">💎 የ VIP ጥቅሞች</div>
+      <div class="faq-chip" onclick="handleFAQ('referral')">❓ 1M ውድድር ደንብ</div>
+    </div>
+
+    <div style="background:rgba(255,215,0,.08);border-bottom:1px solid var(--border);padding:6px 14px;font-size:10px;color:var(--gold);text-align:center">
+      ⚠️ <strong>ማሳሰቢያ፦</strong> የክፍያ ደረሰኝ (TxID) ያላቸው በቀጥታ ከሰው አድሚን ጋር ይገናኛሉ።
+    </div>
+
+    <div class="chat-container" id="chatMsgContainer">
+      <div class="chat-bubble bubble-admin">
+        ሰላም! 👋 ወደ Swap Money የድጋፍ ማዕከል እንኳን ደህና መጡ። ማንኛውንም ጥያቄ መፃፍ ይችላሉ፤ AI ፈጣን ምላሽ ይሰጥዎታል። የከፈሉበትን ደረሰኝ ለማረጋገጥ ከፈለጉ ደረሰኙን እዚህ ይላኩ።
+        <div style="font-size:8.5px;color:var(--muted);text-align:right;margin-top:4px">አሁን</div>
       </div>
     </div>
-    <button class="support-close-btn" onclick="closeSupportModal()">✕</button>
-  </div>
 
-  <div class="faq-chips-container">
-    <div class="faq-chip" onclick="handleFAQ('invite_how')">👥 ሰው መጋበዝ እንዴት ነው?</div>
-    <div class="faq-chip" onclick="handleFAQ('withdraw_schedule')">📅 የክፍያ ቀናት (4 እና 19)</div>
-    <div class="faq-chip" onclick="handleFAQ('vip_perks')">💎 የ VIP ጥቅሞች</div>
-    <div class="faq-chip" onclick="handleFAQ('referral')">❓ 1M ውድድር ደንብ</div>
-  </div>
-
-  <div style="background:rgba(255,215,0,.08);border-bottom:1px solid var(--border);padding:6px 14px;font-size:10px;color:var(--gold);text-align:center">
-    ⚠️ <strong>ማሳሰቢያ፦</strong> የክፍያ ደረሰኝ (TxID) ያላቸው ወይም ቻናል ማስተዋወቅ የፈለጉ ብቻ ናቸው ከሰው አድሚን ጋር መገናኘት የሚችሉት።
-  </div>
-
-  <div class="chat-container" id="chatMsgContainer">
-    <div class="chat-bubble bubble-admin">
-      ሰላም! 👋 ወደ Swap Money የድጋፍ ማዕከል እንኳን ደህና መጡ። ማንኛውንም ጥያቄ መፃፍ ይችላሉ፤ AI ፈጣን ምላሽ ይሰጥዎታል። የከፈሉበትን ደረሰኝ ለማረጋገጥ ከፈለጉ ደረሰኙን እዚህ ይላኩ።
-      <div class="bubble-time">አሁን</div>
+    <!-- Media Preview Bar for Photo Upload -->
+    <div class="media-preview-bar" id="mediaPreviewBar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="" id="imgPreviewThumb" class="media-preview-thumb" alt="Preview">
+        <span style="font-size:11px;color:var(--gold)">ፎቶ ተመርጧል...</span>
+      </div>
+      <button onclick="cancelPhotoUpload()" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer">✕</button>
     </div>
-  </div>
 
-  <div class="media-preview-bar" id="mediaPreviewBar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="" id="imgPreviewThumb" class="media-preview-thumb" alt="Preview">
-      <span style="font-size:11px;color:var(--gold)">ፎቶ ተመርጧል...</span>
+    <div class="voice-record-bar" id="voiceRecordBar">
+      <span>🎙️ ድምፅ እየተቀረጸ ነው... (<span id="voiceTimerTxt">0:00</span>)</span>
+      <button onclick="stopAndSendVoice()" style="background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:10px;font-size:10px;font-weight:900;cursor:pointer">ላክ ➔</button>
     </div>
-    <button onclick="cancelPhotoUpload()" style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer">✕</button>
-  </div>
 
-  <div class="voice-record-bar" id="voiceRecordBar">
-    <span>🎙️ ድምፅ እየተቀረጸ ነው... (<span id="voiceTimerTxt">0:00</span>)</span>
-    <button onclick="stopAndSendVoice()" style="background:var(--red);color:#fff;border:none;padding:5px 12px;border-radius:10px;font-size:10px;font-weight:900;cursor:pointer">ላክ ➔</button>
-  </div>
-
-  <div class="chat-input-bar">
-    <label class="chat-btn" title="ፎቶ አያይዝ">
-      📷
-      <input type="file" id="photoFileInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)">
-    </label>
-    <button class="chat-btn" id="voiceRecordBtn" onclick="toggleVoiceRecording()" title="ድምፅ ቅረጽ">🎙️</button>
-    <input type="text" id="chatTextInput" class="chat-inp" placeholder="ጥያቄዎን ወይም ደረሰኝ እዚህ ይፃፉ..." onkeypress="handleChatEnter(event)">
-    <button class="chat-btn btn-send" onclick="initiateSupportTicketSend()">➤</button>
+    <div class="chat-input-bar">
+      <label class="chat-btn" title="ፎቶ አያይዝ">
+        📷
+        <input type="file" id="photoFileInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)">
+      </label>
+      <button class="chat-btn" id="voiceRecordBtn" onclick="toggleVoiceRecording()" title="ድምፅ ቅረጽ">🎙️</button>
+      <input type="text" id="chatTextInput" class="chat-inp" placeholder="ጥያቄዎን ወይም ደረሰኝ እዚህ ይፃፉ..." onkeypress="handleChatEnter(event)">
+      <button class="chat-btn btn-send" onclick="initiateSupportTicketSend()">➤</button>
+    </div>
   </div>
 </div>
 
 <!-- ════════════════════════════════════════════════════
-     HEADER V4
+     HEADER V4 (WITH DYNAMIC TIER GLOW)
 ════════════════════════════════════════════════════ -->
 <header>
   <div class="hdr-av" id="hdrAv">💰</div>
@@ -985,7 +855,7 @@ header{
     <p>
       <span id="hdrUser">@user</span>
       <span class="level-chip" id="levelChip">⭐ Level 1</span>
-      <span class="vip-hdr-badge" id="vipHdrBadge">PRO VIP</span>
+      <span class="vip-hdr-badge" id="vipHdrBadge">VIP MEMBER</span>
       <span class="streak-chip" id="streakChip"></span>
     </p>
   </div>
@@ -999,7 +869,7 @@ header{
     </div>
     <div class="hdr-btn" onclick="syncFromSheet()" title="Refresh" style="position:relative">
       <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-      <span id="syncDot" style="display:none;position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 4px var(--green)"></span>
+      <span id="syncDot" style="display:none;position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--green)"></span>
     </div>
   </div>
 </header>
@@ -1008,7 +878,7 @@ header{
      PAGE 1: HOME
 ════════════════════════════════════════════════════ -->
 <section class="page active" id="page-home">
-  <div class="hero-wallet">
+  <div class="hero-wallet" id="heroWalletCard">
     <div class="hw-chip-emv"></div>
     <div class="hw-top">
       <div class="hw-logo">SWAP Money V4 💰</div>
@@ -1051,7 +921,7 @@ header{
     </div>
   </div>
 
-  <!-- Quick Actions -->
+  <!-- 🛡️ QUICK ACTIONS (FIXED SVG SIZES - NO GIANT LIGHTNING BOLT!) -->
   <div class="qa-row">
     <div class="qa-item" onclick="showPage('earn')">
       <div class="qa-circle"><svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
@@ -1095,10 +965,10 @@ header{
     <img class="invite-gift" src="https://i.postimg.cc/cJwy699g/20260809-161701.png" alt="gift">
     <div class="invite-info">
       <h3>የሪፈራል ልዩ ጉርሻ!</h3>
-      <p>15 ሰው ሲጋብዙ <span style="color:var(--gold);font-weight:800">750 ETB</span> ተጨማሪ ቦነስ!</p>
+      <p id="homeInviteBannerTxt">ሰው ሲጋብዙ <span style="color:var(--gold);font-weight:800">50 ETB</span> በቀጥታ ያግኙ!</p>
       <button class="btn btn-gold" style="padding:7px 16px;font-size:11px" onclick="showPage('invite')">Invite Now</button>
     </div>
-    <div class="invite-pct">50<small>ETB</small></div>
+    <div class="invite-pct" id="homeInvitePctBadge">50<small>ETB</small></div>
   </div>
 
   <!-- Live Withdrawal -->
@@ -1107,7 +977,7 @@ header{
 </section>
 
 <!-- ════════════════════════════════════════════════════
-     PAGE 2: EARN & STORE HUB (NO ADS DUPLICATION)
+     PAGE 2: EARN & STORE HUB (NEW 5 ETB SPONSOR TASK & SVG STORE)
 ════════════════════════════════════════════════════ -->
 <section class="page" id="page-earn">
   <div class="earn-hero">
@@ -1116,28 +986,18 @@ header{
     <p>ታስኮችን ያጠናቅቁ፣ የሪፈራል ቡስተር ይግዙ፣ ቻናልዎን ያስተዋውቁ!</p>
   </div>
 
-  <!-- High Reward Direct Super Bonus Card -->
-  <div class="smartlink-card" onclick="openSuperBonusAd()">
+  <!-- 🔥 አዲሱ ልዩ SPONSOR TASK (በቀን 20 ማስታወቂያ x 5 ETB = 100 ETB) -->
+  <div class="smartlink-card" style="background:linear-gradient(135deg,#132218,#0a1b12,#09111c);border-color:var(--green);margin-bottom:12px" onclick="executeSponsorTask()">
     <div class="sl-left">
-      <div class="sl-icon">💎</div>
+      <div class="sl-icon" style="background:rgba(16,185,129,.2);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:var(--green)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
       <div class="sl-info">
-        <h4>ልዩ የ 50 ETB ጉርሻ (Super Bonus)</h4>
-        <p>ቀጥታ ማስታወቂያ አይተው +50 ETB ይውሰዱ! (በቀን 1 ጊዜ)</p>
+        <h4 style="color:#fff">ልዩ የስፖንሰር ታስክ (+5 ETB)</h4>
+        <p style="color:var(--green)">በቀን እስከ 20 ጊዜ ማየት ይችላሉ • የተጠናቀቀ፦ <b id="sponsorDailyCountTxt">0/20</b> (እስከ 100 ETB)</p>
       </div>
     </div>
-    <button class="btn btn-gold" style="padding:6px 12px;font-size:10px;pointer-events:none">ይውሰዱ ➔</button>
-  </div>
-
-  <!-- Partner Sponsor Link Card -->
-  <div class="smartlink-card" style="background:linear-gradient(135deg,#132218,#0a1b12,#09111c);border-color:var(--green);margin-bottom:12px" onclick="clickAdSponsor()">
-    <div class="sl-left">
-      <div class="sl-icon">🔥</div>
-      <div class="sl-info">
-        <h4 style="color:#fff">ልዩ የስፖንሰር ታስክ (High Partner)</h4>
-        <p style="color:var(--green)">ስፖንሰሩን ይጎብኙ +40 ETB ተጨማሪ ቦነስ ይውሰዱ!</p>
-      </div>
-    </div>
-    <button class="btn btn-green" style="padding:6px 12px;font-size:10px;pointer-events:none">ይጎብኙ ➔</button>
+    <button class="btn btn-green" id="sponsorTaskBtn" style="padding:7px 14px;font-size:10.5px;pointer-events:none">+5 ETB ይውሰዱ ➔</button>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
@@ -1154,7 +1014,9 @@ header{
 
     <div class="lucky-card" style="margin-bottom:0;padding:10px 12px;flex-direction:column;align-items:flex-start;gap:6px">
       <div style="display:flex;align-items:center;gap:8px;width:100%">
-        <span style="font-size:26px">🎁</span>
+        <div style="width:32px;height:32px;border-radius:10px;background:rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:var(--purple)"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.65-.5-.65C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76V14h2V8.76L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+        </div>
         <div>
           <div style="font-size:11px;font-weight:900;color:#fff">ዕለታዊ ሳጥን</div>
           <div style="font-size:8.5px;color:var(--muted)">Mystery Gift</div>
@@ -1164,47 +1026,67 @@ header{
     </div>
   </div>
 
-  <!-- 🛍️ EXTRA BOOSTERS & STORE -->
-  <div class="sh"><h3>🛒 Extra Boosters &amp; Services</h3></div>
+  <!-- 🛍️ EXTRA BOOSTERS & SHOPPING CENTER (REAL SVG ICONS) -->
+  <div class="sh">
+    <h3>🛒 Shopping Center &amp; Boosters</h3>
+    <a onclick="openRedeemModal()" style="color:var(--purple);font-weight:900">🔑 Redeem Code አስገባ</a>
+  </div>
+  
   <div class="store-grid-2col">
-    <div class="store-item-card" onclick="openVipUpgradeModal('REFERRAL_BOOSTER', 200)">
+    <!-- Item 1: 2x Referral Booster (COMING SOON) -->
+    <div class="store-item-card" style="opacity:0.85;border-color:rgba(255,255,255,0.12);cursor:not-allowed">
+      <div style="position:absolute;top:8px;right:8px;background:rgba(239,68,68,0.2);border:1px solid var(--red);color:var(--red);font-size:7.5px;font-weight:900;padding:2px 6px;border-radius:6px">
+        COMING SOON
+      </div>
       <div>
-        <div class="sic-icon">🚀</div>
+        <div class="sic-icon">
+          <svg viewBox="0 0 24 24" style="fill:#f59e0b"><path d="M12 2.5s4 4.5 4 9.5c0 1.5-.5 3-1.5 4l2.5 4.5-4-1.5-4 1.5 2.5-4.5c-1-1-1.5-2.5-1.5-4 0-5 4-9.5 4-9.5z"/></svg>
+        </div>
         <div class="sic-title">2x Referral Booster</div>
-        <div class="sic-desc">100 ETB / ref ያግኙ (በ 50 ETB ፈንታ)</div>
+        <div class="sic-desc">የሪፈራል ክፍያን እጥፍ ማድረጊያ</div>
       </div>
-      <button class="sic-price-btn">200 ETB ይግዙ</button>
+      <button class="sic-price-btn" style="background:#2a3447;color:var(--muted);cursor:not-allowed" disabled>በቅርቡ ይጠብቁ</button>
     </div>
 
-    <div class="store-item-card" onclick="openVipUpgradeModal('EXTRA_KEY', 30)">
+    <!-- Item 2: Lucky Box Key (Redeem Code) -->
+    <div class="store-item-card" onclick="openRedeemModal()">
       <div>
-        <div class="sic-icon">🔑</div>
-        <div class="sic-title">Lucky Box ቁልፍ</div>
-        <div class="sic-desc">ተጨማሪ የዕድል ሳጥን መክፈቻ</div>
+        <div class="sic-icon">
+          <svg viewBox="0 0 24 24" style="fill:var(--purple)"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31.84 2.41 2 2.83V21h2v-1.17c1.16-.41 2-1.51 2-2.83 0-1.66-1.34-3-3-3zm13.71-9.71l-1.42-1.42c-.39-.39-1.02-.39-1.41 0L14.41 6.3 12 3.89c-.39-.39-1.02-.39-1.41 0L9.17 5.31c-.39.39-.39 1.02 0 1.41l2.41 2.41-6.88 6.89C4.24 16.2 4 16.58 4 17c0 1.66 1.34 3 3 3 .42 0 .8-.24 1-.71l6.89-6.88 2.41 2.41c.39.39 1.02.39 1.41 0l1.42-1.42c.39-.39.39-1.02 0-1.41L17.7 9.59l3.01-3.01c.39-.39.39-1.03 0-1.29z"/></svg>
+        </div>
+        <div class="sic-title">Lucky Box Redeem Key</div>
+        <div class="sic-desc">የዕድል ሳጥን መክፈቻ ሚስጥር ኮድ</div>
       </div>
-      <button class="sic-price-btn">30 ETB ይግዙ</button>
+      <button class="sic-price-btn" style="background:var(--purple);color:#fff">ኮድ አስገባ / ግዛ ➔</button>
     </div>
 
-    <div class="store-item-card" onclick="openVipUpgradeModal('PROMO_CODE_KEY', 30)">
+    <!-- Item 3: Promo Code Key -->
+    <div class="store-item-card" onclick="openDirectAdminInbox('ልዩ የ Promo Code ቁልፍ ለመግዛት ፈልጌ ነበር')">
       <div>
-        <div class="sic-icon">🎟️</div>
+        <div class="sic-icon">
+          <svg viewBox="0 0 24 24" style="fill:#00adee"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-9 7.5h-2v-2h2v2zm0-4.5h-2v-2h2v2zm0-4.5h-2v-2h2v2z"/></svg>
+        </div>
         <div class="sic-title">ልዩ Promo Code</div>
-        <div class="sic-desc">የ 20 እስከ 50 ETB ቦነስ ይውሰዱ</div>
+        <div class="sic-desc">ከ 20 እስከ 50 ETB ቦነስ ይውሰዱ</div>
       </div>
-      <button class="sic-price-btn">30 ETB ይግዙ</button>
+      <button class="sic-price-btn" style="background:#00adee;color:#000">30 ETB ይግዙ (@Swapmoney0)</button>
     </div>
 
+    <!-- Item 4: Promote Telegram Channel -->
     <div class="store-item-card" onclick="openChannelPromoModal()" style="border-color:#229ED9">
       <div>
-        <div class="sic-icon">📢</div>
+        <div class="sic-icon">
+          <svg viewBox="0 0 24 24" style="fill:#229ED9"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        </div>
         <div class="sic-title">ቻናልዎን ያስተዋውቁ</div>
-        <div class="sic-desc">በ Swap Money ላይ ማስታወቂያ ይስጡ</div>
+        <div class="sic-desc">በሺዎች ለሚቆጠሩ ተጠቃሚዎች ያሳዩ</div>
       </div>
       <button class="sic-price-btn" style="background:#229ED9;color:#fff">አስተዋውቅ ➔</button>
     </div>
   </div>
 
-  <div class="sh"><h3>📋 Starter Tasks</h3>
+  <div class="sh">
+    <h3>📋 Starter Tasks &amp; Channels</h3>
     <span style="font-size:9px;background:rgba(16,185,129,.14);color:var(--green);padding:2px 8px;border-radius:8px;font-weight:800">One-Time Bonus</span>
   </div>
   <div class="tasks-grid-4col" id="earnTaskGrid"></div>
@@ -1221,7 +1103,7 @@ header{
 
   <div class="sh">
     <h3>📺 Unlimited Watch Ads Stream (24 Hot Ads)</h3>
-    <span style="font-size:9px;background:rgba(239,68,68,.15);color:var(--red);padding:2px 6px;border-radius:8px;font-weight:800">HIGH CPM</span>
+    <span style="font-size:9px;background:rgba(239,68,68,.15);color:var(--red);padding:2px 6px;border-radius:8px;font-weight:800" id="adMultiplierBadge">1X STANDARD</span>
   </div>
   
   <div class="earn-grid" id="mainAdGrid"></div>
@@ -1247,18 +1129,12 @@ header{
           <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
         </div>
         <div>
-          <h4 class="st-title">Telegram Story Task</h4>
-          <p class="st-sub">Share our Telegram story &amp; get</p>
-          <div class="st-reward">🪙 100 ብር</div>
+          <h4 style="font-size:13px;font-weight:900;color:#fff">Telegram Story Task</h4>
+          <p style="font-size:10px;color:var(--muted)">Share our Telegram story &amp; get</p>
+          <div style="font-size:12px;font-weight:900;color:var(--gold)">🪙 100 ብር</div>
         </div>
       </div>
-      <div class="st-right">
-        <div class="st-deadline-badge">
-          <span style="font-size:12px">📅</span>
-          <div><span>Task</span><strong>One-Time</strong></div>
-        </div>
-        <span class="st-arrow">›</span>
-      </div>
+      <div style="font-size:18px;color:var(--muted);font-weight:800">›</div>
     </div>
   </div>
 
@@ -1287,7 +1163,7 @@ header{
         </div>
 
         <div class="podium-col rank-1-col" id="podium1">
-          <div class="podium-crown">👑</div>
+          <div style="font-size:22px;margin-bottom:-4px">👑</div>
           <span class="podium-rank-tag" style="background:var(--gold-grad);color:#000">1st 🏆</span>
           <div class="podium-avatar" id="podiumAvatar1" style="background:#e11d48">A</div>
           <div class="podium-name" id="podiumName1">Syncing…</div>
@@ -1341,16 +1217,13 @@ header{
 
   <div class="comp-floating-bar" onclick="shareInvite()">
     <div class="cfb-left">
-      <div class="cfb-icon">📢</div>
-      <div class="cfb-text">
-        <h4>Invite Friends</h4>
-        <p>More Referrals = Bigger Rewards!</p>
+      <div style="font-size:28px">📢</div>
+      <div>
+        <h4 style="font-size:12.5px;font-weight:900;color:#fff">Invite Friends</h4>
+        <p style="font-size:9.5px;color:var(--muted)">More Referrals = Bigger Rewards!</p>
       </div>
     </div>
-    <button class="cfb-btn">
-      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-      Share Now
-    </button>
+    <button class="cfb-btn">Share Now</button>
   </div>
 
   <div style="display:none">
@@ -1363,7 +1236,7 @@ header{
 </section>
 
 <!-- ════════════════════════════════════════════════════
-     PAGE 5: PROFILE, FREE VS VIP & VIP SHOWCASE
+     PAGE 5: PROFILE, FREE LIMITATIONS & 4 TIERS SHOWCASE
 ════════════════════════════════════════════════════ -->
 <section class="page" id="page-profile">
   <div class="profile-card-hero">
@@ -1378,9 +1251,15 @@ header{
       </div>
     </div>
 
-    <!-- Active Subscription Notice -->
-    <div id="vipActiveNotice" style="display:none;background:rgba(255,215,0,.1);border:1px solid var(--gold);border-radius:12px;padding:10px;margin-bottom:10px;font-size:11px;color:#fff">
-      🎉 <strong>Active VIP Member:</strong> የሚያበቃበት ቀን: <span id="vipExpiryDisplay" style="color:var(--gold);font-weight:900">--</span>
+    <!-- Active Subscription Notice (30 Days Countdown) -->
+    <div id="vipActiveNotice" style="display:none;background:rgba(255,215,0,.1);border:1px solid var(--gold);border-radius:14px;padding:12px;margin-bottom:12px;font-size:11px;color:#fff">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span>🎉 <strong>Active Membership:</strong> <b id="vipActiveTierName" style="color:var(--gold)">VIP</b></span>
+        <span id="vipExpiryDisplay" style="color:var(--gold);font-weight:900">30 ቀናት ቀርተዋል</span>
+      </div>
+      <div style="width:100%;height:6px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin-top:6px">
+        <div id="vipCountdownBar" style="width:100%;height:100%;background:var(--gold-grad);border-radius:10px"></div>
+      </div>
     </div>
 
     <div class="prof-wallet-box">
@@ -1394,81 +1273,92 @@ header{
     </div>
   </div>
 
-  <!-- Free vs VIP Limitations Comparison Table -->
-  <div class="comparison-card">
-    <div style="font-size:12.5px;font-weight:900;color:#fff;margin-bottom:8px">⚖️ Free Member vs. VIP ንጽጽር</div>
-    <div class="comp-row">
-      <span class="comp-label">የማስታወቂያ ክፍያ (Ad Rewards)</span>
-      <span class="comp-free">1x መደበኛ</span>
-      <span class="comp-vip">እስከ 10x እጥፍ 🔥</span>
+  <!-- ⚪ አዲሱ የ FREE VERSION ካርድ (የአሁኑ ደረጃና ገደቦችን የሚያሳይ) -->
+  <div class="card" id="freeLimitationCard" style="background:linear-gradient(135deg,#131622,#0b0e17);border:1.2px solid rgba(148,163,184,.35);margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:13px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px">
+        <span>⚪</span> የአሁኑ ደረጃዎ፦ FREE (ነፃ አባል)
+      </div>
+      <span style="font-size:9px;background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);padding:2px 8px;border-radius:8px;font-weight:800">LIMITATIONS ACTIVE</span>
     </div>
-    <div class="comp-row">
-      <span class="comp-label">የ 15 ሰው ግብዣ መስፈርት</span>
-      <span class="comp-free">ግዴታ ነው ❌</span>
-      <span class="comp-vip">ተነስቷል (Bypassed) 🔓</span>
-    </div>
-    <div class="comp-row">
-      <span class="comp-label">የክፍያ ፍጥነት</span>
-      <span class="comp-free">በወሩ 4 እና 19</span>
-      <span class="comp-vip">በ 24 ሰዓት ወይም ቅጽበታዊ ⚡</span>
-    </div>
-    <div class="comp-row">
-      <span class="comp-label">ዕለታዊ ሳጥን (Lucky Box)</span>
-      <span class="comp-free">1 ሳጥን በቀን</span>
-      <span class="comp-vip">ያልተገደበ / 10+ 🎁</span>
+    <p style="font-size:10.5px;color:var(--muted);margin-bottom:10px">በነፃ አባልነት ስር ያሉ ዋና ዋና ገደቦች (ከፍ ለማድረግ ከታች ያሉትን ጥቅሎች ይምረጡ)፦</p>
+    
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:11px">
+      <div style="display:flex;align-items:center;gap:8px;color:#cbd5e1">
+        <span style="color:var(--red);font-weight:900">❌</span>
+        <span>የማስታወቂያ ክፍያ፦ <b>1x መደበኛ ብቻ</b> (6 – 20 ETB)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:#cbd5e1">
+        <span style="color:var(--red);font-weight:900">❌</span>
+        <span>ገንዘብ ለማውጣት፦ <b>15 ንቁ ሰዎችን መጋበዝ + 30 ማስታወቂያ ግዴታ ነው</b></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:#cbd5e1">
+        <span style="color:var(--red);font-weight:900">❌</span>
+        <span>የክፍያ ቀን፦ <b>በወሩ 4 እና 19 ቀን ብቻ</b> (በፈረንጆች አቆጣጠር)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:#cbd5e1">
+        <span style="color:var(--red);font-weight:900">❌</span>
+        <span>ዕለታዊ ሳጥን፦ <b>1 ሳጥን በቀን ብቻ</b></span>
+      </div>
     </div>
   </div>
 
   <div class="sh">
-    <h3>💎 VIP Membership Subscriptions</h3>
-    <span style="font-size:9.5px;color:var(--gold);font-weight:800">4x Boost &amp; Fast Payout</span>
+    <h3>💎 Upgrade Membership Packages</h3>
+    <span style="font-size:9.5px;color:var(--gold);font-weight:800">Instant Boost &amp; Fast Payout</span>
   </div>
 
-  <!-- 3 VIP Tier Cards -->
+  <!-- 3 PAID TIER CARDS (PRO, VIP, PREMIUM) -->
   <div class="vip-tier-grid">
-    <!-- Tier 1: Starter -->
-    <div class="vip-card starter" onclick="openVipUpgradeModal('STARTER', 100)">
+    <!-- Tier 1: PRO (100 ETB) -->
+    <div class="vip-card" style="background:linear-gradient(135deg,#0c1a2e,#09101c);border-color:rgba(59,130,246,.45)" onclick="openVipUpgradeModal('PRO', 100)">
       <div class="vip-card-head">
-        <div class="vip-card-title">🥉 STARTER VIP</div>
-        <div class="vip-card-price">100 <small>ETB/mo</small></div>
+        <div class="vip-card-title" style="color:#60a5fa">🥈 PRO TIER</div>
+        <div class="vip-card-price" style="color:#60a5fa">100 <small>ETB/mo</small></div>
       </div>
       <ul class="vip-features-list">
         <li>✓ <b>2x Daily Ad Rewards</b> (እጥፍ የማስታወቂያ ክፍያ)</li>
-        <li>✓ <b>Bronze Profile Badge</b> (የነሐስ ባጅ)</li>
-        <li>✓ <b>3 Extra Daily Lucky Boxes</b> (ተጨማሪ ዕለታዊ ሳጥኖች)</li>
+        <li>✓ <b>🔓 Skip 30 Ads Requirement</b> (የ 30 ማስታወቂያ መስፈርት ይነሳል)</li>
+        <li>✓ <b>4 Daily Lucky Boxes</b> (4 የዕድል ሳጥኖች በቀን)</li>
+        <li>✓ <b>75 ETB / Referral Bonus</b> (ከፍተኛ የሪፈራል ክፍያ)</li>
+        <li>✓ <b>Direct Inbox Chat with Admin</b> (@Swapmoney0)</li>
       </ul>
-      <button class="vip-buy-btn" style="background:#f59e0b;color:#000">ይዘዙ (100 ETB)</button>
+      <button class="vip-buy-btn" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff">PRO ይሁኑ (100 ETB)</button>
     </div>
 
-    <!-- Tier 2: PRO (Popular - With Exclusive 24hr Fast Verification Badge) -->
-    <div class="vip-card pro" onclick="openVipUpgradeModal('PRO', 150)">
-      <div class="vip-popular-tag">🔥 MOST POPULAR</div>
+    <!-- Tier 2: VIP (150 ETB) - [🔥 የ 15 ሰው ግብዣ ወደ 2 ሰው ዝቅ ይላል!] -->
+    <div class="vip-card pro" style="background:linear-gradient(135deg,#1f1402,#121829);border-color:rgba(255,215,0,.6);box-shadow:0 8px 30px rgba(255,215,0,.15)" onclick="openVipUpgradeModal('VIP', 150)">
+      <div style="position:absolute;top:10px;right:12px;background:var(--gold-grad);color:#000;padding:2px 8px;border-radius:10px;font-size:8.5px;font-weight:900">🔥 MOST POPULAR</div>
       <div class="vip-card-head">
-        <div class="vip-card-title">🥈 PRO VIP</div>
-        <div class="vip-card-price">150 <small>ETB/mo</small></div>
+        <div class="vip-card-title" style="color:var(--gold)">👑 VIP TIER</div>
+        <div class="vip-card-price" style="color:var(--gold)">150 <small>ETB/mo</small></div>
       </div>
       <ul class="vip-features-list">
         <li>✓ <b>4x Daily Ad Rewards</b> (4 እጥፍ የማስታወቂያ ክፍያ)</li>
-        <li>✓ <b>🔓 Skip 15 Referrals Requirement</b> (ያለ ግብዣ ገንዘብ ማውጣት!)</li>
-        <li>✓ <b>⚡ የ 24 ሰዓት ፈጣን ክፍያ ማረጋገጫ (Pro Exclusive)</b></li>
-        <li>✓ <b>2x Referral Bonus</b> (100 ETB / Ref)</li>
+        <li>✓ <b>🔓 የ 15 ሰው ግብዣ ወደ 2 ሰው ብቻ ይወርዳል! (2 Refs Only)</b></li>
+        <li>✓ <b>⚡ የ 24 ሰዓት ፈጣን ክፍያ (Express Payout Guarantee)</b></li>
+        <li>✓ <b>10 Daily Lucky Boxes</b> (10 የዕድል ሳጥኖች በቀን)</li>
+        <li>✓ <b>100 ETB / Referral Bonus</b></li>
+        <li>✓ <b>Direct Inbox Chat with Admin</b> (@Swapmoney0)</li>
       </ul>
-      <button class="vip-buy-btn" style="background:var(--gold-grad);color:#000">አሁን Upgrade አድርግ (150 ETB)</button>
+      <button class="vip-buy-btn" style="background:var(--gold-grad);color:#000">አሁን VIP ይሁኑ (150 ETB)</button>
     </div>
 
-    <!-- Tier 3: Elite -->
-    <div class="vip-card elite" onclick="openVipUpgradeModal('ELITE', 400)">
+    <!-- Tier 3: PREMIUM (300 ETB) - [👑 ምንም ግብዣ አያስፈልግም - 100% ነፃ] -->
+    <div class="vip-card elite" style="background:linear-gradient(135deg,#260e1d,#0d1124);border-color:rgba(139,92,246,.6);box-shadow:0 10px 35px rgba(139,92,246,.25)" onclick="openVipUpgradeModal('PREMIUM', 300)">
       <div class="vip-card-head">
-        <div class="vip-card-title">👑 ELITE VIP</div>
-        <div class="vip-card-price">400 <small>ETB/mo</small></div>
+        <div class="vip-card-title" style="color:#c084fc">💎 PREMIUM TIER</div>
+        <div class="vip-card-price" style="color:#c084fc">300 <small>ETB/mo</small></div>
       </div>
       <ul class="vip-features-list">
-        <li>✓ <b>10x All Rewards &amp; Unlimited Lucky Boxes</b></li>
-        <li>✓ <b>Instant Withdrawal Anytime</b> (ቅጽበታዊ ክፍያ)</li>
-        <li>✓ <b>3x Referral Bonus</b> (150 ETB / Ref)</li>
-        <li>✓ <b>Personal Admin Support</b> (ቀጥታ የድጋፍ መስመር)</li>
+        <li>✓ <b>8x All Ad Rewards</b> (እስከ 8 እጥፍ ከፍተኛ ክፍያ)</li>
+        <li>✓ <b>🔓 100% BYPASS ALL REQUIREMENTS (0 ሰው መጋበዝ!)</b></li>
+        <li>✓ <b>⚡ ቅጽበታዊ ክፍያ (Instant VIP Queue Payout)</b></li>
+        <li>✓ <b>ያልተገደበ የዕድል ሳጥን (Unlimited Lucky Boxes)</b></li>
+        <li>✓ <b>150 ETB / Referral Bonus</b></li>
+        <li>✓ <b>VIP Concierge Line with Admin</b> (@Swapmoney0)</li>
       </ul>
-      <button class="vip-buy-btn" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff">Elite ይሁኑ (400 ETB)</button>
+      <button class="vip-buy-btn" style="background:linear-gradient(135deg,#8b5cf6,#d946ef);color:#fff">PREMIUM ይሁኑ (300 ETB)</button>
     </div>
   </div>
 
@@ -1490,42 +1380,40 @@ header{
 </section>
 
 <!-- ════════════════════════════════════════════════════
-     PAGE 6: WITHDRAWAL (SCHEDULED ON 4TH & 19TH G.C.)
+     PAGE 6: WITHDRAWAL (STRICT 2500+ ETB & 4/19 BATCH)
 ════════════════════════════════════════════════════ -->
 <section class="page" id="page-withdraw">
-  <!-- 🛡️ ወደ Profile መመለሻ አዝራር -->
   <button class="btn btn-outline" style="padding:7px 14px;font-size:11px;margin-bottom:10px" onclick="showPage('profile')">
     ← ወደ Profile ተመለስ
   </button>
 
-  <!-- Payout Schedule Banner (4 & 19 G.C.) -->
   <div class="payout-schedule-banner">
-    <div class="psb-icon">📅</div>
-    <div class="psb-info">
-      <h4>ይፋዊ የክፍያ ቀናት፦ በወር 2 ጊዜ (ቀን 4 እና 19 በ G.C.)</h4>
-      <p id="nextPayoutDateBadge">● ቀጣዩ የክፍያ ዙር፦ በቅርቡ ይለቀቃል (በፈረንጆች አቆጣጠር)</p>
+    <div style="font-size:28px">📅</div>
+    <div>
+      <h4 style="font-size:12.5px;font-weight:900;color:#fff">ይፋዊ የክፍያ ቀናት፦ በወር 2 ጊዜ (ቀን 4 እና 19 በ G.C.)</h4>
+      <p id="nextPayoutDateBadge" style="font-size:10px;color:var(--green);font-weight:700;margin-top:2px">● ቀጣዩ የክፍያ ዙር፦ በቅርቡ ይለቀቃል (በፈረንጆች አቆጣጠር)</p>
     </div>
   </div>
 
   <div class="tg-profile-card">
     <div class="tg-prof-left">
       <div class="tg-prof-av" id="wdProfileAv">U</div>
-      <div class="tg-prof-meta">
-        <h4 id="wdProfileName">Telegram User</h4>
-        <p><span id="wdProfileUser">@username</span> • ID: <span id="wdProfileId">8921***</span></p>
+      <div>
+        <h4 id="wdProfileName" style="font-size:13px;font-weight:900;color:#fff">Telegram User</h4>
+        <p style="font-size:10px;color:var(--muted)"><span id="wdProfileUser">@username</span> • ID: <span id="wdProfileId">8921***</span></p>
       </div>
     </div>
-    <div class="tg-verified-pill">✓ VERIFIED</div>
+    <div class="tg-verified-pill" id="wdVerifiedPill">✓ VERIFIED</div>
   </div>
 
-  <!-- ── VERIFIED & IN-PROCESS PAYOUT CARD ── -->
+  <!-- Verified & In-Process Payout Card -->
   <div class="queue-card" id="pendingQueueCard">
-    <div class="qc-head">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
       <div style="font-size:12px;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px">
         <span>🎉</span> ክፍያዎ በሂደት ላይ ነው!
       </div>
-      <div class="qc-processing-tag">
-        <span style="width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green)"></span>
+      <div class="qc-processing-tag" id="qProcessingTag">
+        <span style="width:6px;height:6px;background:var(--green);border-radius:50%"></span>
         APPROVED
       </div>
     </div>
@@ -1545,25 +1433,25 @@ header{
       </div>
     </div>
 
-    <div class="qc-timer-box" style="margin:6px 0">
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;margin:8px 0">
       <span style="font-size:10.5px;color:var(--muted);font-weight:800">የሚለቀቅበት ቀን፦</span>
-      <span class="qc-countdown" id="queueTimerTxt" style="color:var(--green)">በወሩ 4 ወይም 19 (በ G.C.)</span>
+      <span id="queueTimerTxt" style="font-family:monospace;font-size:13.5px;font-weight:900;color:var(--green)">በወሩ 4 ወይም 19 (በ G.C.)</span>
     </div>
 
-    <button class="qc-support-btn" onclick="openSupportModal()">👨‍💼 የደንበኞች ድጋፍ ማዕከልን አነጋግር</button>
+    <button style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--gold);border-radius:12px;font-size:11px;font-weight:800;cursor:pointer;margin-top:8px" onclick="openSupportModal()">👨‍💼 የደንበኞች ድጋፍ ማዕከልን አነጋግር</button>
   </div>
 
   <div class="wd-fintech-hero">
-    <div class="wd-top-meta">
-      <span style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Available for Payout</span>
-      <span class="wd-chip-badge">● Verified Account</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase">Available for Payout</span>
+      <span style="font-size:8.5px;font-weight:900;padding:2px 8px;border-radius:10px;background:rgba(16,185,129,.14);color:var(--green)">● Verified Account</span>
     </div>
     <div class="wd-amount-val">
       <span id="wdBalDisplay">0</span> <span>ETB</span>
     </div>
-    <div class="wd-elig-bar">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)">
       <span>Threshold: <strong style="color:#fff">2,500 ETB</strong></span>
-      <span class="wd-elig-tag" id="wdEligTag">● Checking status…</span>
+      <span id="wdEligTag">● Checking status…</span>
     </div>
   </div>
 
@@ -1579,40 +1467,39 @@ header{
   <div id="sectionBanks">
     <div class="fintech-grid">
       <div class="ft-card sel" id="mb_Telebirr" onclick="selFintechMethod('Telebirr','phone')">
-        <div class="ft-badge">FAST</div>
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/1zH5wqRj/20260805-174415.png" alt="Telebirr">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">Telebirr</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">Telebirr</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
 
       <div class="ft-card" id="mb_CBE" onclick="selFintechMethod('CBE Bank','bank')">
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/Hk1pN2VS/20260805-174301.png" alt="CBE">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">CBE Bank</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">CBE Bank</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
 
       <div class="ft-card" id="mb_Awash" onclick="selFintechMethod('Awash Bank','bank')">
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/NMntk7hh/20260805-174324.png" alt="Awash">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">Awash Bank</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">Awash Bank</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
 
       <div class="ft-card" id="mb_Abyssinia" onclick="selFintechMethod('Abyssinia','bank')">
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/BbCdwxk4/20260805-174346.png" alt="Abyssinia">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">Abyssinia</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">Abyssinia</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
     </div>
   </div>
@@ -1620,27 +1507,24 @@ header{
   <div id="sectionAirtime" style="display:none">
     <div class="fintech-grid">
       <div class="ft-card" id="mb_EthioTelecom" onclick="selFintechMethod('Ethio Telecom','phone')">
-        <div class="ft-badge">AIRTIME</div>
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/8kHyrPVY/20260805-181423.png" alt="Ethio">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">Ethio Telecom</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">Ethio Telecom</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
 
       <div class="ft-card" id="mb_Safaricom" onclick="selFintechMethod('Safaricom','phone')">
-        <div class="ft-badge">AIRTIME</div>
-        <div class="ft-top">
+        <div style="display:flex;align-items:center;justify-content:space-between">
           <img class="ft-logo" src="https://i.postimg.cc/kgDhCrzw/20260805-181354.png" alt="Safaricom">
-          <span class="ft-arrow">➔</span>
+          <span>➔</span>
         </div>
-        <div class="ft-title">Safaricom</div>
-        <div class="ft-meta">Min 2,500 ETB</div>
+        <div style="font-size:12px;font-weight:900;color:#fff;margin-top:6px">Safaricom</div>
+        <div style="font-size:9.5px;color:var(--muted);font-weight:700">Min 2,500 ETB</div>
       </div>
     </div>
 
-    <!-- 🛡️ ከ 2,500 ETB ጀምሮ የተስተካከሉ የአየር ሰዓት ፕሪሴቶች -->
     <div style="font-size:11px;font-weight:800;color:var(--muted);margin:8px 0 6px">Quick Airtime Presets (Min 2,500 ETB):</div>
     <div class="preset-chips">
       <div class="p-chip" onclick="setPresetAmount(2500, this)">2,500 ETB</div>
@@ -1650,30 +1534,31 @@ header{
   </div>
 
   <div class="card" style="margin-top:10px;padding:15px">
-    <div class="wd-input-group">
-      <label class="form-label" id="wdAcctLabel">የስልክ ቁጥር (Telebirr)</label>
+    <div>
+      <label id="wdAcctLabel" style="font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">የስልክ ቁጥር (Telebirr)</label>
       <div class="wd-input-wrap">
-        <input class="form-input" id="wdAcct" placeholder="09... ወይም 07..." style="margin-bottom:0">
+        <input id="wdAcct" placeholder="09... ወይም 07...">
         <span class="wd-input-badge" id="acctTypeBadge">PHONE</span>
       </div>
     </div>
 
-    <div class="wd-input-group" style="margin-top:10px">
-      <label class="form-label">Amount to Payout (ETB)</label>
+    <div style="margin-top:10px">
+      <label style="font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:4px">Amount to Payout (ETB)</label>
       <div class="wd-input-wrap">
-        <input class="form-input" id="wdAmt" type="number" placeholder="2500+" min="2500" style="margin-bottom:0">
+        <input id="wdAmt" type="number" placeholder="2500+" min="2500">
         <span class="wd-input-badge">ETB</span>
       </div>
     </div>
 
-    <div class="wd-task-notice" id="wdTaskNotice" style="margin-top:10px;font-size:11px;line-height:1.5;color:var(--gold);background:rgba(255,215,0,.08);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,215,0,.25);display:none"></div>
+    <!-- Dynamic VIP Withdrawal Bypass Notice -->
+    <div id="wdTaskNotice" style="margin-top:10px;font-size:11px;line-height:1.5;color:var(--gold);background:rgba(255,215,0,.08);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,215,0,.25);display:none"></div>
     <button class="btn btn-gold btn-block" id="wdBtn" style="margin-top:12px" onclick="initiateWithdrawFlow()">Confirm Withdrawal</button>
   </div>
 
   <div class="trust-shield-card">
-    <div class="trust-row">
-      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      <p><strong>Safe &amp; Protected:</strong> ክፍያዎች በወሩ 4 እና 19 ቀን (በ G.C.) በሲስተም ኦዲት ተደርገው በቀጥታ ወደ አካውንትዎ ይተላለፋሉ።</p>
+    <div style="display:flex;align-items:flex-start;gap:9px">
+      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:var(--gold);flex-shrink:0"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      <p style="font-size:10px;color:var(--muted);line-height:1.5"><strong>Safe &amp; Protected:</strong> ክፍያዎች በወሩ 4 እና 19 ቀን (በ G.C.) በሲስተም ኦዲት ተደርገው በቀጥታ ወደ አካውንትዎ ይተላለፋሉ።</p>
     </div>
   </div>
 </section>
@@ -1701,33 +1586,33 @@ header{
 
 <div id="toast"></div>
 
-<!-- ════════════════════════════════════════════════════
-     SCRIPT STARTS IN PART 2
-════════════════════════════════════════════════════ -->
 
 <script>
 /* ══════════════════════════════════════════════════════════════════
-   SWAP MONEY V4 — NEXT-GEN PRODUCTION JAVASCRIPT ENGINE (PART 2)
-   Smart SMS Parser (CBE & Telebirr) • Auto VIP Engine • Batch Payouts
+   SWAP MONEY V4 — NEXT-GEN PRODUCTION JAVASCRIPT ENGINE (PART 4)
+   Dual-Sheet Bridge • Real Canvas Confetti • Amharic SMS Parser
 ══════════════════════════════════════════════════════════════════ */
 
 /* ── CONFIGURATION & ENDPOINTS ── */
 const SCRIPT_URL         = 'https://script.google.com/macros/s/AKfycbxDii62Bjz7KNxIFY9deeDDxnjNx1ifHu93GRxkhmpC9srZ_ZFSAtQgttQYh8o1pXmIgQ/exec';
+const VIP_SERVER_URL     = 'https://swap-vip-server.onrender.com';
 const BOT_USERNAME       = 'Swapmoney_bot';
+const ADMIN_INBOX_USER   = 'Swapmoney0'; // 💎 የቴሌግራም አድሚን Inbox
 const WELCOME_ETB        = 50;
 const REF_BONUS          = 50;
-const MIN_WD             = 2500; // 🛡️ ጥብቅ ደንብ፦ ለሁሉም ማውጫዎች አነስተኛው 2,500 ETB መሆን አለበት
-const REQUIRED_REFS      = 15;
-const REQUIRED_WD_ADS    = 30;
+const MIN_WD             = 2500; // 🛡️ ጥብቅ ደንብ፦ ለሁሉም ማውጫዎች አነስተኛው 2,500 ETB
 const AD_COOLDOWN_SEC    = 2;
 const SUPPORT_SERVER_URL = "https://support-urrw.onrender.com";
 const RENDER_API_URL     = "https://leaderbord-server.vercel.app/api/leaderboard";
-const AGENT_USERNAME     = "Agent1hulubet"; // 💎 የቴሌግራም አድሚን
 
 /* ── 🎟️ ንቁ PROMO CODES ── */
 const ACTIVE_PROMO_CODES = [
   'SWAP26', 'FASTMONEY', 'ACTIVE100', 'WINNER50', 'BONUS26',
   'SWAP2X', 'TELEBIRR26', 'PAYDAY50', 'AIRDROP30', 'VIP2026'
+];
+
+const VALID_REDEEM_KEYS = [
+  'LBOX-2026-VIP', 'LBOX-LUCKY-777', 'LBOX-SWAP-GOLD', 'LBOX-BONUS-100', 'LBOX-PRO-FREE'
 ];
 
 const TG_CHANNEL1  = 'https://t.me/swapmoneybirr';
@@ -1736,7 +1621,23 @@ const TG_BOT       = 'https://t.me/Swapmoney_bot';
 const YT_SUB       = 'https://www.youtube.com/@swapmoneyeth';
 const YT_SUB2      = 'https://youtube.com/@ethioonlinework1?si=F2b0qRp7olWkUQXH';
 
-/* ── የማስታወቂያ ደረጃዎች እና የ VIP ማባዣዎች ── */
+/* ── 💎 የክፍያ አካውንቶች ውቅር (TELEBIRR & CBE) ── */
+const ACCOUNTS_CONFIG = {
+  telebirr: {
+    label: '📱 የ Telebirr ቁጥር (P2P)',
+    displayNumber: '09***47',
+    cleanNumber: '0968260447',
+    holder: 'የአካውንት ስም: Nebyu Mohammed'
+  },
+  cbe: {
+    label: '🏦 የ CBE ባንክ ሂሳብ ቁጥር',
+    displayNumber: '1000562339427',
+    cleanNumber: '1000562339427',
+    holder: 'Account Name: Aymen kemal'
+  }
+};
+
+/* ── የማስታወቂያ ደረጃዎች እና የ 4ቱ TIERS ማባዣዎች ── */
 const AD_TIERS = [
   {upTo: 10, reward: 20},
   {upTo: 30, reward: 12},
@@ -1745,18 +1646,18 @@ const AD_TIERS = [
 
 function getVipMultiplier(){
   const tier = (S.vipTier || 'NONE').toUpperCase();
-  if(tier === 'ELITE') return 10;
-  if(tier === 'PRO') return 4;
-  if(tier === 'STARTER') return 2;
+  if(tier === 'PREMIUM' || tier === 'ELITE') return 8;
+  if(tier === 'VIP') return 4;
+  if(tier === 'PRO') return 2;
   return 1;
 }
 
 function getAdReward(adsWatchedSoFar){
   const adNumber = adsWatchedSoFar + 1;
   let baseReward = 6;
-  for(const tier of AD_TIERS){
-    if(adNumber <= tier.upTo){
-      baseReward = tier.reward;
+  for(const t of AD_TIERS){
+    if(adNumber <= t.upTo){
+      baseReward = t.reward;
       break;
     }
   }
@@ -1796,11 +1697,10 @@ function triggerAutoAd(){
   }
 }
 
-/* ═══════════════ TELEGRAM INIT & BROWSER TESTING MOCK ═══════════════ */
+/* ═══════════════ TELEGRAM INIT & BROWSER MOCK ═══════════════ */
 const tg = window.Telegram?.WebApp || null;
 let tgUser = null, referrerId = 'None';
 
-// 🛡️ ለ OneCompiler እና ለ Chrome ቴስት የሚሆን ቋሚ Mock ID (በየሰከንዱ አዲስ ID እንዳይፈጥር)
 let devMockUid = localStorage.getItem('sm_dev_mock_uid');
 if (!devMockUid) {
   devMockUid = 'TEST_USER_' + Math.floor(100000 + Math.random() * 900000);
@@ -1838,7 +1738,6 @@ if(tg){
     setText('wdProfileUser', userTag);
     setText('wdProfileId', String(tgUser.id));
 
-    // Profile Hub
     const pBigAv = document.getElementById('profBigAv');
     if(pBigAv){
       if(tgUser.photo_url) pBigAv.innerHTML = `<img src="${tgUser.photo_url}" alt="Profile">`;
@@ -1849,7 +1748,6 @@ if(tg){
     setText('profBigId', String(tgUser.id));
   }
 } else {
-  // ብሮውዘር ላይ ቴስት ሲደረግ የሚታይ መረጃ
   setText('hdrWelcome', 'Welcome, Developer 👋');
   setText('hdrUser', '@Tester');
   setText('wdProfileName', 'Browser Test Account');
@@ -1860,12 +1758,9 @@ if(tg){
   setText('profBigId', devMockUid);
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   🔄 V3 ➔ V4 DATA MIGRATION & STATE PERSISTENCE ENGINE
-══════════════════════════════════════════════════════════════════ */
+/* ═══════════════ STATE MANAGEMENT ENGINE ═══════════════ */
 const ACTIVE_UID = tgUser ? tgUser.id : devMockUid;
 const KEY_V4 = `sm_v4_${ACTIVE_UID}`;
-const KEY_V3 = `sm_v3_${ACTIVE_UID}`;
 
 function loadState(){
   const d = {
@@ -1880,11 +1775,10 @@ function loadState(){
     selectedMethod: 'Telebirr',
     streakDays: 0,
     lastLoginDate: '',
-    streakClaimedFor: '',
-    hasClaimedLevel3Once: false,
     lastLuckyBoxDate: '',
     luckyBoxesOpenedToday: 0,
-    lastSuperBonusDate: '',
+    sponsorAdsToday: 0,
+    lastSponsorDate: '',
     lastAdFinishedTime: 0,
     wdAdsStart: null,
     pendingWd: null,
@@ -1892,21 +1786,14 @@ function loadState(){
     daily30AdCount: 0,
     last30AdQuestDate: '',
     claimedPromoCodes: [],
-    vipTier: 'None',      // 'None' | 'STARTER' | 'PRO' | 'ELITE'
-    vipExpiry: '',        // ISO Date
-    hasReferralBooster: false
+    claimedRedeemKeys: [],
+    vipTier: 'None',      // 'None' | 'PRO' | 'VIP' | 'PREMIUM'
+    vipExpiry: '',
+    pendingVip: null
   };
 
   try {
-    let raw = localStorage.getItem(KEY_V4);
-    // 🛡️ V3 ➔ V4 Data Migration (የነባር ተጠቃሚዎች መረጃ ሳይጠፋ መውሰጃ)
-    if (!raw) {
-      const v3Raw = localStorage.getItem(KEY_V3);
-      if (v3Raw) {
-        raw = v3Raw;
-        localStorage.setItem(KEY_V4, v3Raw);
-      }
-    }
+    const raw = localStorage.getItem(KEY_V4);
     return Object.assign(d, raw ? JSON.parse(raw) : {});
   } catch(e){
     return d;
@@ -1919,7 +1806,6 @@ function saveState(){
 
 let S = loadState();
 
-/* ── VIP EXPIRY VALIDATION ── */
 function checkVipExpiry(){
   if(S.vipTier && S.vipTier !== 'None' && S.vipExpiry){
     const expTime = new Date(S.vipExpiry).getTime();
@@ -1927,7 +1813,7 @@ function checkVipExpiry(){
       S.vipTier = 'None';
       S.vipExpiry = '';
       saveState();
-      toast('⚠️ የ VIP አባልነት ጊዜዎ አልቋል!');
+      toast('⚠️ የአባልነት ጊዜዎ አልቋል!');
     }
   }
 }
@@ -1961,6 +1847,12 @@ function checkAndUpdateStreak(){
     S.luckyBoxesOpenedToday = 0;
   }
 
+  // ስፖንሰር ታስክ ዕለታዊ ቆጣሪ ማደስ
+  if(S.lastSponsorDate !== todayKey){
+    S.sponsorAdsToday = 0;
+    S.lastSponsorDate = todayKey;
+  }
+
   if(!S.lastLoginDate){
     S.streakDays = 1;
     S.lastLoginDate = todayKey;
@@ -1985,7 +1877,7 @@ function checkAndUpdateStreak(){
 }
 checkAndUpdateStreak();
 
-/* ═══════════════ TOAST & MUTATION ═══════════════ */
+/* ═══════════════ TOAST & NAVIGATION ═══════════════ */
 let _tt;
 function toast(msg){
   const el=document.getElementById('toast');
@@ -2001,7 +1893,6 @@ function markLocalMutation(){
   render();
 }
 
-/* ═══════════════ NAVIGATION CONTROLLER ═══════════════ */
 function showPage(id){
   recordActivity();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -2019,9 +1910,7 @@ function showPage(id){
   render();
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   📅 SCHEDULED BATCH PAYOUT CALCULATOR (ቀን 4 እና 19 በ G.C.)
-══════════════════════════════════════════════════════════════════ */
+/* ═══════════════ PAYOUT SCHEDULE CALCULATOR ═══════════════ */
 function getNextPayoutDate(){
   const now = new Date();
   const year = now.getFullYear();
@@ -2029,13 +1918,9 @@ function getNextPayoutDate(){
   const day = now.getDate();
 
   let targetDate;
-  if (day < 4) {
-    targetDate = new Date(year, month, 4);
-  } else if (day < 19) {
-    targetDate = new Date(year, month, 19);
-  } else {
-    targetDate = new Date(year, month + 1, 4);
-  }
+  if (day < 4) targetDate = new Date(year, month, 4);
+  else if (day < 19) targetDate = new Date(year, month, 19);
+  else targetDate = new Date(year, month + 1, 4);
   return targetDate;
 }
 
@@ -2044,9 +1929,9 @@ function updatePayoutScheduleUI(){
   const day = now.getDate();
   const badge = document.getElementById('nextPayoutDateBadge');
   const qTimer = document.getElementById('queueTimerTxt');
-  const isVip = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
+  const tier = (S.vipTier || 'NONE').toUpperCase();
+  const isVip = tier === 'VIP' || tier === 'PREMIUM';
 
-  // ዛሬ ቀን 4 ወይም 19 ሲሆን የሚታይ አስደሳች ማሳወቂያ
   if(day === 4 || day === 19){
     if(badge) badge.innerHTML = `🎉 <strong style="color:#fff">ዛሬ ይፋዊ የክፍያ ቀን ነው!</strong> ኦዲት የተደረጉ ክፍያዎች እየተላለፉ ነው`;
     if(qTimer) qTimer.textContent = 'ዛሬ በመተላለፍ ላይ ነው!';
@@ -2076,26 +1961,26 @@ function render(){
   setText('hdrSC', sc.toFixed(2));
   setText('levelChip', `⭐ ${lv.label}`);
   
-  // Header VIP Badge & Avatar styling
+  // Header VIP Badge & Avatar Styling
   const vipBadge = document.getElementById('vipHdrBadge');
   const hdrAv = document.getElementById('hdrAv');
   if(vipBadge){
-    if(tier !== 'NONE'){
+    if(tier !== 'NONE' && tier !== 'FREE'){
       vipBadge.style.display = 'inline-block';
-      vipBadge.textContent = tier + ' VIP';
-      if(tier === 'STARTER') vipBadge.style.background = '#f59e0b';
-      else if(tier === 'PRO') vipBadge.style.background = 'var(--gold-grad)';
-      else if(tier === 'ELITE') vipBadge.style.background = 'linear-gradient(135deg,#ec4899,#8b5cf6)';
+      vipBadge.textContent = tier + ' MEMBER';
+      if(tier === 'PRO') vipBadge.style.background = 'linear-gradient(135deg,#3b82f6,#1d4ed8)';
+      else if(tier === 'VIP') vipBadge.style.background = 'var(--gold-grad)';
+      else if(tier === 'PREMIUM') vipBadge.style.background = 'linear-gradient(135deg,#ec4899,#8b5cf6)';
     } else {
       vipBadge.style.display = 'none';
     }
   }
 
   if(hdrAv){
-    hdrAv.classList.remove('vip-starter-border', 'vip-pro-border', 'vip-elite-border');
-    if(tier === 'STARTER') hdrAv.classList.add('vip-starter-border');
-    else if(tier === 'PRO') hdrAv.classList.add('vip-pro-border');
-    else if(tier === 'ELITE') hdrAv.classList.add('vip-elite-border');
+    hdrAv.classList.remove('tier-pro-border', 'tier-vip-border', 'tier-premium-border');
+    if(tier === 'PRO') hdrAv.classList.add('tier-pro-border');
+    else if(tier === 'VIP') hdrAv.classList.add('tier-vip-border');
+    else if(tier === 'PREMIUM') hdrAv.classList.add('tier-premium-border');
   }
 
   const streak = S.streakDays || 0;
@@ -2104,8 +1989,15 @@ function render(){
 
   setText('mainBalance', bal.toLocaleString());
   const mult = getVipMultiplier();
-  setText('balSub', mult > 1 ? `Level ${lv.n} • 🔥 ${mult}X VIP Boost Active` : `Level ${lv.n} — ${lv.label}`);
+  setText('balSub', mult > 1 ? `Level ${lv.n} • 🔥 ${mult}X ${tier} Boost Active` : `Level ${lv.n} — ${lv.label}`);
   setText('scBalance', sc.toFixed(2));
+
+  // Multiplier Badge in Watch Ads Page
+  const adBadge = document.getElementById('adMultiplierBadge');
+  if(adBadge){
+    adBadge.textContent = mult > 1 ? `${mult}X BOOST ACTIVE` : '1X STANDARD';
+    adBadge.style.color = mult > 1 ? 'var(--gold)' : 'var(--red)';
+  }
 
   // Withdrawal Page Meta
   setText('wdBalDisplay', bal.toLocaleString());
@@ -2122,18 +2014,20 @@ function render(){
   renderWdButton();
   renderQueueCard();
 
-  const prog = Math.min(refs, REQUIRED_REFS);
-  setText('refProgText', `${prog}/${REQUIRED_REFS}`);
-  setText('refCount', refs);
-
-  // 💎 ሪፈራል ቦነስ በትክክል ለ VIP በ 100 እና በ 150 ብር ተባዝቶ ማሳያ
+  // 💎 ሪፈራል ቦነስ በየደረጃው
   let refRate = REF_BONUS; // 50
-  if (tier === 'ELITE') refRate = 150;
-  else if (tier === 'PRO' || tier === 'REFERRAL_BOOSTER' || S.hasReferralBooster) refRate = 100;
+  if(tier === 'PREMIUM') refRate = 150;
+  else if(tier === 'VIP') refRate = 100;
+  else if(tier === 'PRO') refRate = 75;
 
   setText('refEarned', (refs * refRate).toLocaleString() + ' ETB');
-  const pf = document.getElementById('refProgFill');
-  if(pf) pf.style.width = `${(prog/REQUIRED_REFS)*100}%`;
+  setText('refCount', refs);
+  setText('homeInvitePctBadge', `${refRate} ETB`);
+  const inviteTxt = document.getElementById('homeInviteBannerTxt');
+  if(inviteTxt) inviteTxt.innerHTML = `ሰው ሲጋብዙ <span style="color:var(--gold);font-weight:800">${refRate} ETB</span> በቀጥታ ያግኙ!`;
+
+  // Sponsor Task Daily Count
+  setText('sponsorDailyCountTxt', `${S.sponsorAdsToday || 0}/20`);
 
   renderHomeTasks();
   renderEarnTasks();
@@ -2146,52 +2040,55 @@ function renderProfileHub(){
   setText('profBalDisplay', (S.balance || 0).toLocaleString());
   const chip = document.getElementById('profStatusChip');
   const notice = document.getElementById('vipActiveNotice');
+  const freeCard = document.getElementById('freeLimitationCard');
   const tier = (S.vipTier || 'None').toUpperCase();
 
   if(!chip) return;
 
   if(tier !== 'NONE' && tier !== 'FREE'){
     chip.className = 'prof-status-chip is-vip';
-    chip.innerHTML = `<span>👑</span> ${tier} VIP MEMBER`;
-    S.pendingVip = null;
-    saveState();
+    chip.innerHTML = `<span>👑</span> ${tier} MEMBER`;
+    if(freeCard) freeCard.style.display = 'none';
+
     if(notice && S.vipExpiry){
       notice.style.display = 'block';
-      notice.style.borderColor = 'rgba(255,215,0,.32)';
-      notice.style.background = 'rgba(255,215,0,.08)';
-      notice.innerHTML = `🎉 <strong>Active VIP Member:</strong> የሚያበቃበት ቀን: <span style="color:var(--gold);font-weight:900">${S.vipExpiry}</span>`;
+      setText('vipActiveTierName', tier);
+      
+      const diffMs = new Date(S.vipExpiry).getTime() - Date.now();
+      const diffDays = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+      setText('vipExpiryDisplay', `${diffDays} ቀናት ቀርተዋል`);
+      
+      const bar = document.getElementById('vipCountdownBar');
+      if(bar) bar.style.width = `${Math.min(100, (diffDays / 30) * 100)}%`;
     }
   } 
   else if(S.pendingVip){
     chip.className = 'prof-status-chip';
-    chip.style.borderColor = 'var(--orange)';
-    chip.style.color = 'var(--orange)';
-    chip.innerHTML = `<span>⏳</span> ${String(S.pendingVip.tier || 'VIP').toUpperCase()} VIP (PENDING)`;
-    if(notice){
-      notice.style.display = 'block';
-      notice.style.borderColor = 'var(--orange)';
-      notice.style.background = 'rgba(245,158,11,.1)';
-      notice.innerHTML = `⏳ <strong>ክፍያዎ በጥበቃ ላይ ነው!</strong><br><small style="color:var(--muted)">TxID: ${S.pendingVip.txId || 'N/A'} • በአድሚን እየተረጋገጠ ነው...</small>`;
-    }
+    chip.style.borderColor = 'var(--gold)';
+    chip.style.color = 'var(--gold)';
+    chip.innerHTML = `<span>⏳</span> ${String(S.pendingVip.tier || 'VIP').toUpperCase()} (PENDING)`;
+    if(freeCard) freeCard.style.display = 'block';
+    if(notice) notice.style.display = 'none';
   } 
   else {
     chip.className = 'prof-status-chip';
     chip.innerHTML = `<span>⚪</span> Free Member`;
+    if(freeCard) freeCard.style.display = 'block';
     if(notice) notice.style.display = 'none';
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   📱 1-TAP COPY ENGINE
-══════════════════════════════════════════════════════════════════ */
-function copyAccount(text){
+/* ═══════════════ 📱 1-TAP COPY ENGINE ═══════════════ */
+function copyActiveAccount(){
   recordActivity();
+  const cleanNum = ACCOUNTS_CONFIG[currentCheckoutMethod].cleanNumber;
+  
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast('📋 ቁጥሩ ተኮርጇል: ' + text);
-    }).catch(() => fallbackCopy(text));
+    navigator.clipboard.writeText(cleanNum).then(() => {
+      onCopySuccess(cleanNum);
+    }).catch(() => fallbackCopy(cleanNum));
   } else {
-    fallbackCopy(text);
+    fallbackCopy(cleanNum);
   }
 }
 
@@ -2202,11 +2099,20 @@ function fallbackCopy(text){
   ta.select();
   document.execCommand('copy');
   document.body.removeChild(ta);
-  toast('📋 ቁጥሩ ተኮርጇል: ' + text);
+  onCopySuccess(text);
+}
+
+function onCopySuccess(num){
+  toast(`📋 ቁጥሩ ተኮርጇል: ${num}`);
+  const icon = document.getElementById('copyIconState');
+  if(icon) {
+    icon.textContent = '✓';
+    setTimeout(() => { icon.textContent = '📋'; }, 1800);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   🧠 SMART REAL-TIME SMS PARSER & VALIDATOR (CBE & TELEBIRR)
+   🧠 DUAL-LANGUAGE SMART REAL-TIME SMS PARSER (AMHARIC & ENGLISH)
 ══════════════════════════════════════════════════════════════════ */
 function parsePaymentSms(sms, expectedAmount) {
   if (!sms || !sms.trim()) {
@@ -2217,27 +2123,26 @@ function parsePaymentSms(sms, expectedAmount) {
   let amount = null;
   let txId = '';
   
-  // 1. Detect Telebirr SMS
-  if (/telebirr/i.test(sms) || /transaction\s+number\s+is/i.test(sms) || /2519/i.test(sms)) {
+  // 1. Detect Telebirr (Amharic & English)
+  if (/telebirr|ቴሌብር/i.test(sms) || /transaction\s+number/i.test(sms) || /የትራንዛክሽን\s*ቁጥር/i.test(sms) || /251968260447/i.test(sms) || /0968260447/i.test(sms)) {
     provider = 'Telebirr';
-    // Match: "transferred ETB 210.00" or "transferred ETB210.00"
-    const amtMatch = sms.match(/transferred\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i);
+    
+    const amtMatch = sms.match(/(?:transferred\s+ETB|ETB|ብር)\s*([0-9,]+(?:\.[0-9]+)?)/i) ||
+                     sms.match(/([0-9,]+(?:\.[0-9]+)?)\s*(?:ETB|ብር)/i);
     if (amtMatch) amount = parseFloat(amtMatch[1].replace(/,/g, ''));
     
-    // Match: "transaction number is DIM11708RN" or "/receipt/DIM11708RN"
-    const txMatch = sms.match(/transaction\s+number\s+is\s+([A-Za-z0-9]+)/i) || 
+    const txMatch = sms.match(/(?:transaction\s+number\s+is|የትራንዛክሽን\s*ቁጥር(?:ዎ)?\s*(?:ነው)?)\s*[:፡]?\s*([A-Za-z0-9]+)/i) || 
                     sms.match(/receipt\/([A-Za-z0-9]+)/i);
     if (txMatch) txId = txMatch[1];
   }
-  // 2. Detect CBE SMS
-  else if (/CBE/i.test(sms) || /mbreciept\.cbe\.com\.et/i.test(sms) || /Banking\s+with\s+CBE/i.test(sms)) {
+  // 2. Detect CBE Bank (Amharic & English)
+  else if (/CBE|ንግድ\s*ባንክ/i.test(sms) || /cbe\.com\.et/i.test(sms) || /1000562339427/i.test(sms) || /Banking\s+with\s+CBE/i.test(sms)) {
     provider = 'CBE Bank';
-    // Match: "transferred ETB175.00" or "transferred ETB 175.00" or "total of ETB175.00"
-    const amtMatch = sms.match(/transferred\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i) || 
-                     sms.match(/total\s+of\s+ETB\s*([0-9,]+(?:\.[0-9]+)?)/i);
+    
+    const amtMatch = sms.match(/(?:transferred\s+ETB|total\s+of\s+ETB|ETB|ብር)\s*([0-9,]+(?:\.[0-9]+)?)/i) ||
+                     sms.match(/([0-9,]+(?:\.[0-9]+)?)\s*(?:ETB|ብር)/i);
     if (amtMatch) amount = parseFloat(amtMatch[1].replace(/,/g, ''));
     
-    // Match: "mbreciept.cbe.com.et/v2-hfHCxHbblBBwZ4UZLm3r"
     const txMatch = sms.match(/mbreciept\.cbe\.com\.et\/([A-Za-z0-9_-]+)/i) || 
                     sms.match(/cbe\.com\.et\/([A-Za-z0-9_-]+)/i);
     if (txMatch) txId = txMatch[1];
@@ -2257,7 +2162,6 @@ function parsePaymentSms(sms, expectedAmount) {
     return { valid: false, error: '⚠️ የትራንዛክሽን መለያ ቁጥር (TxID) አልተገኘም!' };
   }
   
-  // 🛡️ የብር መጠን ከተመረጠው ፓኬጅ ጋር እኩል መሆኑን ማረጋገጥ
   if (expectedAmount && amount < expectedAmount) {
     return { 
       valid: false, 
@@ -2265,15 +2169,9 @@ function parsePaymentSms(sms, expectedAmount) {
     };
   }
   
-  return {
-    valid: true,
-    provider: provider,
-    amount: amount,
-    txId: txId
-  };
+  return { valid: true, provider, amount, txId };
 }
 
-// 🧠 Live Real-Time Parser Trigger (ተጠቃሚው እንዳስገባ ወዲያውኑ የሚሰራ)
 function autoParseSmsInput() {
   const sms = (document.getElementById('vpSmsInput')?.value || '').trim();
   const feedback = document.getElementById('smsVerifyStatusCard');
@@ -2283,7 +2181,7 @@ function autoParseSmsInput() {
   if (!sms) {
     if (feedback) feedback.style.display = 'none';
     if (txInput) txInput.value = '';
-    if (submitBtn) submitBtn.disabled = true;
+    if (submitBtn) submitBtn.disabled = !selectedReceiptFile;
     return;
   }
   
@@ -2296,30 +2194,32 @@ function autoParseSmsInput() {
     feedback.innerHTML = `
       <div style="color:var(--green);font-weight:900;margin-bottom:3px">✅ ትክክለኛ የ${res.provider} ክፍያ ተረጋግጧል!</div>
       <div style="color:#fff;font-size:10.5px">💰 የተገኘው መጠን: <b>${res.amount} ETB</b> (ትክክል ነው)</div>
-      <div style="color:var(--gold);font-size:10.5px">🧾 መለያ: <code>${res.txId}</code></div>
+      <div style="color:var(--gold);font-size:10.5px">🧾 መለያ ቁጥር: <code>${res.txId}</code></div>
     `;
     if (txInput) txInput.value = res.txId;
-    if (submitBtn) submitBtn.disabled = false; // ቁልፉ ተከፈተ!
+    if (submitBtn) submitBtn.disabled = false;
   } else {
     feedback.style.borderColor = 'var(--red)';
     feedback.style.background = 'rgba(239,68,68,.12)';
     feedback.innerHTML = `<span style="color:var(--red);font-weight:800">${res.error}</span>`;
     if (txInput) txInput.value = '';
-    if (submitBtn) submitBtn.disabled = true; // አልተዛመደም!
+    if (submitBtn) submitBtn.disabled = !selectedReceiptFile;
   }
 }
 
-/* ═══════════════ VIP PURCHASE & SUBMIT MODAL ═══════════════ */
-let selectedVipTier = 'PRO';
+/* ═══════════════ CHECKOUT MODAL CONTROLLER ═══════════════ */
+let selectedVipTier = 'VIP';
 let selectedVipPrice = 150;
+let currentCheckoutMethod = 'telebirr';
+let currentProofTab = 'sms';
+let selectedReceiptFile = null;
 
 function openVipUpgradeModal(tier, price){
   recordActivity();
   selectedVipTier = tier.toUpperCase();
   selectedVipPrice = price;
 
-  const iconEl = document.getElementById('vpModalIcon');
-  const titleEl = document.getElementById('vpModalTitle');
+  const pill = document.getElementById('vpModalTierPill');
   const priceEl = document.getElementById('vpModalPrice');
   const modal = document.getElementById('vipPaymentModal');
   const smsInput = document.getElementById('vpSmsInput');
@@ -2327,106 +2227,228 @@ function openVipUpgradeModal(tier, price){
   const feedback = document.getElementById('smsVerifyStatusCard');
   const submitBtn = document.getElementById('vpSubmitBtn');
 
-  // ሳጥኖቹን ማጽዳት
   if (smsInput) smsInput.value = '';
   if (txInput) txInput.value = '';
   if (feedback) feedback.style.display = 'none';
   if (submitBtn) submitBtn.disabled = true;
+  selectedReceiptFile = null;
 
-  if(iconEl){
-    if(selectedVipTier === 'STARTER') iconEl.textContent = '🥉';
-    else if(selectedVipTier === 'PRO') iconEl.textContent = '🥈';
-    else if(selectedVipTier === 'ELITE') iconEl.textContent = '👑';
-    else if(selectedVipTier === 'REFERRAL_BOOSTER') iconEl.textContent = '🚀';
-    else if(selectedVipTier === 'EXTRA_KEY') iconEl.textContent = '🔑';
-    else if(selectedVipTier === 'PROMO_CODE_KEY') iconEl.textContent = '🎟️';
-  }
+  const preview = document.getElementById('photoDropPreview');
+  const empty = document.getElementById('photoDropEmpty');
+  if(preview) preview.style.display = 'none';
+  if(empty) empty.style.display = 'block';
 
-  if(titleEl){
-    if(selectedVipTier === 'REFERRAL_BOOSTER') titleEl.textContent = '2x Referral Booster (200 ETB)';
-    else if(selectedVipTier === 'EXTRA_KEY') titleEl.textContent = 'Extra Lucky Box Key (30 ETB)';
-    else if(selectedVipTier === 'PROMO_CODE_KEY') titleEl.textContent = 'Promo Code Key (30 ETB)';
-    else titleEl.textContent = `Upgrade to ${selectedVipTier} VIP`;
-  }
-  
-  if(priceEl) priceEl.textContent = `${price} ETB`;
+  if(pill) pill.textContent = `${selectedVipTier} UPGRADE`;
+  if(priceEl) priceEl.innerHTML = `${price} <span>ETB</span>`;
+
+  selectCheckoutMethod('telebirr');
+  switchProofTab('sms');
 
   modal?.classList.add('active');
 }
 
-  closeVipPaymentModal();
-  function closeVipPaymentModal(){
+function closeVipPaymentModal(){
   document.getElementById('vipPaymentModal')?.classList.remove('active');
 }
 
-const VIP_SERVER_URL = "https://swap-vip-server.onrender.com";
+function selectCheckoutMethod(method){
+  recordActivity();
+  currentCheckoutMethod = method;
+
+  document.getElementById('cardTelebirr')?.classList.toggle('active', method === 'telebirr');
+  document.getElementById('cardCbe')?.classList.toggle('active', method === 'cbe');
+
+  const cfg = ACCOUNTS_CONFIG[method];
+  setText('checkoutAccProviderLabel', cfg.label);
+  setText('checkoutAccNumber', cfg.displayNumber);
+  setText('checkoutAccHolder', cfg.holder);
+
+  toast(`✓ ${method === 'telebirr' ? 'Telebirr' : 'CBE Bank'} ተመርጧል`);
+}
+
+function switchProofTab(tab){
+  recordActivity();
+  currentProofTab = tab;
+  document.getElementById('ptabSms')?.classList.toggle('active', tab === 'sms');
+  document.getElementById('ptabPhoto')?.classList.toggle('active', tab === 'photo');
+
+  const secSms = document.getElementById('proofSmsSection');
+  const secPhoto = document.getElementById('proofPhotoSection');
+  if(secSms) secSms.style.display = (tab === 'sms') ? 'block' : 'none';
+  if(secPhoto) secPhoto.style.display = (tab === 'photo') ? 'block' : 'none';
+}
+
+function previewReceiptScreenshot(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  selectedReceiptFile = file;
+
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    document.getElementById('receiptPreviewImg').src = evt.target.result;
+    document.getElementById('photoDropEmpty').style.display = 'none';
+    document.getElementById('photoDropPreview').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+  
+  const submitBtn = document.getElementById('vpSubmitBtn');
+  if(submitBtn) submitBtn.disabled = false;
+  toast('📸 ደረሰኝ ተመርጧል!');
+}
+
+function openDirectAdminInbox(customMsg){
+  recordActivity();
+  const text = encodeURIComponent(customMsg || `ሰላም አድሚን! የ ${selectedVipTier} አባልነት ክፍያ ፈጽሜ ነበር። ማረጋገጥ እፈልጋለሁ።`);
+  const url = `https://t.me/${ADMIN_INBOX_USER}?text=${text}`;
+  if(tg && tg.openTelegramLink) tg.openTelegramLink(url);
+  else window.open(url, '_blank');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   🚀 SUBMIT VIP PAYMENT (DUAL-BRIDGE TO RENDER & TELEGRAM)
+══════════════════════════════════════════════════════════════════ */
+let vipPollInterval = null;
 
 async function submitVipPayment(){
   recordActivity();
 
   const txInput = document.getElementById('vpTxIdInput');
   const smsInput = document.getElementById('vpSmsInput');
+  const spinner = document.getElementById('vpSubmitSpinner');
+  const submitBtn = document.getElementById('vpSubmitBtn');
+
   const txId = (txInput?.value || '').trim();
   const fullSms = (smsInput?.value || '').trim();
 
-  if(!txId){
-    toast('⚠️ እባክዎ TxID ያስገቡ');
+  if(!txId && !selectedReceiptFile && !fullSms){
+    toast('⚠️ እባክዎ SMS ወይም ደረሰኝ ፎቶ ያስገቡ');
     return;
   }
 
-  closeVipPaymentModal();
-  toast('⏳ ክፍያው በመላክ ላይ ነው...');
+  if(spinner) spinner.style.display = 'inline-block';
+  if(submitBtn) submitBtn.disabled = true;
+
+  toast('⏳ ደረሰኝዎ ወደ አድሚን ግሩፕ በመላክ ላይ ነው...');
 
   const uid = ACTIVE_UID;
-  const uname = tgUser
-    ? (tgUser.username || tgUser.first_name)
-    : 'Tester';
+  const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Tester';
+
+  const formData = new FormData();
+  formData.append('userId', String(uid));
+  formData.append('username', uname);
+  formData.append('vipTier', selectedVipTier);
+  formData.append('amount', selectedVipPrice);
+  formData.append('txId', txId || 'PHOTO_PROOF');
+  formData.append('fullSms', fullSms);
+  formData.append('method', currentCheckoutMethod === 'telebirr' ? 'Telebirr' : 'CBE Bank');
+  if (selectedReceiptFile) formData.append('receiptPhoto', selectedReceiptFile);
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 35000);
 
   try {
-    const response = await fetch(`${VIP_SERVER_URL}/api/submit-payment`, {
+    const response = await fetch(`${VIP_SERVER_URL}/api/submit-vip-payment`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId: String(uid),
-        username: uname,
-        vipTier: selectedVipTier,
-        amount: selectedVipPrice,
-        txId,
-        fullSms,
-        method: 'Telebirr/CBE'
-      })
+      signal: controller.signal,
+      body: formData
     });
-
-    if(!response.ok){
-      throw new Error(`Server returned ${response.status}`);
-    }
+    clearTimeout(timeoutId);
 
     const data = await response.json();
 
     if(data.status === 'success'){
-      S.pendingVip = {
-        tier: selectedVipTier,
-        amount: selectedVipPrice,
-        txId
-      };
-
+      closeVipPaymentModal();
+      S.pendingVip = { tier: selectedVipTier, amount: selectedVipPrice, txId: txId || 'Photo Submitted' };
       markLocalMutation();
-      saveState();
-      render();
+      toast('🎉 ደረሰኙ ለአድሚን ተልኳል! በደቂቃዎች ውስጥ ይረጋገጣል።');
 
-      toast('🎉 ' + (data.message || 'Payment submitted successfully'));
-
-      if(txInput) txInput.value = '';
-      if(smsInput) smsInput.value = '';
+      // 3 ሰከንድ Polling መጀመር
+      startVipStatusPolling();
     } else {
-      toast('❌ ' + (data.message || 'Payment was not accepted'));
+      toast('❌ ' + (data.message || 'ክፍያው አልተሳካም'));
     }
-
   } catch(error) {
-    console.error('VIP payment error:', error);
-    toast('❌ Server connection error: ' + error.message);
+    clearTimeout(timeoutId);
+    if(error.name === 'AbortError'){
+      toast('⚠️ ሰርቨሩ ምላሽ ለመስጠት ዘግይቷል፤ ደረሰኝዎን ወደ @Swapmoney0 ይላኩ');
+    } else {
+      toast('❌ ሰርቨር ማገናኘት አልተቻለም');
+    }
+  } finally {
+    if(spinner) spinner.style.display = 'none';
+    if(submitBtn) submitBtn.disabled = false;
+  }
+}
+
+function startVipStatusPolling(){
+  if(vipPollInterval) clearInterval(vipPollInterval);
+  
+  vipPollInterval = setInterval(async () => {
+    try {
+      const res = await fetch(`${VIP_SERVER_URL}/api/check-vip-status?userId=${ACTIVE_UID}`);
+      const data = await res.json();
+      
+      if(data.status === 'approved'){
+        clearInterval(vipPollInterval);
+        S.vipTier = data.tier;
+        S.vipExpiry = data.expiry;
+        S.pendingVip = null;
+        saveState();
+        
+        triggerFireworks();
+        if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+        toast(`👑 እንኳን ደስ አለዎት! የ ${data.tier} አባልነትዎ በአድሚን ጸድቋል!`);
+        render();
+        syncToSheet();
+      } else if(data.status === 'rejected'){
+        clearInterval(vipPollInterval);
+        S.pendingVip = null;
+        saveState();
+        render();
+        toast('❌ ያስገቡት ክፍያ በአድሚን ውድቅ ተደርጓል!');
+      }
+    } catch(e){}
+  }, 3000);
+}
+
+/* ═══════════════ REDEEM CODES ENGINE ═══════════════ */
+function openRedeemModal(){
+  recordActivity();
+  const inp = document.getElementById('redeemCodeInput');
+  if(inp) inp.value = '';
+  document.getElementById('redeemModal')?.classList.add('active');
+}
+
+function closeRedeemModal(){
+  document.getElementById('redeemModal')?.classList.remove('active');
+}
+
+function submitRedeemCode(){
+  recordActivity();
+  const inp = document.getElementById('redeemCodeInput');
+  const code = (inp?.value || '').trim().toUpperCase();
+
+  if(!code){
+    toast('⚠️ እባክዎ Redeem ኮዱን ያስገቡ');
+    return;
+  }
+
+  if(!S.claimedRedeemKeys) S.claimedRedeemKeys = [];
+  if(S.claimedRedeemKeys.includes(code)){
+    toast('⚠️ ይህ ኮድ አስቀድሞ ጥቅም ላይ ውሏል!');
+    return;
+  }
+
+  if(VALID_REDEEM_KEYS.includes(code) || code.startsWith('LBOX-')){
+    S.claimedRedeemKeys.push(code);
+    S.luckyBoxesOpenedToday = Math.max(0, (S.luckyBoxesOpenedToday || 0) - 3); // 3 ተጨማሪ ሳጥን መስጠት
+    S.balance += 25;
+    closeRedeemModal();
+    markLocalMutation();
+    triggerFireworks();
+    toast('🎉 ኮዱ ተረጋግጧል! 3 ተጨማሪ ሳጥን እና +25 ETB ተሰጥቶዎታል!');
+  } else {
+    toast('❌ የተሳሳተ Redeem ኮድ! ከአድሚን (@Swapmoney0) ይግዙ');
   }
 }
 
@@ -2449,14 +2471,75 @@ function submitChannelPromoInquiry(){
     return;
   }
   closeChannelPromoModal();
+  openDirectAdminInbox(`📢 የቻናል ማስታወቂያ ጥያቄ:\n• ቻናል: ${ch}\n• ዝርዝር: ${msg || 'ማስተዋወቅ እፈልጋለሁ'}`);
+}
 
-  const fullText = encodeURIComponent(`📢 የቻናል ማስታወቂያ ጥያቄ:\n• ቻናል: ${ch}\n• ዝርዝር: ${msg || 'ማስተዋወቅ እፈልጋለሁ'}`);
-  const url = `https://t.me/${AGENT_USERNAME}?text=${fullText}`;
-  if(tg && tg.openTelegramLink){
-    tg.openTelegramLink(url);
-  } else {
-    window.open(url, '_blank');
+/* ═══════════════ 🔥 አዲሱ 5 ETB SPONSOR TASK ENGINE (MAX 20/DAY) ═══════════════ */
+function executeSponsorTask(){
+  recordActivity();
+  const todayKey = dateKey(new Date());
+
+  if(S.lastSponsorDate !== todayKey){
+    S.sponsorAdsToday = 0;
+    S.lastSponsorDate = todayKey;
   }
+
+  if((S.sponsorAdsToday || 0) >= 20){
+    toast('✅ የዛሬውን 20 የስፖንሰር ማስታወቂያዎች ጨርሰዋል! (100/100 ETB) ነገ ይጠብቁ');
+    return;
+  }
+
+  const timeSinceLastAd = (Date.now() - (S.lastAdFinishedTime || 0)) / 1000;
+  if(timeSinceLastAd < AD_COOLDOWN_SEC){
+    const waitSec = Math.ceil(AD_COOLDOWN_SEC - timeSinceLastAd);
+    toast(`⏳ እባክዎ ${waitSec} ሰከንድ ይጠብቁ...`);
+    return;
+  }
+
+  toast('🎁 ስፖንሰር በመክፈት ላይ...');
+
+  if(typeof show_11460944 === 'function'){
+    show_11460944('pop').catch(()=>{});
+  }
+
+  S.sponsorAdsToday = (S.sponsorAdsToday || 0) + 1;
+  S.balance += 5;
+  S.lastAdFinishedTime = Date.now();
+  markLocalMutation();
+  toast(`🎉 +5 ETB ስፖንሰር ቦነስ ተጨምሯል! (${S.sponsorAdsToday}/20)`);
+  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  if(syncReady) syncToSheet();
+}
+
+function openLuckyBox(){
+  recordActivity();
+  const tier = (S.vipTier || 'None').toUpperCase();
+  let maxBoxes = 1;
+  if(tier === 'PRO') maxBoxes = 4;
+  else if(tier === 'VIP') maxBoxes = 10;
+  else if(tier === 'PREMIUM') maxBoxes = 999;
+
+  const currentUsed = S.luckyBoxesOpenedToday || 0;
+  if(currentUsed >= maxBoxes){
+    toast(`✅ የዛሬውን የዕድል ሳጥን (${currentUsed}/${maxBoxes}) ጨርሰዋል!`);
+    return;
+  }
+
+  const bonusTypes = [
+    {type:'etb', val:15, txt:'+15 ETB'},
+    {type:'sc',  val:30, txt:'+30 SC'},
+    {type:'etb', val:25, txt:'+25 ETB'},
+    {type:'sc',  val:50, txt:'+50 SC'}
+  ];
+  const pick = bonusTypes[Math.floor(Math.random() * bonusTypes.length)];
+  if(pick.type === 'etb') S.balance += pick.val;
+  else S.swapCoins = (S.swapCoins || 0) + pick.val;
+  
+  S.luckyBoxesOpenedToday = currentUsed + 1;
+  markLocalMutation();
+  toast(`🎉 እንኳን ደስ አለዎት! የዕድል ሳጥን ${pick.txt} አሸንፈዋል! (${S.luckyBoxesOpenedToday}/${maxBoxes})`);
+  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  if(syncReady) syncToSheet();
 }
 
 /* ═══════════════ 🏆 30-ADS QUEST RENDERER ═══════════════ */
@@ -2467,7 +2550,7 @@ function renderHolidayGamification(){
   setText('questStatusTxt', `${count}/30`);
 }
 
-/* ═══════════════ ALL 7 TASKS ENGINE ═══════════════ */
+/* ═══════════════ 📋 ALL TASKS ENGINE (WITH CLAIM BUTTON BUG FIX) ═══════════════ */
 const TG_ICON = 'https://static.vecteezy.com/system/resources/previews/023/986/562/non_2x/telegram-logo-telegram-logo-transparent-telegram-icon-transparent-free-free-png.png';
 const YT_ICON = 'https://static.vecteezy.com/system/resources/thumbnails/018/930/572/small_2x/youtube-logo-youtube-icon-transparent-free-png.png';
 const YT_VID1 = 'https://youtu.be/R_vcyPNxAW4?si=0ntjQfo-Okvg37Ax';
@@ -2502,30 +2585,16 @@ function renderHomeTasks(){
   if(!el) return;
   if(activeTaskTimers.size === 0){
     el.innerHTML = ALL_TASKS.map(t=>taskGrid4ColHTML(t,'htb_')).join('');
-    return;
   }
-  ALL_TASKS.forEach(t=>{
-    if(activeTaskTimers.has(t.id)) return;
-    const wrap = document.getElementById('htb_'+t.id)?.closest('.task-mini-card');
-    if(wrap) wrap.outerHTML = taskGrid4ColHTML(t,'htb_');
-  });
 }
 
 function renderEarnTasks(){
   const tEl = document.getElementById('earnTaskGrid');
-  if(tEl){
-    if(activeTaskTimers.size === 0){
-      tEl.innerHTML = ALL_TASKS.map(t=>taskGrid4ColHTML(t,'etb_')).join('');
-    } else {
-      ALL_TASKS.forEach(t=>{
-        if(activeTaskTimers.has(t.id)) return;
-        const wrap = document.getElementById('etb_'+t.id)?.closest('.task-mini-card');
-        if(wrap) wrap.outerHTML = taskGrid4ColHTML(t,'etb_');
-      });
-    }
+  if(tEl && activeTaskTimers.size === 0){
+    tEl.innerHTML = ALL_TASKS.map(t=>taskGrid4ColHTML(t,'etb_')).join('');
   }
 
-  // 📺 24 Hot Ads በ Watch Ads ገጽ ላይ ብቻ ማሳያ
+  // 📺 24 Hot Ads Stream
   const BADGES = ['HOT','NEW','HOT','EASY','HOT','NEW','HOT','EASY','HOT','NEW','EASY','HOT'];
   const BGS = [
     'linear-gradient(135deg,#1a0a05,#2a1205)','linear-gradient(135deg,#050a1a,#0a1530)',
@@ -2567,10 +2636,18 @@ function startTask(id, url, reward, dur){
   if(tg?.openLink) tg.openLink(url); else window.open(url,'_blank');
   if(tg?.HapticFeedback) { try{ tg.HapticFeedback.impactOccurred('medium'); }catch(e){} }
 
-  const setBtn=(txt,dis=false)=>{
+  const setBtn=(txt, dis=false, isClaim=false)=>{
     [`htb_${id}`,`etb_${id}`].forEach(bid=>{
       const b=document.getElementById(bid);
-      if(b){b.textContent=txt;b.disabled=dis;}
+      if(b){
+        b.textContent=txt;
+        b.disabled=dis;
+        if(isClaim){
+          b.style.background='var(--green-grad)';
+          b.style.color='#fff';
+          b.onclick=()=>claimTask(id,reward);
+        }
+      }
     });
   };
   toast(`⏱️ ${dur}s ቆጣሪ ጀምሯል!`);
@@ -2583,11 +2660,7 @@ function startTask(id, url, reward, dur){
     clearInterval(taskTimers[id]);
     document.removeEventListener('visibilitychange', onVisible);
     if(S.completedTasks.includes(id)) return;
-    setBtn(`+${reward} ✨`,false);
-    [`htb_${id}`,`etb_${id}`].forEach(bid=>{
-      const b=document.getElementById(bid);
-      if(b) b.onclick=()=>claimTask(id,reward);
-    });
+    setBtn(`✨ +${reward} ተቀበል`, false, true);
     toast(`✅ ጨርሰዋል! +${reward} ETB ይቀበሉ`);
   }
 
@@ -2595,11 +2668,11 @@ function startTask(id, url, reward, dur){
   taskTimers[id]=setInterval(()=>{
     const remaining = Math.max(0, Math.ceil((deadline - Date.now())/1000));
     if(remaining>0){
-      setBtn(`⏱️${remaining}s`,true);
+      setBtn(`⏱️ ${remaining}s`, true);
     } else {
       finishCountdown();
     }
-  },500);
+  }, 500);
 
   const onVisible = ()=>{
     if(document.visibilityState==='visible'){
@@ -2618,14 +2691,13 @@ function claimTask(id, reward){
   S.completedTasks.push(id);
   S.balance += reward;
   markLocalMutation();
+  triggerFireworks();
   toast(`🎉 +${reward} ETB ተጨምሯል!`);
   if(tg?.HapticFeedback){ try{ tg.HapticFeedback.notificationOccurred('success'); }catch(e){} }
   if(syncReady){ syncToSheet(); } else { pendingSyncAfterInit = true; }
 }
 
-/* ════════════════════════════════════════════════════
-   ✨ LUXURY AD MODAL ENGINE (WATCH & PROMO) ✨
-════════════════════════════════════════════════════ */
+/* ═══════════════ WATCH ADS STREAM ENGINE ═══════════════ */
 let adRunning = false;
 let adTimerInterval = null;
 let currentAdSession = null;
@@ -2657,7 +2729,7 @@ function launchAdModalStep(session){
     ring.textContent = '🎟️';
     pill.textContent = `ፕሮሞ ኮድ ማረጋገጫ [${session.step}/${session.maxSteps}]`;
     title.textContent = `ደረጃ ${session.step}/${session.maxSteps} (17 ሰከንድ)`;
-    desc.innerHTML = `3ቱን ማስታወቂያዎች ሲያጠናቅቁ <strong style="color:var(--gold)">+${session.reward} ETB</strong> ቦነስ ወዲያውኑ ገቢ ይሆናል!`;
+    desc.innerHTML = `3ቱን ማስታወቂያዎች ሲያጠናቅቁ <strong style="color:var(--gold)">+${session.reward} ETB</strong> ቦነስ ገቢ ይሆናል!`;
   }
 
   modal.classList.add('active');
@@ -2677,13 +2749,11 @@ function launchAdModalStep(session){
 
     if(left <= 0){
       clearInterval(adTimerInterval);
-
       if(session.step < session.maxSteps){
         desc.innerHTML = `✅ ደረጃ ${session.step}/${session.maxSteps} ተጠናቋል! ✕ ይንኩ ወደ ቀጣዩ ለመሄድ`;
       } else {
         desc.innerHTML = `🎉 ተጠናቀቀ! ✕ ይንኩ ሽልማትዎን ለመቀበል`;
       }
-
       closeBtn.style.display = 'flex';
     }
   }, 1000);
@@ -2770,7 +2840,6 @@ function finalizeWatchAdSession(reward){
   if(tg?.HapticFeedback){ try{ tg.HapticFeedback.notificationOccurred('success'); }catch(e){} }
 }
 
-/* ── 3-STAGE PROMO FLOW ── */
 function startPromoClaimFlow(){
   recordActivity();
   if(adRunning) return;
@@ -2814,77 +2883,6 @@ function finalizePromoSession(code, wonReward){
   if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
 }
 
-/* ═══════════════ SUPER BONUS & LUCKY BOX ═══════════════ */
-function openSuperBonusAd(){
-  recordActivity();
-  const todayKey = dateKey(new Date());
-  if(S.lastSuperBonusDate === todayKey){
-    toast('✅ የዛሬውን ልዩ 50 ETB ጉርሻ ወስደዋል! ነገ ይጠብቁ');
-    return;
-  }
-
-  const timeSinceLastAd = (Date.now() - (S.lastAdFinishedTime || 0)) / 1000;
-  if(timeSinceLastAd < AD_COOLDOWN_SEC){
-    const waitSec = Math.ceil(AD_COOLDOWN_SEC - timeSinceLastAd);
-    toast(`⏳ እባክዎ ${waitSec} ሰከንድ ይጠብቁ...`);
-    return;
-  }
-
-  toast('💎 ልዩ 50 ETB ማስታወቂያ እየተከፈተ ነው...');
-  
-  if(typeof show_11460944 === 'function'){
-    show_11460944().then(() => {
-      grantSuperBonusReward();
-    }).catch(e => {
-      toast('⚠️ ማስታወቂያው አልተጠናቀቀም');
-    });
-  } else {
-    grantSuperBonusReward();
-  }
-}
-
-function grantSuperBonusReward(){
-  const todayKey = dateKey(new Date());
-  S.balance += 50;
-  S.lastSuperBonusDate = todayKey;
-  S.lastAdFinishedTime = Date.now();
-  markLocalMutation();
-  toast('🎉 እንኳን ደስ አለዎት! +50 ETB ልዩ ጉርሻ ተጨምሯል!');
-  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  if(syncReady) syncToSheet(); else pendingSyncAfterInit = true;
-}
-
-function openLuckyBox(){
-  recordActivity();
-  const tier = (S.vipTier || 'None').toUpperCase();
-  let maxBoxes = 1;
-  if(tier === 'STARTER') maxBoxes = 4;
-  else if(tier === 'PRO') maxBoxes = 11;
-  else if(tier === 'ELITE') maxBoxes = 99;
-
-  const currentUsed = S.luckyBoxesOpenedToday || 0;
-  if(currentUsed >= maxBoxes){
-    toast(`✅ የዛሬውን የዕድል ሳጥን (${currentUsed}/${maxBoxes}) ጨርሰዋል!`);
-    return;
-  }
-
-  const bonusTypes = [
-    {type:'etb', val:15, txt:'+15 ETB'},
-    {type:'sc',  val:30, txt:'+30 SC'},
-    {type:'etb', val:25, txt:'+25 ETB'},
-    {type:'sc',  val:50, txt:'+50 SC'}
-  ];
-  const pick = bonusTypes[Math.floor(Math.random() * bonusTypes.length)];
-  if(pick.type === 'etb') S.balance += pick.val;
-  else S.swapCoins = (S.swapCoins || 0) + pick.val;
-  
-  S.luckyBoxesOpenedToday = currentUsed + 1;
-  markLocalMutation();
-  toast(`🎉 እንኳን ደስ አለዎት! የዕድል ሳጥን ${pick.txt} አሸንፈዋል! (${S.luckyBoxesOpenedToday}/${maxBoxes})`);
-  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  if(syncReady) syncToSheet(); else pendingSyncAfterInit = true;
-}
-
 function openTermsModal(){ document.getElementById('termsModal')?.classList.add('active'); }
 function closeTermsModal(){ document.getElementById('termsModal')?.classList.remove('active'); }
 
@@ -2911,9 +2909,7 @@ function closeTermsModal(){ document.getElementById('termsModal')?.classList.rem
   });
 })();
 
-/* ══════════════════════════════════════════════════════════════════
-   REALISTIC ETHIOPIAN LIVE WITHDRAWAL FEED
-══════════════════════════════════════════════════════════════════ */
+/* ═══════════════ LIVE WITHDRAWAL FEED ═══════════════ */
 const FEED_ITEMS = [
   { name: 'Yonas T.',      amount: 2800, method: 'Telebirr',   acct: '097*****11' },
   { name: 'Bethelhem A.',  amount: 3500, method: 'CBE Bank',   acct: '1000****8912' },
@@ -2953,9 +2949,7 @@ async function apiPost(payload){
   return await res.json();
 }
 
-/* ════════════════════════════════════════════════════
-   1,000,000 ብር LEADERBOARD (FETCHED ONCE ON ENTRY)
-════════════════════════════════════════════════════ */
+/* ═══════════════ 1,000,000 ETB LEADERBOARD ═══════════════ */
 let allLbData = [];
 let isExpanded100 = false;
 const PRIZES_TOP10 = ['100,000 ብር','70,000 ብር','50,000 ብር','30,000 ብር','20,000 ብር','15,000 ብር','10,000 ብር','8,000 ብር','5,000 ብር','3,000 ብር'];
@@ -2988,7 +2982,7 @@ function renderLeaderboardUI(){
     setText('podiumName1', "Waiting...");
     setText('podiumName2', "Waiting...");
     setText('podiumName3', "Waiting...");
-    list.innerHTML = '<div style="text-align:center;padding:15px;color:var(--muted)">እስካሁን ምንም ተወዳዳሪ የለም...</div>';
+    list.innerHTML = '<div style="text-align:center;padding:15px;color:var(--muted)">የቀጥታ ደረጃዎችን በመጫን ላይ...</div>';
     return;
   }
 
@@ -3054,7 +3048,6 @@ function updateMyRankTab(){
   }
 }
 
-// ⚡ Fetch Once On Entry (የ 12 ሰከንድ ቆጣሪው ቆሟል)
 async function fetchLiveLeaderboard(){
   try {
     toast('🔄 ደረጃዎችን በማደስ ላይ...');
@@ -3083,14 +3076,66 @@ function toggleFull100List(){
   renderLeaderboardUI();
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   🎆 REAL CANVAS CONFETTI / FIREWORKS PHYSICS ENGINE
+══════════════════════════════════════════════════════════════════ */
 function triggerFireworks(){
-  const cv = document.getElementById('fwCanvas');
-  if(!cv) return;
-  cv.style.display = 'block';
-  setTimeout(()=>{ cv.style.display = 'none'; }, 3000);
+  const canvas = document.getElementById('fwCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+
+  const particles = [];
+  const colors = ['#FFD700', '#FFA500', '#8b5cf6', '#10b981', '#3b82f6', '#ec4899', '#ffffff'];
+
+  for(let i = 0; i < 90; i++){
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 14,
+      vy: (Math.random() - 0.5) * 14 - 3,
+      size: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 1,
+      decay: Math.random() * 0.015 + 0.01
+    });
+  }
+
+  let animFrame;
+  function renderParticles(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.22; // gravity
+      p.alpha -= p.decay;
+
+      if(p.alpha > 0){
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        ctx.restore();
+      }
+    });
+
+    if(alive){
+      animFrame = requestAnimationFrame(renderParticles);
+    } else {
+      cancelAnimationFrame(animFrame);
+      canvas.style.display = 'none';
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  renderParticles();
 }
 
-// 🪙 Story Task ቦነስ መስጠት
 function shareStory(e){
   if(e) e.preventDefault();
   recordActivity();
@@ -3135,9 +3180,9 @@ function shareInvite(){
   }
 }
 
-/* ════════════════════════════════════════════════════
-   WITHDRAWAL FINTECH & VIP BYPASS ENGINE
-════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════
+   WITHDRAWAL ENGINE (FREE=15, PRO=30 ADS BYPASS, VIP=2 REFS, PREMIUM=0 REFS)
+══════════════════════════════════════════════════════════════════ */
 let currentCategory = 'bank';
 
 function switchWdCategory(cat){
@@ -3199,42 +3244,77 @@ function renderWdButton(){
     ? Math.max(0, (S.adsWatched || 0) - S.wdAdsStart)
     : 0;
 
-  const isVipBypassed = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
+  const tier = (S.vipTier || 'None').toUpperCase();
 
-  if(isVipBypassed){
+  // 👑 PREMIUM: 100% BYPASS (0 Requirements)
+  if(tier === 'PREMIUM' || tier === 'ELITE'){
     if(notice){
       notice.style.display = 'block';
-      notice.style.background = 'rgba(16,185,129,.1)';
-      notice.style.borderColor = 'var(--green)';
-      notice.innerHTML = `🎉 <strong>VIP PRIVILEGE:</strong> የ 15 ሰው ግብዣ እና የ 30 ማስታወቂያ መስፈርት ተነስቶልዎታል! (Bypassed ✓)`;
+      notice.style.background = 'rgba(139,92,246,.15)';
+      notice.style.borderColor = 'var(--purple)';
+      notice.innerHTML = `💎 <strong>PREMIUM PRIVILEGE:</strong> ምንም አይነት የሰው ግብዣ ወይም ማስታወቂያ ሳያስፈልግዎ በቅጽበት ማውጣት ይችላሉ! (100% Bypassed ✓)`;
     }
-    if(btn){
-      btn.disabled = false;
-      btn.textContent = 'Confirm Withdrawal (VIP Priority)';
+    if(btn){ btn.disabled = false; btn.textContent = 'Confirm Withdrawal (Instant VIP Queue)'; }
+    return;
+  }
+
+  // 👑 VIP: የ 15 ሰው ግብዣ ወደ 2 ሰው ብቻ ይወርዳል!
+  if(tier === 'VIP'){
+    if(refs < 2){
+      if(notice){
+        notice.style.display = 'block';
+        notice.style.background = 'rgba(255,215,0,.1)';
+        notice.style.borderColor = 'var(--gold)';
+        notice.innerHTML = `👑 <strong>VIP PRIVILEGE:</strong> የ 15 ሰው ግብዣ ወደ 2 ሰው ብቻ ወርዶልዎታል! (አሁን የጋበዙት፦ <b>${refs}/2</b> ሰው)`;
+      }
+      if(btn){ btn.disabled = true; btn.textContent = `VIP Task: ${refs}/2 ሰው ይጋብዙ`; }
+    } else {
+      if(notice){
+        notice.style.display = 'block';
+        notice.style.background = 'rgba(16,185,129,.12)';
+        notice.style.borderColor = 'var(--green)';
+        notice.innerHTML = `🎉 <strong>VIP QUALIFIED:</strong> 2 ሰዎችን ጋብዘዋል — አሁኑኑ ገንዘብዎን ያውጡ! (Express 24hr Payout ✓)`;
+      }
+      if(btn){ btn.disabled = false; btn.textContent = 'Confirm Withdrawal (VIP Priority)'; }
     }
     return;
   }
 
-  if(S.isWdTaskActive && (refs < REQUIRED_REFS || wdAdsDone < REQUIRED_WD_ADS)){
+  // 🥈 PRO: 30 ማስታወቂያ መስፈርት ይነሳል
+  if(tier === 'PRO'){
+    if(refs < 15){
+      if(notice){
+        notice.style.display = 'block';
+        notice.style.background = 'rgba(59,130,246,.1)';
+        notice.style.borderColor = 'var(--blue)';
+        notice.innerHTML = `🥈 <strong>PRO PRIVILEGE:</strong> የ 30 ማስታወቂያ መስፈርት ተነስቶልዎታል! (የቀረው፦ <b>${refs}/15 ሰው መጋበዝ</b>)`;
+      }
+      if(btn){ btn.disabled = true; btn.textContent = `PRO Task: ${refs}/15 ሰው ይጋብዙ`; }
+    } else {
+      if(notice) notice.style.display = 'none';
+      if(btn){ btn.disabled = false; btn.textContent = 'Confirm Withdrawal'; }
+    }
+    return;
+  }
+
+  // ⚪ FREE: 15 ሰው + 30 ማስታወቂያ ግዴታ ነው
+  if(S.isWdTaskActive && (refs < 15 || wdAdsDone < 30)){
     if(notice){
       notice.style.display = 'block';
       notice.style.background = 'rgba(255,215,0,.08)';
       notice.style.borderColor = 'rgba(255,215,0,.25)';
       notice.innerHTML = `⚠️ <strong>ገንዘብ ለማውጣት የሚከተሉትን ያጠናቅቁ:</strong><br>
-      • 15 ሰዎችን መጋበዝ: <b>(${refs}/${REQUIRED_REFS})</b><br>
-      • 30 ተጨማሪ ማስታወቂያ ማየት: <b>(${Math.min(wdAdsDone, REQUIRED_WD_ADS)}/${REQUIRED_WD_ADS})</b><br>
-      <a onclick="showPage('profile')" style="color:var(--gold);text-decoration:underline;cursor:pointer;display:block;margin-top:4px">⚡ ወይም በ PRO VIP (150 ብር) ይህንን መስፈርት ይዝለሉ!</a>`;
+      • 15 ሰዎችን መጋበዝ: <b>(${refs}/15)</b><br>
+      • 30 ተጨማሪ ማስታወቂያ ማየት: <b>(${Math.min(wdAdsDone, 30)}/30)</b><br>
+      <a onclick="showPage('profile')" style="color:var(--gold);text-decoration:underline;cursor:pointer;display:block;margin-top:4px">⚡ ወይም በ VIP (150 ብር) የ 15 ሰው ግብዣን ወደ 2 ሰው ብቻ ዝቅ ያድርጉ!</a>`;
     }
     if(btn){
       btn.disabled = true;
-      btn.textContent = `Task: ${refs}/${REQUIRED_REFS} ሰው | ${Math.min(wdAdsDone, REQUIRED_WD_ADS)}/${REQUIRED_WD_ADS} Ads`;
+      btn.textContent = `Task: ${refs}/15 ሰው | ${Math.min(wdAdsDone, 30)}/30 Ads`;
     }
   } else {
     if(notice) notice.style.display = 'none';
-    if(btn){
-      btn.disabled = false;
-      btn.textContent = 'Confirm Withdrawal';
-    }
+    if(btn){ btn.disabled = false; btn.textContent = 'Confirm Withdrawal'; }
   }
 }
 
@@ -3271,8 +3351,9 @@ function renderQueueCard(){
   setText('qAcctDisplay', maskAcct(S.pendingWd.account || '098*****77'));
   setText('qTxDisplay', S.pendingWd.txId || '#SWAP-89421');
 
-  const isVip = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
-  const tag = document.querySelector('.qc-processing-tag');
+  const tier = (S.vipTier || 'None').toUpperCase();
+  const isVip = tier === 'VIP' || tier === 'PREMIUM';
+  const tag = document.getElementById('qProcessingTag');
   if(tag && isVip){
     tag.innerHTML = `<span style="width:6px;height:6px;background:var(--gold);border-radius:50%"></span> VIP EXPRESS (24 HR)`;
   }
@@ -3280,7 +3361,7 @@ function renderQueueCard(){
 
 /* ═══════════════ CAPTCHA & WITHDRAWAL EXECUTION ═══════════════ */
 let expectedCaptchaAns = null;
-let isCaptchaVerified = false; // 🛡️ ካፕቻውን ዘልሎ ኮድ እንዳይጠራ መከላከያ
+let isCaptchaVerified = false;
 
 function initiateWithdrawFlow(){
   recordActivity();
@@ -3295,10 +3376,8 @@ function initiateWithdrawFlow(){
     return;
   }
 
-  // 🛡️ ጥብቅ ደንብ፦ ለሁሉም 2,500 ETB
-  const minRequired = MIN_WD;
-  if(isNaN(amt) || amt < minRequired){
-    toast(`⚠️ አነስተኛ መጠን ${minRequired.toLocaleString()} ETB ያስፈልጋል`);
+  if(isNaN(amt) || amt < MIN_WD){
+    toast(`⚠️ አነስተኛ መጠን ${MIN_WD.toLocaleString()} ETB ያስፈልጋል`);
     return;
   }
 
@@ -3307,18 +3386,27 @@ function initiateWithdrawFlow(){
     return;
   }
 
-  const isVipBypassed = S.vipTier === 'PRO' || S.vipTier === 'ELITE';
+  const tier = (S.vipTier || 'None').toUpperCase();
   const refs = S.totalRefs || 0;
   if(S.wdAdsStart === null || typeof S.wdAdsStart === 'undefined'){
     S.wdAdsStart = S.adsWatched || 0;
   }
   const wdAdsDone = Math.max(0, (S.adsWatched || 0) - S.wdAdsStart);
 
-  if(!isVipBypassed && (refs < REQUIRED_REFS || wdAdsDone < REQUIRED_WD_ADS)){
-    S.isWdTaskActive = true;
-    markLocalMutation();
-    toast('⚠️ 15 ሰዎችን ይጋብዙ ወይም በ PRO VIP ይህንን መስፈርት ይዝለሉ!');
-    return;
+  if(tier === 'FREE' || tier === 'NONE'){
+    if(refs < 15 || wdAdsDone < 30){
+      S.isWdTaskActive = true;
+      markLocalMutation();
+      toast('⚠️ 15 ሰዎችን ይጋብዙ ወይም በ VIP የግብዣ መስፈርቱን ወደ 2 ሰው ዝቅ ያድርጉ!');
+      return;
+    }
+  } else if(tier === 'VIP'){
+    if(refs < 2){
+      S.isWdTaskActive = true;
+      markLocalMutation();
+      toast('⚠️ VIP አባልነት 2 ሰዎችን ብቻ መጋበዝ ይፈልጋል!');
+      return;
+    }
   }
 
   const n1 = Math.floor(Math.random() * 8) + 2;
@@ -3402,7 +3490,7 @@ async function executeWithdraw(){
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   👑 THE BIG VIP & SERVER SYNC ENGINE (25s POLLING KEPT!)
+   👑 THE BIG VIP & SERVER SYNC ENGINE (DUAL-SHEET INTEGRATION)
 ══════════════════════════════════════════════════════════════════ */
 async function syncFromSheet(){
   const uid = ACTIVE_UID;
@@ -3422,25 +3510,22 @@ async function syncFromSheet(){
         S.balance = serverBal;
       }
 
-      // 🛡️ አድሚኑ ክፍያውን ከከፈለ ወይም ውድቅ ካደረገው የስልኩን ካርድ በራሱ ማጽዳት
-      if(S.pendingWd){
-        if(serverBal > S.balance){
-          S.pendingWd = null;
-        }
+      if(S.pendingWd && serverBal > S.balance){
+        S.pendingWd = null;
       }
 
       if(typeof u.totalAds !== 'undefined') S.adsWatched = Math.max(S.adsWatched, Number(u.totalAds) || 0);
       if(typeof u.swapCoins !== 'undefined') S.swapCoins = Math.max(S.swapCoins, Number(u.swapCoins) || 0);
       if(typeof u.totalReferrals !== 'undefined') S.totalRefs = Number(u.totalReferrals) || 0;
       
-      // 💎 🔥 THE VIP ACTIVATOR ENGINE
+      // 💎 VIP Tier Update from Main Sheet (Column 9 & 10)
       if(u.vipTier && u.vipTier !== 'None'){
         const oldTier = S.vipTier;
         S.vipTier = u.vipTier.toUpperCase();
         S.vipExpiry = u.vipExpiry || '';
 
         if(oldTier !== S.vipTier && S.vipTier !== 'NONE'){
-          toast(`🎉 እንኳን ደስ አለዎት! የ ${S.vipTier} VIP አባልነትዎ ነቅቷል!`);
+          toast(`🎉 እንኳን ደስ አለዎት! የ ${S.vipTier} አባልነትዎ ነቅቷል!`);
           triggerFireworks();
           if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
         }
@@ -3539,7 +3624,12 @@ async function safeInit(){
 
   syncReady = true;
   render();
-  fetchLiveLeaderboard(); // ⚡ በመግቢያ ላይ 1 ጊዜ ብቻ ይጭናል
+  fetchLiveLeaderboard();
+
+  // በቅርብ ክፍያ ልከው ከሆነ Polling መጀመር
+  if(S.pendingVip){
+    startVipStatusPolling();
+  }
 
   if(pendingSyncAfterInit){
     pendingSyncAfterInit = false;
@@ -3548,12 +3638,10 @@ async function safeInit(){
 }
 
 safeInit();
-
-// 🔄 የ 25 ሰከንዱ የ Google Sheet Polling ሳይነካ በቦታው ቀጥሏል!
 setInterval(syncFromSheet, 25000);
 
 /* ══════════════════════════════════════════════════════════════════
-   CUSTOMER SUPPORT LIVE CHAT (SPAM-FREE POLICY)
+   CUSTOMER SUPPORT LIVE CHAT & PHOTO PREVIEW ENGINE
 ══════════════════════════════════════════════════════════════════ */
 function formatChatText(text){
   if(!text) return '';
@@ -3561,7 +3649,7 @@ function formatChatText(text){
   return text.replace(urlPattern, function(match){
     let url = match;
     if(!url.match(/^https?:\/\//i)) url = 'https://' + url;
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;font-weight:900;word-break:break-all;" onclick="if(window.Telegram?.WebApp?.openLink){window.Telegram.WebApp.openLink('${url}');event.preventDefault();}">${match}</a>`;
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;font-weight:900" onclick="if(window.Telegram?.WebApp?.openLink){window.Telegram.WebApp.openLink('${url}');event.preventDefault();}">${match}</a>`;
   });
 }
 
@@ -3579,7 +3667,7 @@ function updateChatHeaderBadge(){
     badge.innerHTML = `● <strong style="color:var(--gold)">የሰው አድሚን ሞድ (${S.humanAdminQuota} መልዕክት ቀርቷል)</strong>`;
     if(inp) inp.placeholder = 'ለሰው አድሚን ቅሬታዎን እዚህ ይፃፉ...';
   } else {
-    badge.innerHTML = `● AI Support Online (24/7)`;
+    badge.innerHTML = `● Live Support Online (24/7)`;
     if(inp) inp.placeholder = 'ጥያቄዎን ወይም ደረሰኝ እዚህ ይፃፉ...';
   }
 }
@@ -3591,7 +3679,7 @@ function restoreLocalChatUI(){
 
   if(localChatHistory.length === 0){
     container.innerHTML = `<div class="chat-bubble bubble-admin">
-      ሰላም! 🌼 ወደ Swap Money የድጋፍ ማዕከል እንኳን ደህና መጡ። ማንኛውንም ጥያቄ መፃፍ ይችላሉ፤ AI ፈጣን ምላሽ ይሰጥዎታል። የከፈሉበትን ደረሰኝ (TxID) ለማረጋገጥ ከፈለጉ እዚህ ይላኩ።
+      ሰላም! 🌼 ወደ Swap Money የድጋፍ ማዕከል እንኳን ደህና መጡ። ማንኛውንም ጥያቄ መፃፍ ይችላሉ፤ AI ፈጣን ምላሽ ይሰጥዎታል። የከፈሉበትን ደረሰኝ ለማረጋገጥ ከፈለጉ ደረሰኙን እዚህ ይላኩ።
       <div class="bubble-time">አሁን</div>
     </div>`;
     return;
@@ -3638,13 +3726,13 @@ function handleFAQ(type){
 
   if(type === 'invite_how'){
     qText = 'ሰዎችን እንዴት መጋበዝ እችላለሁ?';
-    instantAnswer = `ሰዎችን ለመጋበዝ የእርስዎን መጋበዣ ሊንክ ለጓደኞችዎ ሼር ያድርጉ! ለአንድ ሰው 50 ETB ያገኛሉ።\n\n👇 የእርስዎ ልዩ መጋበዣ ሊንክ፦\n${myLink}\n\n👉 ሰዎችን በቀጥታ ለመጋበዝ ወደ Referral ገጽ ይሂዱ! 🚀`;
+    instantAnswer = `ሰዎችን ለመጋበዝ የእርስዎን መጋበዣ ሊንክ ለጓደኞችዎ ሼር ያድርጉ! ለአንድ ሰው 50 ETB ያገኛሉ።\n\n👇 የእርስዎ መጋበዣ ሊንክ፦\n${myLink}\n\n👉 ሰዎችን በቀጥታ ለመጋበዝ ወደ Referral ገጽ ይሂዱ! 🚀`;
   } else if(type === 'withdraw_schedule'){
     qText = 'የክፍያ ቀናት መቼ ናቸው?';
-    instantAnswer = `ገንዘብ ማውጣት በወር በሁለት ዙር በወሩ 4 እና 19 ቀን በ G.C. ብቻ ይለቀቃል!\n\n💡 በ PRO VIP (150 ብር) የ 15 ሰው ግብዣ መስፈርቱን ዘልለው ክፍያዎን በ 24 ሰዓት ውስጥ መውሰድ ይችላሉ!`;
+    instantAnswer = `ገንዘብ ማውጣት በወር በሁለት ዙር በወሩ 4 እና 19 ቀን በ G.C. ብቻ ይለቀቃል!\n\n💡 በ VIP (150 ብር) የ 15 ሰው ግብዣ መስፈርቱን ወደ 2 ሰው ብቻ ዝቅ ማድረግ ይችላሉ!`;
   } else if(type === 'vip_perks'){
     qText = 'የ VIP ጥቅሞች ምንድናቸው?';
-    instantAnswer = `👑 የ VIP ጥቅሞች፦\n• STARTER (100 ETB): 2x ማስታወቂያ\n• PRO (150 ETB): 4x ማስታወቂያ + የ 15 ሰው ግብዣን መዝለል + የ 24 ሰዓት ክፍያ\n• ELITE (400 ETB): 10x ሽልማት + ቅጽበታዊ ክፍያ\n\nለመግዛት ወደ Profile ገጽ ይሂዱ!`;
+    instantAnswer = `👑 የጥቅሎች ዝርዝር፦\n• PRO (100 ETB): 2x ማስታወቂያ\n• VIP (150 ETB): 4x ማስታወቂያ + 2 ሰው ብቻ መጋበዝ + 24hr ክፍያ\n• PREMIUM (300 ETB): 8x ማስታወቂያ + ምንም ግብዣ የለም + ቅጽበታዊ ክፍያ\n\nለመግዛት ወደ Profile ገጽ ይሂዱ!`;
   } else if(type === 'referral'){
     qText = 'የ 1,000,000 ብር የውድድር ደንብ እንዴት ነው?';
     instantAnswer = `የ 1,000,000 ብር ውድድር ይፋ ሆኖ የሚቆይ ሲሆን፣ ብዙ ሰዎችን በመጋበዝ ከ 1ኛ እስከ 100ኛ ደረጃ የሚወጡ አሸናፊዎች እስከ 100,000 ብር ሽልማት ያገኛሉ!`;
@@ -3753,11 +3841,11 @@ async function sendDirectAITicket(){
     if(data.status === 'success' && data.reply){
       appendAdminBubble(data.reply);
     } else {
-      appendAdminBubble('ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ (TxID) ካለዎት እዚህ ይላኩ፤ አድሚን በቀጥታ ያየዋል።');
+      appendAdminBubble('ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ፤ አድሚን በቀጥታ ያየዋል። ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
     }
   } catch(e){
     removeAdminTypingIndicator();
-    appendAdminBubble('ሰላም! ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ (TxID) ካለዎት እዚህ ይላኩ፤ አድሚን በቀጥታ ያየዋል።');
+    appendAdminBubble('ሰላም! ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
   }
 }
 
@@ -3875,7 +3963,7 @@ async function finishSupportTicketGate(){
   markLocalMutation();
   syncToSheet();
 
-  appendAdminBubble('👨‍💼 አሁን ከሰው አድሚን ጋር ተገናኝተዋል! ያጋጠመዎትን ቅሬታ፣ የከፈሉበትን ደረሰኝ (Screenshot) ወይም ድምፅ አሁን ይላኩ።');
+  appendAdminBubble('👨‍💼 አሁን ከሰው አድሚን ጋር ተገናኝተዋል! ያጋጠመዎትን ቅሬታ ወይም ደረሰኝ አሁን ይላኩ። ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
   toast('🎉 +30 ETB ቦነስ ተጨምሯል! አሁን መልዕክትዎን ይላኩ');
   updateChatHeaderBadge();
   if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -3963,7 +4051,7 @@ function showAdminTypingIndicator(){
   const d = document.createElement('div');
   d.className = 'bubble-typing';
   d.id = 'adminTypingBubble';
-  d.innerHTML = `👨‍💼 አድሚን መልዕክትዎን እያየ ነው... እባክዎ ጥቂት ይጠብቁ <div class="typing-dots"><span></span><span></span><span></span></div>`;
+  d.innerHTML = `👨‍💼 አድሚን መልዕክትዎን እያየ ነው... እባክዎ ጥቂት ይጠብቁ`;
   c.appendChild(d);
   c.scrollTop = c.scrollHeight;
 }
@@ -4021,3 +4109,7 @@ function appendPhotoBubble(src, cap){
 </script>
 </body>
 </html>
+
+
+
+
