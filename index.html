@@ -2362,6 +2362,10 @@ function closeVipPaymentModal(){
    💎 REAL VIP SUBMISSION ENGINE
 ══════════════════════════════════════════════════════════════════ */
 async function submitVipPayment(){
+// አዲሱ ፈጣን የ VIP ሰርቨር አድራሻዎ
+const VIP_SERVER_URL = "https://swap-vip-server.onrender.com"; // Render የሚሰጥዎትን URL እዚህ ይለጥፉ
+
+async function submitVipPayment(){
   recordActivity();
   const txInput = document.getElementById('vpTxIdInput');
   const smsInput = document.getElementById('vpSmsInput');
@@ -2374,43 +2378,46 @@ async function submitVipPayment(){
   }
 
   closeVipPaymentModal();
-  toast('⏳ የክፍያ ማረጋገጫ ወደ ሰርቨር በመላክ ላይ ነው...');
+  toast('⏳ የክፍያ ማረጋገጫ በመላክ ላይ ነው...');
 
   const uid = ACTIVE_UID;
   const uname = tgUser ? (tgUser.username || tgUser.first_name) : 'Tester';
 
   try {
-    const res = await apiPost({
-      action: 'subscribevip',
-      userId: String(uid),
-      username: uname,
-      vipTier: selectedVipTier,
-      amount: selectedVipPrice,
-      txId: txId,
-      fullSms: fullSms,
-      method: 'Telebirr/CBE'
+    // ⚡ ቀጥታ ወደ አዲሱ Node.js ሰርቨር መላክ (ፈጣን እና አስተማማኝ)
+    const res = await fetch(`${VIP_SERVER_URL}/api/submit-payment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: String(uid),
+        username: uname,
+        vipTier: selectedVipTier,
+        amount: selectedVipPrice,
+        txId: txId,
+        fullSms: fullSms,
+        method: 'Telebirr/CBE'
+      })
     });
 
-    if(res && res.result === 'success'){
+    const data = await res.json();
+
+    if(data.status === 'success'){
       S.pendingVip = {
         tier: selectedVipTier,
         amount: selectedVipPrice,
-        txId: txId,
-        date: new Date().toLocaleDateString()
+        txId: txId
       };
       markLocalMutation();
-      saveState();
       render();
 
-      toast('🎉 ' + (res.message || 'የክፍያ ጥያቄዎ ተቀባይነት አግኝቷል'));
+      toast('🎉 ' + data.message);
       if(txInput) txInput.value = '';
       if(smsInput) smsInput.value = '';
     } else {
-      toast('❌ ' + (res.message || 'ክፍያው በሰርቨር አልተመዘገበም'));
+      toast('❌ ' + (data.message || 'ክፍያው አልተመዘገበም'));
     }
   } catch(e){
-    console.error('VIP Submit Error:', e);
-    toast('❌ የግንኙነት ስህተት: ' + (e && e.message ? e.message : 'Unknown error'));
+    toast('❌ የግንኙነት ስህተት አጋጥሟል');
   }
 }
 
