@@ -233,7 +233,11 @@ header{
   box-shadow:0 4px 16px rgba(0,0,0,.5);transition:.18s;
 }
 .qa-circle:active{transform:scale(.92);border-color:var(--gold)}
-.qa-circle svg{width:22px !important;height:22px !important;max-width:22px !important;max-height:22px !important;fill:var(--gold);display:block}
+.qa-circle svg{
+  width:22px !important;height:22px !important;max-width:22px !important;
+  max-height:22px !important;min-width:22px !important;min-height:22px !important;
+  fill:var(--gold);display:block;
+}
 .qa-label{font-size:9.5px;font-weight:800;color:var(--muted)}
 
 .banner-wrap{
@@ -430,10 +434,21 @@ header{
 .c-panel{display:none}.c-panel.active{display:block}
 .view-more-btn{width:100%;margin-top:10px;padding:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--gold);font-size:11px;font-weight:800;cursor:pointer}
 
-/* PROFILE & VIP */
+/* 🛡️ PROFILE & AVATAR (STRICT 58PX BOUNDS - NO IMAGE OVERFLOW!) */
 .profile-card-hero{background:linear-gradient(145deg,#131b2e 0%,#090d18 100%);border:1.5px solid var(--border);border-radius:24px;padding:18px;margin-bottom:12px}
 .prof-top-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.prof-av-large{width:58px;height:58px;border-radius:20px;background:var(--gold-grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#000;border:2px solid #fff}
+.prof-av-large{
+  width:58px !important;height:58px !important;min-width:58px !important;
+  max-width:58px !important;min-height:58px !important;max-height:58px !important;
+  border-radius:20px !important;background:var(--gold-grad);display:flex;align-items:center;
+  justify-content:center;font-weight:900;font-size:22px;color:#000;border:2px solid #fff;
+  overflow:hidden !important;flex-shrink:0 !important;position:relative !important;
+}
+.prof-av-large img{
+  width:100% !important;height:100% !important;max-width:100% !important;
+  max-height:100% !important;object-fit:cover !important;border-radius:18px !important;
+  display:block !important;
+}
 .prof-meta h3{font-size:15px;font-weight:900;color:#fff}
 .prof-status-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:9.5px;font-weight:900;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--muted)}
 .prof-status-chip.is-vip{background:var(--gold-grad);color:#000;border-color:var(--gold)}
@@ -462,10 +477,14 @@ header{
 }
 .tg-prof-left{display:flex;align-items:center;gap:10px}
 .tg-prof-av{
-  width:42px;height:42px;border-radius:14px;background:var(--gold-grad);
-  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#000;border:2px solid #3b82f6;
+  width:42px !important;height:42px !important;min-width:42px !important;
+  max-width:42px !important;border-radius:14px !important;background:var(--gold-grad);
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;
+  color:#000;border:2px solid #3b82f6;overflow:hidden !important;flex-shrink:0 !important;
 }
+.tg-prof-av img{width:100% !important;height:100% !important;object-fit:cover !important;display:block !important}
 .tg-verified-pill{font-size:8.5px;font-weight:900;color:var(--green);background:rgba(16,185,129,.14);padding:3px 8px;border-radius:10px}
+
 .wd-fintech-hero{
   background:linear-gradient(135deg,#1f1503 0%,#111624 50%,#080b13 100%);
   border:1px solid rgba(255,215,0,.35);border-radius:22px;padding:16px;margin-bottom:12px;
@@ -787,7 +806,7 @@ header{
   </div>
 </div>
 
-<!-- 9. 👨‍💼 RESPONSIVE CUSTOMER SUPPORT MODAL -->
+<!-- 9. 👨‍💼 RESPONSIVE CUSTOMER SUPPORT MODAL (FIXED MAX 480PX) -->
 <div class="support-chat-modal" id="supportModal">
   <div class="support-chat-wrapper">
     <div class="support-hdr">
@@ -1034,7 +1053,7 @@ header{
   
   <div class="store-grid-2col">
     <!-- Item 1: 2x Referral Booster (COMING SOON) -->
-    <div class="store-item-card" style="opacity:0.85;border-color:rgba(255,255,255,0.12);cursor:not-allowed">
+    <div class="store-item-card" style="opacity:0.85;border-color:rgba(255,255,255,0.12);cursor:not-allowed" onclick="toast('🚀 2x Referral Booster በቅርቡ ይጠብቁ (Coming Soon)!')">
       <div style="position:absolute;top:8px;right:8px;background:rgba(239,68,68,0.2);border:1px solid var(--red);color:var(--red);font-size:7.5px;font-weight:900;padding:2px 6px;border-radius:6px">
         COMING SOON
       </div>
@@ -1311,7 +1330,7 @@ header{
   <!-- 3 PAID TIER CARDS (PRO, VIP, PREMIUM) -->
   <div class="vip-tier-grid">
     <!-- Tier 1: PRO (100 ETB) -->
-    <div class="vip-card" style="background:linear-gradient(135deg,#0c1a2e,#09101c);border-color:rgba(59,130,246,.45)" onclick="openVipUpgradeModal('PRO', 100)">
+    <div class="vip-card" id="pkgCard_PRO" style="background:linear-gradient(135deg,#0c1a2e,#09101c);border-color:rgba(59,130,246,.45)" onclick="openVipUpgradeModal('PRO', 100)">
       <div class="vip-card-head">
         <div class="vip-card-title" style="color:#60a5fa">🥈 PRO TIER</div>
         <div class="vip-card-price" style="color:#60a5fa">100 <small>ETB/mo</small></div>
@@ -1327,7 +1346,7 @@ header{
     </div>
 
     <!-- Tier 2: VIP (150 ETB) - [🔥 የ 15 ሰው ግብዣ ወደ 2 ሰው ዝቅ ይላል!] -->
-    <div class="vip-card pro" style="background:linear-gradient(135deg,#1f1402,#121829);border-color:rgba(255,215,0,.6);box-shadow:0 8px 30px rgba(255,215,0,.15)" onclick="openVipUpgradeModal('VIP', 150)">
+    <div class="vip-card pro" id="pkgCard_VIP" style="background:linear-gradient(135deg,#1f1402,#121829);border-color:rgba(255,215,0,.6);box-shadow:0 8px 30px rgba(255,215,0,.15)" onclick="openVipUpgradeModal('VIP', 150)">
       <div style="position:absolute;top:10px;right:12px;background:var(--gold-grad);color:#000;padding:2px 8px;border-radius:10px;font-size:8.5px;font-weight:900">🔥 MOST POPULAR</div>
       <div class="vip-card-head">
         <div class="vip-card-title" style="color:var(--gold)">👑 VIP TIER</div>
@@ -1345,7 +1364,7 @@ header{
     </div>
 
     <!-- Tier 3: PREMIUM (300 ETB) - [👑 ምንም ግብዣ አያስፈልግም - 100% ነፃ] -->
-    <div class="vip-card elite" style="background:linear-gradient(135deg,#260e1d,#0d1124);border-color:rgba(139,92,246,.6);box-shadow:0 10px 35px rgba(139,92,246,.25)" onclick="openVipUpgradeModal('PREMIUM', 300)">
+    <div class="vip-card elite" id="pkgCard_PREMIUM" style="background:linear-gradient(135deg,#260e1d,#0d1124);border-color:rgba(139,92,246,.6);box-shadow:0 10px 35px rgba(139,92,246,.25)" onclick="openVipUpgradeModal('PREMIUM', 300)">
       <div class="vip-card-head">
         <div class="vip-card-title" style="color:#c084fc">💎 PREMIUM TIER</div>
         <div class="vip-card-price" style="color:#c084fc">300 <small>ETB/mo</small></div>
@@ -1361,6 +1380,11 @@ header{
       <button class="vip-buy-btn" style="background:linear-gradient(135deg,#8b5cf6,#d946ef);color:#fff">PREMIUM ይሁኑ (300 ETB)</button>
     </div>
   </div>
+
+  <!-- Direct Inbox Button for Verified Paying Members -->
+  <button class="lc-inbox-btn" id="vipDirectInboxBtn" style="display:none;margin-top:10px" onclick="openDirectAdminInbox()">
+    💬 አድሚንን በግል Inbox ያነጋግሩ (@Swapmoney0)
+  </button>
 
   <div class="card" style="margin-top:10px">
     <div class="card-title">⚙️ የአካውንት ቅንብሮች</div>
@@ -1586,10 +1610,9 @@ header{
 
 <div id="toast"></div>
 
-
 <script>
 /* ══════════════════════════════════════════════════════════════════
-   SWAP MONEY V4 — NEXT-GEN PRODUCTION JAVASCRIPT ENGINE (PART 4)
+   SWAP MONEY V4 — NEXT-GEN PRODUCTION JAVASCRIPT ENGINE (PART 2)
    Dual-Sheet Bridge • Real Canvas Confetti • Amharic SMS Parser
 ══════════════════════════════════════════════════════════════════ */
 
@@ -1600,7 +1623,7 @@ const BOT_USERNAME       = 'Swapmoney_bot';
 const ADMIN_INBOX_USER   = 'Swapmoney0'; // 💎 የቴሌግራም አድሚን Inbox
 const WELCOME_ETB        = 50;
 const REF_BONUS          = 50;
-const MIN_WD             = 2500; // 🛡️ ጥብቅ ደንብ፦ ለሁሉም ማውጫዎች አነስተኛው 2,500 ETB
+const MIN_WD             = 2500; // 🛡️ ዝቅተኛው የማውጫ መጠን 2,500 ETB
 const AD_COOLDOWN_SEC    = 2;
 const SUPPORT_SERVER_URL = "https://support-urrw.onrender.com";
 const RENDER_API_URL     = "https://leaderbord-server.vercel.app/api/leaderboard";
@@ -2043,12 +2066,36 @@ function renderProfileHub(){
   const freeCard = document.getElementById('freeLimitationCard');
   const tier = (S.vipTier || 'None').toUpperCase();
 
+  // የጥቅል ካርዶች እና የ Inbox አዝራር
+  const cardPro = document.getElementById('pkgCard_PRO');
+  const cardVip = document.getElementById('pkgCard_VIP');
+  const cardPremium = document.getElementById('pkgCard_PREMIUM');
+  const vipInboxBtn = document.getElementById('vipDirectInboxBtn');
+
   if(!chip) return;
 
   if(tier !== 'NONE' && tier !== 'FREE'){
     chip.className = 'prof-status-chip is-vip';
     chip.innerHTML = `<span>👑</span> ${tier} MEMBER`;
     if(freeCard) freeCard.style.display = 'none';
+
+    // 🔒 @Swapmoney0 አዝራር የሚከፈተው ለተረጋገጡ VIP ብቻ ነው!
+    if(vipInboxBtn) vipInboxBtn.style.display = 'flex';
+
+    // 🛡️ የገዙትን ጥቅል ከታች ማጥፋት (Upgrade Filtering)
+    if(tier === 'PRO'){
+      if(cardPro) cardPro.style.display = 'none';       // PRO ይጠፋል
+      if(cardVip) cardVip.style.display = 'block';      // VIP ይታያል
+      if(cardPremium) cardPremium.style.display = 'block';
+    } else if(tier === 'VIP'){
+      if(cardPro) cardPro.style.display = 'none';       // PRO ይጠፋል
+      if(cardVip) cardVip.style.display = 'none';       // VIP ይጠፋል
+      if(cardPremium) cardPremium.style.display = 'block';// PREMIUM ብቻ ይታያል
+    } else if(tier === 'PREMIUM' || tier === 'ELITE'){
+      if(cardPro) cardPro.style.display = 'none';
+      if(cardVip) cardVip.style.display = 'none';
+      if(cardPremium) cardPremium.style.display = 'none';// ሁሉም ይጠፋሉ
+    }
 
     if(notice && S.vipExpiry){
       notice.style.display = 'block';
@@ -2062,19 +2109,19 @@ function renderProfileHub(){
       if(bar) bar.style.width = `${Math.min(100, (diffDays / 30) * 100)}%`;
     }
   } 
-  else if(S.pendingVip){
-    chip.className = 'prof-status-chip';
-    chip.style.borderColor = 'var(--gold)';
-    chip.style.color = 'var(--gold)';
-    chip.innerHTML = `<span>⏳</span> ${String(S.pendingVip.tier || 'VIP').toUpperCase()} (PENDING)`;
-    if(freeCard) freeCard.style.display = 'block';
-    if(notice) notice.style.display = 'none';
-  } 
   else {
     chip.className = 'prof-status-chip';
     chip.innerHTML = `<span>⚪</span> Free Member`;
     if(freeCard) freeCard.style.display = 'block';
     if(notice) notice.style.display = 'none';
+
+    // ነፃ ተጠቃሚ @Swapmoney0ን አያይም (Spam እንዳይበዛ)
+    if(vipInboxBtn) vipInboxBtn.style.display = 'none';
+
+    // ለነፃ ተጠቃሚ 3ቱም ጥቅሎች ይታያሉ
+    if(cardPro) cardPro.style.display = 'block';
+    if(cardVip) cardVip.style.display = 'block';
+    if(cardPremium) cardPremium.style.display = 'block';
   }
 }
 
@@ -3530,8 +3577,12 @@ async function syncFromSheet(){
           if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
         }
       } else if(u.vipTier === 'None' && S.vipTier !== 'None'){
-        S.vipTier = 'None';
-        S.vipExpiry = '';
+        // ጊዜው ካላለቀ በስተቀር ከሺት በስህተት የሚመጣ None እንዲሰርዘው አንፈቅድም
+        const expTime = new Date(S.vipExpiry).getTime();
+        if(!isNaN(expTime) && Date.now() > expTime){
+          S.vipTier = 'None';
+          S.vipExpiry = '';
+        }
       }
       
       saveState();
@@ -3841,11 +3892,11 @@ async function sendDirectAITicket(){
     if(data.status === 'success' && data.reply){
       appendAdminBubble(data.reply);
     } else {
-      appendAdminBubble('ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ፤ አድሚን በቀጥታ ያየዋል። ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
+      appendAdminBubble('ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ፤ አድሚን በቀጥታ ያየዋል።');
     }
   } catch(e){
     removeAdminTypingIndicator();
-    appendAdminBubble('ሰላም! ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
+    appendAdminBubble('ሰላም! ጥያቄዎን ተቀብለናል። የክፍያ ደረሰኝ ካለዎት እዚህ ይላኩ።');
   }
 }
 
@@ -3928,13 +3979,11 @@ function launchSingleSupportAdModal(step){
 
     if(left <= 0){
       clearInterval(supportAdTimerInterval);
-
       if(step < 3){
         document.getElementById('supportAdDesc').innerHTML = `✅ ደረጃ ${step}/3 ተጠናቋል! ✕ ይንኩ ወደ ቀጣዩ ማስታወቂያ ለመሄድ`;
       } else {
         document.getElementById('supportAdDesc').innerHTML = `🎉 3ቱም ማስታወቂያዎች ተጠናቀቁ! ✕ ይንኩ ከአድሚን ጋር ለመገናኘት`;
       }
-
       closeBtn.style.display = 'flex';
     }
   }, 1000);
@@ -3963,7 +4012,7 @@ async function finishSupportTicketGate(){
   markLocalMutation();
   syncToSheet();
 
-  appendAdminBubble('👨‍💼 አሁን ከሰው አድሚን ጋር ተገናኝተዋል! ያጋጠመዎትን ቅሬታ ወይም ደረሰኝ አሁን ይላኩ። ወይም @Swapmoney0 አድሚንን በግል ያነጋግሩ።');
+  appendAdminBubble('👨‍💼 አሁን ከሰው አድሚን ጋር ተገናኝተዋል! ያጋጠመዎትን ቅሬታ ወይም ደረሰኝ አሁን ይላኩ።');
   toast('🎉 +30 ETB ቦነስ ተጨምሯል! አሁን መልዕክትዎን ይላኩ');
   updateChatHeaderBadge();
   if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -4032,7 +4081,7 @@ async function toggleVoiceRecording(){
       document.getElementById('voiceTimerTxt').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
     }, 1000);
   } catch(err){
-    alert('⚠️ እባክዎ ማይክሮፎን ፈቃድ (Permission) ይስጡ።');
+    toast('⚠️ በስልክዎ ላይ የድምፅ መቅረጫ አይደገፍም፤ እባክዎ በጽሁፍ ይላኩ');
   }
 }
 
@@ -4109,7 +4158,6 @@ function appendPhotoBubble(src, cap){
 </script>
 </body>
 </html>
-
 
 
 
